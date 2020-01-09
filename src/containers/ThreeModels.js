@@ -1,7 +1,7 @@
 import React, { Component,Suspense } from 'react'
 
 import Sphere from '../components/Sphere'
-
+import Cube from '../components/Cube'
 
 class ThreeModels extends Component {
     constructor(props) {

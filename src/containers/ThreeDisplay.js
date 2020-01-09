@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 import { Canvas } from 'react-three-fiber';
 import ThreeModels from "./ThreeModels";
+import BoxTest from "./BoxTest";
+import { useThree } from 'react-three-fiber'
 
-class ThreeDisplay extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
-    render() { 
+const ThreeDisplay =() => {
+
+
+    const {size,viewport} = useThree()
+
+    const {camera} = useThree()
+
+
+    console.log(viewport)
+
         return ( 
             <Canvas>
                 <ambientLight intensity={0.5} />
@@ -15,7 +21,7 @@ class ThreeDisplay extends Component {
                 <ThreeModels />
             </Canvas>
          );
-    }
+
 }
  
 export default ThreeDisplay;
