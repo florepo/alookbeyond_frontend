@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {Button, CardMetaProps, Card} from 'semantic-ui-react'
 
-const SideContainer = ({sats}) => {
+const SideContainer = ({sats,addSat}) => {
 
-    const handleClick=()=>{
-        console.log("clicked")
+    const handleClick=(id)=>{
+        console.log("clicked",id)
+        addSat(id)
+
     }
 
     console.log(sats)
@@ -15,7 +17,7 @@ const SideContainer = ({sats}) => {
                     return (
                         <Card fluid teal="white" key={sat.id}>
                             {sat.name}
-                            <Button onClick={handleClick} id={sat.id}>
+                            <Button onClick={()=>handleClick(sat.id)} id={sat.id}>
                                 ADD
                             </Button>
                         </Card>

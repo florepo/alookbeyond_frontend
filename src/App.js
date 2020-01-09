@@ -14,8 +14,8 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { satTLE: [{name:"one", id:1},{name:"two",id:2}, {name:"three", id:3}],
-                   selectedSats: [],
+    this.state = { satResults: [{name:"one", id:1},{name:"two",id:2}, {name:"three", id:3}],
+                   satCollection: [],
                    searchTerm: null }
   }
 
@@ -33,10 +33,17 @@ class App extends Component {
     this.fetchData(query)
   }
   
-  addSat=(id)=>{
-
-    setState
+  addSatToCollection=(id)=>{
+    console.log('sat added to collection')
+    let satResults = [...this.state.satResults]
+    let satCollection = [...this.state.satCollection]
+    let choosenSat = satResults.filter(sat=>{return sat.id==id})
+    let updatedCollection= satCollection.concat(choosenSat)
+    //setState
+    this.setState({satCollection: updatedCollection})
   }
+
+
 
 
   componentDidMount(){
@@ -54,7 +61,8 @@ class App extends Component {
             </Grid.Row>    
             <Grid.Row>
               <MainDisplay className="MainDisplay"
-                sats={this.state.satTLE}        
+                mySats={this.state.satResults} 
+                addSat={this.addSatToCollection}       
               /> 
             </Grid.Row>   
             <Footer className="Footer"

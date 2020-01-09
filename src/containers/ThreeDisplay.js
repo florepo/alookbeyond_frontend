@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { Canvas } from 'react-three-fiber';
 import ThreeModels from "./ThreeModels";
-import BoxTest from "./BoxTest";
+import BoxTest from "../components/BoxTest";
 import { useThree } from 'react-three-fiber'
 
 const ThreeDisplay =() => {
 
 
     const {size,viewport} = useThree()
-
     const {camera} = useThree()
-
-
-    console.log(viewport)
 
         return ( 
             <Canvas>
