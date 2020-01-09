@@ -1,38 +1,41 @@
 import React,{ Component } from 'react'
-import BoxTest from '../components/BoxTest'
-import ThreeDisplay from './ThreeDisplay'
-import SideContainer from './SideContainer'
 import {Container, Grid} from 'semantic-ui-react'
 
+import SideContainer from './SideContainer'
+import ThreeDisplay from './ThreeDisplay'
+import SelectionContainer from './SelectionContainer'
 
-const MainDisplay = ({mySats, addSat}) => {
-    console.log('maindisplay',mySats)
+
+const MainDisplay = ({fetchedSats, addSat,removeSat, mySats}) => {
 
     return ( 
-        <div className="MainDisplay">
-            <Container className="MainDisplay">
-                <Grid columns={2}>
+        <Container className="MainDisplay">
+            <Grid columns={2}>
+                <Grid.Row>
                     <Grid.Column width={6}>
                         <SideContainer
                             className="SideContainer"
-                            sats={mySats}
+                            sats={fetchedSats}
                             addSat={addSat}
                         />
                     </Grid.Column>
                     <Grid.Column width={10}>
                         <ThreeDisplay
                             className="ThreeDisplay"
-                            sats={mySats}
+                            sats={fetchedSats}
                         />
                     </Grid.Column>
-                </Grid>
-
-            </Container>
-
-
-        </div>
-        );
+                </ Grid.Row>
+                <Grid.Row>
+                    <SelectionContainer
+                        className="SelectionContainer"
+                        sats={mySats}
+                        removeSat={removeSat}
+                    />
+                </Grid.Row>
+            </Grid>
+        </Container>
+    );
 }
 
- 
 export default MainDisplay;

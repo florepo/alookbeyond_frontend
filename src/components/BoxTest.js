@@ -25,5 +25,3 @@ const BoxTest = () =>{
 }
 
 export default BoxTest
-
-// render(<Canvas><Box /></Canvas>,document.getElementById("root"))
