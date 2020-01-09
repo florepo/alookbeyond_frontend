@@ -9,7 +9,6 @@ const SelectionContainer =({sats, removeSat})=> {
             <div className="selectionContainer">
                 <Card.Group>
                     {sats.map(sat => {
-                        console.log(sat)
                         return <SatCard 
                                     key={sat.id}
                                     info={sat}

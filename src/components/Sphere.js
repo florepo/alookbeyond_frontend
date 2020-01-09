@@ -11,7 +11,7 @@ const Sphere = () => {
 
   const [texture, bump] = useLoader(THREE.TextureLoader, [earthImg, bumpImg]);
 
-  useFrame(() => (ref.current.rotation.z += 0.01));
+  useFrame(() => (ref.current.rotation.y += 0.00));
   
   return (
     <Suspense fallback={null}>

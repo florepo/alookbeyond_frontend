@@ -22,7 +22,7 @@ const MainDisplay = ({fetchedSats, addSat,removeSat, mySats}) => {
                     <Grid.Column width={10}>
                         <ThreeDisplay
                             className="ThreeDisplay"
-                            sats={fetchedSats}
+                            sats={mySats}
                         />
                     </Grid.Column>
                 </ Grid.Row>
