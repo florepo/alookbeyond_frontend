@@ -6,7 +6,6 @@ export const SatelliteGeoModel = (name="unknown", scaleFactor=0.1, color="#466F8
     let material = new THREE.MeshBasicMaterial({ color});
     let cube = new THREE.Mesh(geometry, material);
     cube.name= name
-    console.log(cube)
     return cube;
 }
 

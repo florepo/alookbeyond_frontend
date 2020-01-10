@@ -9,7 +9,19 @@ class MainPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { satResults: [{name:"one", id:1},{name:"two",id:2}, {name:"three", id:3}],
+        this.state = { satResults: [{name: "NOAA 6", 
+                                    id: "NOAA 6",                 
+                                    TLE1: "1 11416U 79057A   20009.54513310  .00000022  00000-0  24252-4 0  9997",
+                                    TLE2: "2 11416  98.6497   8.4074 0010515   9.8375 350.3013 14.33560503114017"},
+                                    {name: "SKYNET 4C ",
+                                    id: "SKYNET 4C ",       
+                                    TLE1: "1 20776U 90079A   20009.15256995  .00000136  00000-0  00000+0 0  9999",
+                                    TLE2: "2 20776  13.9796   7.2950 0003220 282.5585 266.6095  1.00277087107367"},
+                                   {name: "INMARSAT 3-F1",           
+                                    id: "INMARSAT 3-F1", 
+                                    TLE1: "1 23839U 96020A   20010.13527057  .00000013  00000-0  00000+0 0  9998",
+                                    TLE2: "2 23839   5.7635  63.1242 0005326 230.7711 288.3891  1.00272578 87059"}
+                                    ],
                        satCollection: [{name:"ISS (ZARYA)", 
                                         id: "ISS (ZARYA)",           
                                         TLE1: "1 25544U 98067A   20009.58914988 -.00000025  00000-0  76486-5 0  9997",

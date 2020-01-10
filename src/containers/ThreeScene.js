@@ -1,5 +1,6 @@
 import React, { Component, Suspense } from "react";
 import * as THREE from "three";
+import {isEqual, differenceBy} from 'lodash'
 
 import { SatelliteGeoModel, EarthGeoModel } from "../components/ThreeModels";
 import { intializeSatObject } from "../utils/sathelper.js";
@@ -13,7 +14,7 @@ let satScaleFactor = 1 / 16;
 class ThreeScene extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {removable_items: []};
   }
 
   componentDidMount() {
@@ -36,13 +37,15 @@ class ThreeScene extends Component {
 
     //Add Earth
     let earth = EarthGeoModel(1000*scaleFactor)
-    this.scene.add(earth);
+    this.scene.add(earth);       
+    this.state.removable_items.push(earth)   //track for garbage collection
 
     //dynamically create and add satellite objects based on selection
     this.props.sats.map(sat => {
       let satGeoModel = SatelliteGeoModel(sat.name, scaleFactor*500)
-      let satellite =intializeSatObject(sat.name, sat.TLE1, sat.TLE2, satGeoModel, scaleFactor)
-      this.scene.add(satellite);
+      let satObject = intializeSatObject(sat.name, sat.TLE1, sat.TLE2, satGeoModel, scaleFactor)
+      this.scene.add(satObject);
+      this.state.removable_items.push(satObject)   //track for garbage collection
     });
 
     this.start();
@@ -50,16 +53,49 @@ class ThreeScene extends Component {
 
   componentWillUnmount() {
     this.stop();
+
     this.mount.removeChild(this.renderer.domElement);
   }
+ 
+  componentDidUpdate(prevProps, prevState){
+    console.log("component did update")
 
-  componentDidUpdate(){
-    console.log("did update")
+    //handle removed elements
+    if (prevProps.sats.length>this.props.sats.length){
 
-    this.stop()
-    let object ={name:"earth"}
-    this.removeEntity(object) 
+      let removedElements= differenceBy(prevProps.sats, this.props.sats)
 
+      removedElements.forEach(element=>{
+        let entity = this.scene.getObjectByName(element.name)
+        this.removeEntityfromScene(entity) //remove from scene
+        this.removeEntityFromMemory(entity) //remove from memory
+      })
+     
+    //handle added elements
+    } else if (prevProps.sats.length<this.props.sats.length){
+      console.log(prevProps.sats-this.props.sats)
+      console.log("adding not implemented yet")
+
+    } else
+    { console.log("equal")}
+
+
+
+  }
+
+
+
+
+  removeEntityfromScene = (entity) => {
+    this.scene.remove( entity );
+    this.renderScene();
+  }
+
+  removeEntityFromMemory =(entity) =>{
+    console.log("entity to be clean up:",entity.name)
+    entity.material.dispose();
+    entity.geometry.dispose();
+    //possibly add texture.dispose()
   }
 
 
@@ -82,13 +118,7 @@ class ThreeScene extends Component {
     this.renderer.render(this.scene, this.camera);
   };
 
-  removeEntity(object) {
-    var selectedObject = this.scene.getObjectByName(object.name);
-    console.log(selectedObject)
-    debugger
-    this.scene.remove( selectedObject );
-    this.renderScene();
-  }
+
 
 
 
