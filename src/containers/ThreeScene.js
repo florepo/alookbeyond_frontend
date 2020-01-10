@@ -2,7 +2,7 @@ import React, { Component, Suspense } from "react";
 
 // import { Canvas, useThree } from "react-three-fiber";
 // import Sphere from "../components/Sphere";
-import {Cube} from "../components/Cube2";
+import { Cube } from "../components/ThreeModels";
 
 import * as THREE from "three";
 
@@ -15,16 +15,18 @@ let iniPosition2 = { id: 2, x: 0.8, y: 1.8, z: 1.2 }; //
 
 let positions = [iniPosition1, iniPosition2];
 
-class ThreeScene extends Component {
+let scaleFactor = 1 / 3000;
+let satScaleFactor = 1 / 16;
 
+class ThreeScene extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {
-    const width = 400 //this.mount.clientWidth;      change here for size changes of render canvas!
-    const height = 400 //this.mount.clientHeight;
+    const width = 400; //this.mount.clientWidth;      change here for size changes of render canvas!
+    const height = 400; //this.mount.clientHeight;
 
     //ADD SCENE
     this.scene = new THREE.Scene();
@@ -36,28 +38,32 @@ class ThreeScene extends Component {
     this.renderer.setClearColor("#000000");
     this.renderer.setSize(width, height);
     this.mount.appendChild(this.renderer.domElement);
-    //ADD CUBE
-    console.log(this.props.sats)
 
-  //Dynamically create cubes for satellites
-    this.props.sats.map(sat=>{
+    //EARTH MODEL
+    // let geometry1 = new THREE.SphereGeometry(0.5, 32, 32);
 
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshBasicMaterial({ color: "#433F81" });
-      let cube = new THREE.Mesh(geometry, material)
-      this.scene.add(cube);
-    })
-  
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: "#433F81" });
-    this.cube = new THREE.Mesh(geometry, material)
-  
-    console.log(Cube)
-    this.scene.add(this.cube);
+    // let loader = new THREE.TextureLoader();
+    // // let texture = loader.load(
+    // //   "https://stemkoski.github.io/AR-Examples/images/earth-sphere.jpg",
+    // //   this.renderer
+    // // );
 
-    // this.earth = createEarth()
+    // let material1 = new THREE.MeshBasicMaterial({
+    //   color: 0xffffff,
+    //   opacity: 0.5
+    // });
 
-    // this.scene.add(this.earth);
+    // let earth = new THREE.Mesh(geometry1, material1);
+    // this.scene.add(earth);
+
+    //Dynamically create satellite objects based on selection
+    this.props.sats.map(sat => {
+      let satellite = this.createSatelliteObject(sat.name, sat.TLE1, sat.TLE2);
+      this.scene.add(satellite);
+    });
+
+    // console.log(Cube);
+    // this.scene.add(Cube);
 
     this.start();
   }
@@ -78,8 +84,8 @@ class ThreeScene extends Component {
   };
 
   animate = () => {
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.01;
+    // this.cube.rotation.x += 0.01;
+    // this.cube.rotation.y += 0.01;
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
   };
@@ -88,10 +94,58 @@ class ThreeScene extends Component {
     this.renderer.render(this.scene, this.camera);
   };
 
-  render() {
+  createSatelliteGeometry = () => {};
 
+  createSatelliteObject(name, tle1, tle2) {
+    // console.log('create Satellite: ',satDataContainer.name)
+    // console.log('sat data',satDataContainer)
+    let TsE = 0; //[min]
+    let pAv = {};
+    let satrec = {};
+
+    // let sat = this.createSatelliteGeometry();
+    let sat = Cube();
+
+    // // let sat = () => {
+    // let geometry = new THREE.BoxGeometry(1, 1, 1);
+    // let material = new THREE.MeshBasicMaterial({ color: "#433F81" });
+    // let cube = new THREE.Mesh(geometry, material);
+      // return cube}
+
+      // let sat = cube
+
+    satrec = twoline2satrec(tle1, tle2);
+    pAv = sgp4(satrec, TsE);
+
+    // sat.position.set(
+    //   pAv.position.x * scaleFactor, //map ECI to ThreeJS coord system > x(js) = z(ECI), y(js) = x(ECI), z(js)=y(ECI)
+    //   pAv.position.y * scaleFactor,
+    //   pAv.position.z * scaleFactor
+    // );
+    //  console.log('sat position initial', sat.position)
+
+    // sat.userData.satrec = satrec;
+    // sat.userData.name = name;
+
+    return sat;
+  }
+
+  updateSatPosition(satContainer, date) {
+    let pAv = propagate(satContainer.userData.satrec, date);
+
+    satContainer.position.set(
+      pAv.position.x * scaleFactor,
+      pAv.position.y * scaleFactor,
+      pAv.position.z * scaleFactor
+    );
+
+    // console.log('sat position updated', satContainer.position)
+
+    return satContainer;
+  }
+
+  render() {
     return (
-     
       <div
         style={{ width: "100%", height: "100%" }}
         ref={mount => {
