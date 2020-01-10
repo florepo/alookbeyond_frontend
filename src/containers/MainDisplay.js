@@ -2,7 +2,7 @@ import React,{ Component } from 'react'
 import {Container, Grid} from 'semantic-ui-react'
 
 import SideContainer from './SideContainer'
-import ThreeDisplay from './ThreeDisplay'
+import ThreeDisplay from './ThreeScene'
 import SelectionContainer from './SelectionContainer'
 
 
