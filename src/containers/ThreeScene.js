@@ -19,15 +19,20 @@ class ThreeScene extends Component {
 
   componentDidMount() {
     //get canvas size
-    const width = 400; //this.mount.clientWidth;      change here for size changes of render canvas!
-    const height = 400; //this.mount.clientHeight;
+    const width = 600; //this.mount.clientWidth;      change here for size changes of render canvas!
+    const height = 600; //this.mount.clientHeight;
 
     //ADD SCENE
     this.scene = new THREE.Scene();
 
     //ADD CAMERA
-    this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
     this.camera.position.z = 3;
+    this.camera.position.set(10, 0, 0);    // view along x-axis
+    this.camera.lookAt(0,0,0);                   // looking target
+    this.camera.up.set(0,0,1);                   // set camera direction to z=up
+
+    this.scene.add(this.camera);
 
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
