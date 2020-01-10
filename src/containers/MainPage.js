@@ -22,20 +22,17 @@ class MainPage extends Component {
                        searchTerm: null }
       }
 
-
-
       addToCollection=(id)=>{
         console.log('sat added to collection')
         let satResults = [...this.state.satResults]
         let satCollection = [...this.state.satCollection]
         let choosenSat = satResults.filter(sat=>{return sat.id==id})
         let updatedCollection= satCollection.concat(choosenSat)
-        //setState
         this.setState({satCollection: updatedCollection})
       }
     
       removeFromCollection=(id)=>{
-        console.log('dismissed')
+        console.log('sat removed from to collection')
         let satCollection = [...this.state.satCollection]
         let updateCollection = satCollection.filter(bot=>{return bot.id!=id})
     
