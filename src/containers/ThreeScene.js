@@ -2,8 +2,7 @@ import React, { Component, Suspense } from "react";
 import * as THREE from "three";
 import {differenceBy} from 'lodash'
 
-import { SatelliteGeoModel, EarthGeoModel, AmbientLight} from "../components/ThreeModels";
-
+import { SatelliteGeoModel, OrbitGeoModel, EarthGeoModel, AmbientLight} from "../components/ThreeModels"
 import { intializeSatObject } from "../utils/sathelper.js";
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
 
@@ -19,8 +18,9 @@ class ThreeScene extends Component {
 
   componentDidMount() {
     //get canvas size
-    const width = 600; //this.mount.clientWidth;      change here for size changes of render canvas!
-    const height = 600; //this.mount.clientHeight;
+    console.log(this.mount)
+    const width = this.mount.clientWidth;   
+    const height = this.mount.clientHeight;
 
     //ADD SCENE
     this.scene = new THREE.Scene();
@@ -31,7 +31,6 @@ class ThreeScene extends Component {
     this.camera.position.set(10, 0, 0);    // view along x-axis
     this.camera.lookAt(0,0,0);                   // looking target
     this.camera.up.set(0,0,1);                   // set camera direction to z=up
-
     this.scene.add(this.camera);
 
     //ADD RENDERER
@@ -50,27 +49,14 @@ class ThreeScene extends Component {
     this.scene.add(earth);       
     this.state.removable_items.push(earth)   //tracking for garbage collection
 
-    //ADD Satellites
-    // this.props.sats.map(sat => {
-    //   let satGeoModel = SatelliteGeoModel(sat.name, scaleFactor*500)
-    //   let satObject = intializeSatObject(sat.name, sat.TLE1, sat.TLE2, satGeoModel, scaleFactor)
-
-    //   this.scene.add(satObject);
-    //   this.state.removable_items.push(satObject)   //tracking for garbage collection
-    // });
-
     this.start();
   }
 
   componentWillUnmount() {
+    console.log("component will unmount")
+
     this.stop();
-
-    this.state.removable_items.forEach(element=>{
-      let entity = this.scene.getObjectByName(element.name)
-      this.removeEntityfromScene(entity) //remove from scene
-      this.removeEntityFromMemory(entity) //remove from memory (using .dispose)
-    })
-
+    this.removeEntities(this.state.removable_items)
     this.mount.removeChild(this.renderer.domElement);
   }
  
@@ -78,43 +64,58 @@ class ThreeScene extends Component {
     console.log("component did update")
 
     //handle removed elements
-    if (prevProps.sats.length>this.props.sats.length){
-      console.log("handle removign elements")
-      const removedElements= differenceBy(prevProps.sats, this.props.sats)
-      console.log("removed",removedElements)
-      removedElements.forEach(element=>{
-        let entity = this.scene.getObjectByName(element.name)
-        this.removeEntityfromScene(entity)
-        this.removeEntityFromMemory(entity) //remove from memory (using .dispose)
+    if (prevProps.sats.length>this.props.sats.length) {
+      const removedElements = differenceBy(prevProps.sats, this.props.sats)
+      this.removeEntities(removedElements, prevState)
 
-        if (prevState==this.state) { this.removeItemfromList(element)}
-       
-      })
-     
-    //handle added elements
-    } else if (prevProps.sats.length<this.props.sats.length){
-      console.log("handling adding elements")
+     //handle added elements
+    } else if (prevProps.sats.length<this.props.sats.length) {
       const addedElements= differenceBy(this.props.sats,prevProps.sats)
-      console.log("added",addedElements)
-      //dynamically create and add satellite objects based on selection
-      addedElements.forEach(sat => {
-        let satGeoModel = SatelliteGeoModel(sat.name, scaleFactor*500)
-        let satObject = intializeSatObject(sat.name, sat.TLE1, sat.TLE2, satGeoModel, scaleFactor)
+      this.addEntities(addedElements)
+    } else {}
 
-        this.scene.add(satObject);
-        this.state.removable_items.push(satObject)   //tracking for garbage collection
-      });
-
-    } else
-    { console.log("equal")}
-    this.renderScene()
+    //re-render scene
+    this.renderer.render(this.scene, this.camera);
   }
 
-  removeItemfromList = (entity) =>{
-    console.log("entity to be removed from list:",entity.name)
-    const currentItems = [...this.state.removable_items]
-    const newItems = currentItems.filter(item=>{return item.name!=entity.name})
-    this.setState({removable_items: newItems})
+
+
+  removeEntities = (removedEntities, prevState = null)  => {
+    let entitiesNames = removedEntities.map(entity => entity.name)
+
+    let dependencies = entitiesNames.map(entityName=>{
+      let children =  this.scene.children //breakout in variable required for enumaration
+      return children.filter( child => child.name === entityName)
+    })
+
+    dependencies.forEach( dependecy => {
+      dependecy.forEach(object=>{
+        this.removeEntityfromScene(object)
+        this.removeEntityFromMemory(object)
+        this.removeEntityfromList(object)
+      })
+    })
+  }
+
+  addEntities =(entities) =>{
+    entities.forEach(sat => {
+
+      let satGeoModel = SatelliteGeoModel(sat.name, scaleFactor*500)
+      let satObject = intializeSatObject(sat.name, sat.TLE1, sat.TLE2, satGeoModel, scaleFactor)
+      this.scene.add(satObject);
+      this.state.removable_items.push(satObject)   //tracking for garbage collection
+
+      let orbitGeoModel = OrbitGeoModel(satObject.userData.satrec, satObject.name,scaleFactor)
+      this.scene.add(orbitGeoModel);
+      this.state.removable_items.push(orbitGeoModel)   //tracking for garbage collection
+
+    });
+  }
+
+  removeEntityfromList = (entity) =>{
+    const oldItems = [...this.state.removable_items]
+    const updatedItems = oldItems.filter(item=>{return item.name!=entity.name})
+    this.setState({removable_items: updatedItems})
   }
 
   removeEntityfromScene = (entity) => {
@@ -123,7 +124,7 @@ class ThreeScene extends Component {
     this.renderer.render(this.scene, this.camera);
   }
 
-  removeEntityFromMemory =(entity) =>{
+  removeEntityFromMemory = (entity) =>{
     console.log("entity to be clean up:",entity.name)
     entity.material.dispose();
     entity.geometry.dispose();
