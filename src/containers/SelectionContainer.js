@@ -12,7 +12,7 @@ const SelectionContainer =({sats, removeSat})=> {
                         return <SatCard 
                                     key={sat.id}
                                     info={sat}
-                                    removeHandler={removeSat}
+                                    // removeHandler={removeSat}
                                 />
                     })}
                 </Card.Group>

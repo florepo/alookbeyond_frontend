@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import {Card, Button} from 'semantic-ui-react'
 
 
-const SatCard = ({info, removeHandler}) => {
+const SatCard = ({info, remove}) => {
 
     const handleClick = (id)=>{
         console.log("clicked", id)
-        removeHandler(id)
+        remove(id)
     }
     
 

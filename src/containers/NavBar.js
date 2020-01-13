@@ -11,7 +11,7 @@ class NavBar extends Component {
     render() { 
         return ( 
             <Container className="NavBar">
-                <SearchBar />
+                {/* <SearchBar /> */}
             </Container>
          );
     }

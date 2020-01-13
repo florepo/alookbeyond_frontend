@@ -33,7 +33,7 @@ const MainDisplay = ({fetchedSats, addSat,removeSat, mySats}) => {
                         removeSat={removeSat}
                     />
                 </Grid.Row>
-            </Grid>
+                </Grid>
         </Container>
     );
 }

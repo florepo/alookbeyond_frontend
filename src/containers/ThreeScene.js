@@ -28,7 +28,7 @@ class ThreeScene extends Component {
     //ADD CAMERA
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
     this.camera.position.z = 3;
-    this.camera.position.set(10, 0, 0);    // view along x-axis
+    this.camera.position.set(6, 0, 0);    // view along x-axis
     this.camera.lookAt(0,0,0);                   // looking target
     this.camera.up.set(0,0,1);                   // set camera direction to z=up
     this.scene.add(this.camera);
@@ -62,6 +62,8 @@ class ThreeScene extends Component {
  
   componentDidUpdate(prevProps, prevState){
     console.log("component did update")
+
+
 
     //handle removed elements
     if (prevProps.sats.length>this.props.sats.length) {
