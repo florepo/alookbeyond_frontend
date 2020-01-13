@@ -2,7 +2,6 @@
   text-align: center;
 }
 
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -53,21 +52,51 @@
   background-color: #68E7BC;
 }
 
-canvas {
-  background-color: rgb(120, 1, 54);
-  height: 100%;
-  width: 100%
-}
 
-.SideContainer {
-  text-align: center;
-  background-color: #68E7BC;
-}
+
 
 .SatelliteContainer {
   text-align: center;
   background-color: #11F281;
 }
 
+/* viewport example */
+.flex-row-container {
+  display: flex;
+  flex-flow: row;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar {
+  display: block;
+  flex: 0 0 200px;
+  background-color: 445;
+  margin: 3px 4px 3px 4px;
+  box-sizing: border-box;
+  border: 1px solid #888;
+}
 
 
+.sidebar {
+  display: block;
+  flex: 0 0 200px;
+  background-color: 445;
+  margin: 3px 4px 3px 4px;
+  box-sizing: border-box;
+  border: 1px solid #888;
+}
+
+.viewport {
+  flex: 1 1 auto;
+  height: 80vh;
+  width: 100vh;
+  overflow: hidden;
+}
+
+.canvas {
+  flex: 1 1 auto;
+  height: 100vh;
+  width: 100vh;
+  overflow: hidden;
+}

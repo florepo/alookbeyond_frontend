@@ -2,15 +2,18 @@ import React, { Component, Suspense } from "react";
 import * as THREE from "three";
 import {differenceBy} from 'lodash'
 
-import { SatelliteGeoModel, OrbitGeoModel, EarthGeoModel, AmbientLight} from "../components/ThreeModels"
+import { createSatelliteGeoModel, createOrbitGeoModel, EarthGeoModel, AmbientLight} from "../components/ThreeModels"
 import { intializeSatObject } from "../utils/sathelper.js";
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
 
-//Geometry control parameters
-let scaleFactor = 1 / 4000;
-let satScaleFactor = 0.6;
+//Control parameters
+const earthRadius = 6371      //[km]
+const cameraAltitude = 30000  //[km]
+let sceneScaleFactor = 1 / 1000;
+let satScaleFactor = 200;
 
-class ThreeScene extends Component {
+
+class Viewport extends Component {
   constructor(props) {
     super(props);
     this.state = {removable_items: []};
@@ -27,8 +30,7 @@ class ThreeScene extends Component {
 
     //ADD CAMERA
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
-    this.camera.position.z = 3;
-    this.camera.position.set(6, 0, 0);    // view along x-axis
+    this.camera.position.z = (cameraAltitude-earthRadius)*sceneScaleFactor;
     this.camera.lookAt(0,0,0);                   // looking target
     this.camera.up.set(0,0,1);                   // set camera direction to z=up
     this.scene.add(this.camera);
@@ -41,13 +43,14 @@ class ThreeScene extends Component {
 
     //ADD LIGHTSOURCE
     let ambientLight = AmbientLight()
-    this.scene.add(ambientLight);       
     this.state.removable_items.push(ambientLight)   //tracking for garbage collection
-    
+    this.scene.add(ambientLight);       
+
     //Add Earth
-    let earth = EarthGeoModel(1000*scaleFactor)
-    this.scene.add(earth);       
+    let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
     this.state.removable_items.push(earth)   //tracking for garbage collection
+    this.scene.add(earth);       
+
 
     this.start();
   }
@@ -56,30 +59,37 @@ class ThreeScene extends Component {
     console.log("component will unmount")
 
     this.stop();
-    this.removeEntities(this.state.removable_items)
-    this.mount.removeChild(this.renderer.domElement);
+    // this.removeEntities(this.state.removable_items)
+    // this.mount.removeChild(this.renderer.domElement);
   }
  
   componentDidUpdate(prevProps, prevState){
     console.log("component did update")
 
-
-
     //handle removed elements
     if (prevProps.sats.length>this.props.sats.length) {
+      console.log("elements removed")
       const removedElements = differenceBy(prevProps.sats, this.props.sats)
       this.removeEntities(removedElements, prevState)
 
      //handle added elements
     } else if (prevProps.sats.length<this.props.sats.length) {
-      const addedElements= differenceBy(this.props.sats,prevProps.sats)
-      this.addEntities(addedElements)
-    } else {}
+        console.log("elements added")
+        const addedElements = differenceBy(this.props.sats,prevProps.sats)
+        console.log(addedElements)
+        this.addEntities(addedElements)
+    } else {
+      console.log("elements rerendered")
+      const currentElements=this.props.sats
+      console.log(currentElements)
+      // not finished
+      // this.addEntities(addedElements)
+
+    }
 
     //re-render scene
     this.renderer.render(this.scene, this.camera);
   }
-
 
 
   removeEntities = (removedEntities, prevState = null)  => {
@@ -101,16 +111,16 @@ class ThreeScene extends Component {
 
   addEntities =(entities) =>{
     entities.forEach(sat => {
-
-      let satGeoModel = SatelliteGeoModel(sat.name, scaleFactor*500)
-      let satObject = intializeSatObject(sat.name, sat.TLE1, sat.TLE2, satGeoModel, scaleFactor)
-      this.scene.add(satObject);
-      this.state.removable_items.push(satObject)   //tracking for garbage collection
-
-      let orbitGeoModel = OrbitGeoModel(satObject.userData.satrec, satObject.name,scaleFactor)
+      const satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
+      const satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
+      const orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec, satObject.name,sceneScaleFactor)
       this.scene.add(orbitGeoModel);
-      this.state.removable_items.push(orbitGeoModel)   //tracking for garbage collection
+      this.scene.add(satObject);
 
+      //tracking for garbage collection 
+      let elementList = [...this.state.removable_items] 
+      elementList.push(satObject,orbitGeoModel)
+      this.setState({removable_items: elementList})
     });
   }
 
@@ -156,14 +166,9 @@ class ThreeScene extends Component {
 
   render() {
     return (
-      <div
-        style={{ width: "100%", height: "100%" }}
-        ref={mount => {
-          this.mount = mount;
-        }}
-      />
+      <div className = "viewport"ref={mount => {this.mount = mount;}} />
     );
   }
 }
 
-export default ThreeScene;
+export default Viewport;

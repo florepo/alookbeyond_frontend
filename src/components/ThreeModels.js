@@ -2,12 +2,14 @@
 import * as THREE from "three";
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
 
-export const SatelliteGeoModel = (name="unknown", scaleFactor=0.1, color="#466F81")=> {
+export const createSatelliteGeoModel = (name="unknown", satScaleFactor=1, scaleFactor=1, )=> {
 
+    const size = satScaleFactor*scaleFactor
+    console.log(size)
     const identifier = name
-    let geometry = new THREE.BoxGeometry(scaleFactor, scaleFactor, scaleFactor);
+    let geometry = new THREE.BoxGeometry(size, size, size);
     geometry.name=identifier
-    let material = new THREE.MeshBasicMaterial({ color});
+    let material = new THREE.MeshBasicMaterial({ color: "#42f54e"});
     material.name=identifier
     let mesh = new THREE.Mesh(geometry, material);
     mesh.name= identifier
@@ -15,7 +17,7 @@ export const SatelliteGeoModel = (name="unknown", scaleFactor=0.1, color="#466F8
     return mesh;
 }
 
-export const OrbitGeoModel = (satRec, name="default", scaleFactor) => {
+export const createOrbitGeoModel = (satRec, name="default", scaleFactor) => {
     const identifier = name
 
     let timeSinceEpoch = 0
@@ -33,8 +35,8 @@ export const OrbitGeoModel = (satRec, name="default", scaleFactor) => {
     for (let i = 0; i <= plotpoints; i++){
       let pAv=sgp4(satRec,timeSinceEpoch + i*deltaT);
       geometry.vertices.push(new THREE.Vector3(pAv.position.x*scaleFactor,
-                                          pAv.position.y*scaleFactor,
-                                          pAv.position.z*scaleFactor));
+                                               pAv.position.y*scaleFactor,
+                                               pAv.position.z*scaleFactor));
     };
   
     let mesh = new THREE.Line(geometry,material)
@@ -44,19 +46,17 @@ export const OrbitGeoModel = (satRec, name="default", scaleFactor) => {
 }
 
 
-export const EarthGeoModel = (scaleFactor=0.5, color = "#433F81")=> {
+export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
 
     const identifier ="earth"
-
-    let geometry = new THREE.SphereGeometry(scaleFactor, 32, 32);
+    const radius = earthRadius*scaleFactor
+    console.log(radius)
+    let geometry = new THREE.SphereGeometry(radius, 32, 32);
     geometry.name = identifier
-
     let loader = new THREE.TextureLoader()
     loader.name = identifier
-
     // let earthMap = loader.load("surface.jpg")
     let earthMap = loader.load("https://stemkoski.github.io/AR-Examples/images/earth-sphere.jpg")
-
     let material = new THREE.MeshPhongMaterial({
         map: earthMap,
         opacity: 0.5
@@ -70,11 +70,8 @@ export const EarthGeoModel = (scaleFactor=0.5, color = "#433F81")=> {
 }
 
 export const AmbientLight = () =>{
-
-    const  identifier ="ambient light"
-
-    let ambientLight = new THREE.AmbientLight(0xcccccc, 0.8);
-    ambientLight.name = identifier
-    
-    return ambientLight
+  const  identifier ="ambient light"
+  let ambientLight = new THREE.AmbientLight(0xcccccc, 0.8);
+  ambientLight.name = identifier
+  return ambientLight
 }

@@ -1,23 +1,27 @@
-import React, { Component } from 'react'
-import {Card} from 'semantic-ui-react'
+import React from 'react'
+import {List, Button, Icon} from 'semantic-ui-react'
 
-import SatCard from '../components/SatCard'
+const SelectionContainer =({sats, remove})=> {
 
-const SelectionContainer =({sats, removeSat})=> {
+    const handleClick = (id) =>{
+        console.log("clicked")
+        remove(id)
+    }
 
-        return ( 
-            <div className="selectionContainer">
-                <Card.Group>
-                    {sats.map(sat => {
-                        return <SatCard 
-                                    key={sat.id}
-                                    info={sat}
-                                    // removeHandler={removeSat}
-                                />
-                    })}
-                </Card.Group>
-            </div>
-         );
+    return ( 
+        <div className="selectionContainer">
+            <List selection verticalAlign='middle'>
+                {sats.map(sat => {
+                    return  <List.Item key={sat.name} >
+                                {sat.name}
+                                <Button icon onClick={()=>handleClick(sat.id)}>
+                                    <Icon name='minus'/>
+                                </Button>
+                            </List.Item>
+                })}
+            </List>
+        </div>
+    );
 
 }
  
