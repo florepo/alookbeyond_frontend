@@ -2,7 +2,7 @@ import React, { Component, Suspense } from "react";
 import * as THREE from "three";
 import {differenceBy} from 'lodash'
 
-import { createSatelliteGeoModel, createOrbitGeoModel, EarthGeoModel, AmbientLight} from "../components/ThreeModels"
+import { createSatelliteGeoModel, createOrbitGeoModel, EarthGeoModel, AmbientLight, Sun} from "../components/ThreeModels"
 import { intializeSatObject } from "../utils/sathelper.js";
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
 
@@ -11,7 +11,6 @@ const earthRadius = 6371      //[km]
 const cameraAltitude = 30000  //[km]
 let sceneScaleFactor = 1 / 1000;
 let satScaleFactor = 200;
-
 
 class Viewport extends Component {
   constructor(props) {
@@ -32,8 +31,8 @@ class Viewport extends Component {
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
     this.camera.position.z = (cameraAltitude-earthRadius)*sceneScaleFactor;
     this.camera.lookAt(0,0,0);                   // looking target
-    this.camera.up.set(0,0,1);                   // set camera direction to z=up
-    this.scene.add(this.camera);
+    this.camera.up.set(0,0,1);  
+    this.addToSceneAndTrack(this.camera, this.scene)                 // set camera direction to z=up
 
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -41,15 +40,15 @@ class Viewport extends Component {
     this.renderer.setSize(width, height);
     this.mount.appendChild(this.renderer.domElement);
 
-    //ADD LIGHTSOURCE
+    //ADD LIGHTSOURCES
     let ambientLight = AmbientLight()
-    this.state.removable_items.push(ambientLight)   //tracking for garbage collection
-    this.scene.add(ambientLight);       
+    this.addToSceneAndTrack(ambientLight, this.scene)   
+    let sun = Sun()
+    this.addToSceneAndTrack(sun, this.scene)
 
     //Add Earth
     let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
-    this.state.removable_items.push(earth)   //tracking for garbage collection
-    this.scene.add(earth);       
+    this.addToSceneAndTrack(earth, this.scene)   //tracking for garbage collection
 
 
     this.start();
@@ -57,44 +56,28 @@ class Viewport extends Component {
 
   componentWillUnmount() {
     console.log("component will unmount")
-
     this.stop();
-    // this.removeEntities(this.state.removable_items)
-    // this.mount.removeChild(this.renderer.domElement);
+    this.removeEntities(this.state.removable_items)
+    this.mount.removeChild(this.renderer.domElement);
   }
  
   componentDidUpdate(prevProps, prevState){
     console.log("component did update")
-
     //handle removed elements
     if (prevProps.sats.length>this.props.sats.length) {
-      console.log("elements removed")
       const removedElements = differenceBy(prevProps.sats, this.props.sats)
       this.removeEntities(removedElements, prevState)
-
      //handle added elements
     } else if (prevProps.sats.length<this.props.sats.length) {
-        console.log("elements added")
-        const addedElements = differenceBy(this.props.sats,prevProps.sats)
-        console.log(addedElements)
-        this.addEntities(addedElements)
-    } else {
-      console.log("elements rerendered")
-      const currentElements=this.props.sats
-      console.log(currentElements)
-      // not finished
-      // this.addEntities(addedElements)
-
-    }
-
+      const addedElements = differenceBy(this.props.sats,prevProps.sats)
+      this.addEntities(addedElements)
+    } else {}
     //re-render scene
     this.renderer.render(this.scene, this.camera);
   }
 
-
   removeEntities = (removedEntities, prevState = null)  => {
     let entitiesNames = removedEntities.map(entity => entity.name)
-
     let dependencies = entitiesNames.map(entityName=>{
       let children =  this.scene.children //breakout in variable required for enumaration
       return children.filter( child => child.name === entityName)
@@ -104,7 +87,7 @@ class Viewport extends Component {
       dependecy.forEach(object=>{
         this.removeEntityfromScene(object)
         this.removeEntityFromMemory(object)
-        this.removeEntityfromList(object)
+        this.removeFromWatchList(object)
       })
     })
   }
@@ -114,20 +97,23 @@ class Viewport extends Component {
       const satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
       const satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
       const orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec, satObject.name,sceneScaleFactor)
-      this.scene.add(orbitGeoModel);
-      this.scene.add(satObject);
-
-      //tracking for garbage collection 
-      let elementList = [...this.state.removable_items] 
-      elementList.push(satObject,orbitGeoModel)
-      this.setState({removable_items: elementList})
+      this.addToSceneAndTrack(satObject, this.scene)
+      this.addToSceneAndTrack(orbitGeoModel, this.scene)
     });
   }
 
-  removeEntityfromList = (entity) =>{
+  removeFromWatchList = (entity) =>{
     const oldItems = [...this.state.removable_items]
     const updatedItems = oldItems.filter(item=>{return item.name!=entity.name})
     this.setState({removable_items: updatedItems})
+  }
+
+  addToSceneAndTrack = (object, scene) => {
+    let trackingList = [...this.state.removable_items] 
+    trackingList.push(object)
+    this.setState({removable_items: trackingList})
+    scene.add(object)
+    return scene
   }
 
   removeEntityfromScene = (entity) => {

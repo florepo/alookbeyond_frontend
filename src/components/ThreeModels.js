@@ -1,6 +1,6 @@
-
 import * as THREE from "three";
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
+
 
 export const createSatelliteGeoModel = (name="unknown", satScaleFactor=1, scaleFactor=1, )=> {
 
@@ -45,6 +45,15 @@ export const createOrbitGeoModel = (satRec, name="default", scaleFactor) => {
   return mesh
 }
 
+export const Sun = () => {
+
+  const sun = new THREE.DirectionalLight(0xffffff, 1, 4000);
+
+  sun.name='sun';
+  sun.position.set(-100, 400, 400);           //set intial sun position (arbitrary)
+  
+  return sun;
+}
 
 export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
 
@@ -55,11 +64,14 @@ export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
     geometry.name = identifier
     let loader = new THREE.TextureLoader()
     loader.name = identifier
-    // let earthMap = loader.load("surface.jpg")
-    let earthMap = loader.load("https://stemkoski.github.io/AR-Examples/images/earth-sphere.jpg")
+    let earthMap = loader.load(require("../images/surface.jpg"))
+    let bumpMap = loader.load(require("../images/bump.jpeg"))
+    // let earthMap = loader.load("https://stemkoski.github.io/AR-Examples/images/earth-sphere.jpg")
     let material = new THREE.MeshPhongMaterial({
         map: earthMap,
-        opacity: 0.5
+        bump: bumpMap,
+        bumpScale: 0.05,
+        opacity: 1.0
       });
     material.name = identifier
 
@@ -71,7 +83,7 @@ export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
 
 export const AmbientLight = () =>{
   const  identifier ="ambient light"
-  let ambientLight = new THREE.AmbientLight(0xcccccc, 0.8);
+  let ambientLight = new THREE.AmbientLight(0xcccccc, 0.6);
   ambientLight.name = identifier
   return ambientLight
 }
