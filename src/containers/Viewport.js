@@ -46,23 +46,24 @@ class Viewport extends Component {
     let sun = Sun()
     this.addToSceneAndTrack(sun, this.scene)
 
-    //Add Earth
+    //ADD EARTH
     let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
     this.addToSceneAndTrack(earth, this.scene)   //tracking for garbage collection
 
+    //ADD SATELLITE FLEET CONTAINER
+    let satGroup = THREE.Group
+    this.addToSceneAndTrack(earth, this.scene)   //tracking for garbage collection
 
     this.start();
   }
 
   componentWillUnmount() {
-    console.log("component will unmount")
     this.stop();
     this.removeEntities(this.state.removable_items)
     this.mount.removeChild(this.renderer.domElement);
   }
  
   componentDidUpdate(prevProps, prevState){
-    console.log("component did update")
     //handle removed elements
     if (prevProps.sats.length>this.props.sats.length) {
       const removedElements = differenceBy(prevProps.sats, this.props.sats)
