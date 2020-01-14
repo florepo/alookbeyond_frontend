@@ -1,5 +1,6 @@
 import React, { Component, Suspense } from "react";
 import * as THREE from "three";
+import OrbitControls from 'threejs-orbit-controls'
 import {differenceBy} from 'lodash'
 
 import { createSatelliteGeoModel, createOrbitGeoModel, EarthGeoModel, AmbientLight, Sun} from "../components/ThreeModels"
@@ -24,6 +25,7 @@ class Viewport extends Component {
     const width = this.mount.clientWidth;   
     const height = this.mount.clientHeight;
 
+
     //ADD SCENE
     this.scene = new THREE.Scene();
 
@@ -33,6 +35,12 @@ class Viewport extends Component {
     this.camera.lookAt(0,0,0);                   // looking target
     this.camera.up.set(0,0,1);  
     this.addToSceneAndTrack(this.camera, this.scene)                 // set camera direction to z=up
+
+    //ADD ORBITCONTROLS
+    this.controls = new OrbitControls(this.camera)
+    this.controls.enabled = true
+    this.controls.minDistance = 1.5 * earthRadius*sceneScaleFactor
+    this.controls.maxDistance = 10 * earthRadius*sceneScaleFactor
 
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });

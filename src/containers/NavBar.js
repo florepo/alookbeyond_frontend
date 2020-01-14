@@ -15,7 +15,7 @@ class NavBar extends Component {
             <Menu pointing secondary>
                 <Menu.Item
                 as={Link}
-                to={'/home'}
+                to={'/'}
                 name='Welcome'
                 active={activeItem === 'home'}
                 onClick={this.handleItemClick}
