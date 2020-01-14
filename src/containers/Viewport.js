@@ -3,14 +3,26 @@ import * as THREE from "three";
 import OrbitControls from 'threejs-orbit-controls'
 import {differenceBy} from 'lodash'
 
-import { createSatelliteGeoModel, createOrbitGeoModel, EarthGeoModel, AmbientLight, Sun} from "../components/ThreeModels"
-import { intializeSatObject } from "../utils/sathelper.js"
+import {
+  createSatelliteGeoModel, 
+  createOrbitGeoModel,
+  EarthGeoModel,
+  AmbientLight,
+  Sun}
+from "../components/ThreeModels"
+
+import {
+  intializeSatObject,
+  updateSatPostion
+} from "../utils/sathelper.js"
 
 //Control parameters
 const earthRadius = 6371      //[km]
 const cameraAltitude = 30000  //[km]
 let sceneScaleFactor = 1 / 1000;
 let satScaleFactor = 200;
+
+const currentTimeStamp   = new Date();
 
 class Viewport extends Component {
   constructor(props) {
@@ -103,10 +115,12 @@ class Viewport extends Component {
   addEntities =(entities) =>{
     entities.forEach(sat => {
       const satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
-      const satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
+      let satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
       const orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec, satObject.name,sceneScaleFactor)
-      this.addToSceneAndTrack(satObject, this.scene)
+      const updatedSatObject = updateSatPostion(satObject, currentTimeStamp, sceneScaleFactor)
+      this.addToSceneAndTrack(updatedSatObject, this.scene)
       this.addToSceneAndTrack(orbitGeoModel, this.scene)
+
     });
   }
 

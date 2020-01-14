@@ -14,21 +14,32 @@ import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
       positionAndVelocity.position.y * scaleFactor,
       positionAndVelocity.position.z * scaleFactor
     );
-
     return threeJSobject;
   }
 
-export const updatedDate = (currentDate,deltatime,timefactor) => {
-    const addSeconds = deltatime*timefactor;
-    const newDate    = new Date(currentDate.getTime() + (addSeconds * 1000));
-  return newDate
+export const updateSatPostion = (satObject, date, scaleFactor=1) => {
+
+  let pAv = propagate(satObject.userData.satrec,date);
+  satObject.position.set(pAv.position.x*scaleFactor,     
+                            pAv.position.y*scaleFactor,
+                            pAv.position.z*scaleFactor); 
+  // setSatGeoLocation(satContainer,pAv,date)
+
+  return satObject;
 }
 
-export const updateEpochTime = (currentDate,deltatime,timefactor) => {
-  const timeDisplay = document.getElementById('epoch-time');   
-  const newDate     = updatedDate(currentDate,deltatime,timefactor)
-  timeDisplay.style.visibility  = 'visible';   
-  timeDisplay.style.fontSize    = '2vw';             
-  timeDisplay.innerHTML         = '<b> Displayed Time: </b>'+ newDate;   
 
-}
+// export const updatedDate = (currentDate,deltatime,timefactor) => {
+//     const addSeconds = deltatime*timefactor;
+//     const newDate    = new Date(currentDate.getTime() + (addSeconds * 1000));
+//   return newDate
+// }
+
+// export const updateEpochTime = (currentDate,deltatime,timefactor) => {
+//   const timeDisplay = document.getElementById('epoch-time');   
+//   const newDate     = updatedDate(currentDate,deltatime,timefactor)
+//   timeDisplay.style.visibility  = 'visible';   
+//   timeDisplay.style.fontSize    = '2vw';             
+//   timeDisplay.innerHTML         = '<b> Displayed Time: </b>'+ newDate;   
+
+// }
