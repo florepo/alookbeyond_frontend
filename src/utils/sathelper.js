@@ -18,3 +18,17 @@ import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
     return threeJSobject;
   }
 
+export const updatedDate = (currentDate,deltatime,timefactor) => {
+    const addSeconds = deltatime*timefactor;
+    const newDate    = new Date(currentDate.getTime() + (addSeconds * 1000));
+  return newDate
+}
+
+export const updateEpochTime = (currentDate,deltatime,timefactor) => {
+  const timeDisplay = document.getElementById('epoch-time');   
+  const newDate     = updatedDate(currentDate,deltatime,timefactor)
+  timeDisplay.style.visibility  = 'visible';   
+  timeDisplay.style.fontSize    = '2vw';             
+  timeDisplay.innerHTML         = '<b> Displayed Time: </b>'+ newDate;   
+
+}
