@@ -1,8 +1,8 @@
 import React,{ Component } from 'react'
 import {Container, Grid} from 'semantic-ui-react'
 
-import SideContainer from './SideContainer'
-import ThreeDisplay from './Viewport'
+import SideContainer from '../containers/SideContainer'
+import ThreeDisplay from '../containers/Viewport'
 import SelectionContainer from './SelectionContainer'
 
 

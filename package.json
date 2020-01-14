@@ -12,6 +12,7 @@
     "react-bootstrap": "^1.0.0-beta.16",
     "react-container-dimensions": "^1.4.1",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-three-fiber": "^3.0.17",
     "satellite.js": "^3.0.1",

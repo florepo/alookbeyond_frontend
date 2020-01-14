@@ -1,16 +1,25 @@
 import React, {Component} from 'react';
 import './App.css';
 
-import MainPage from './containers/MainPage'
-// import Viewport from './containers/Viewport';
-// import Viewport from './containers/ViewportExample';
-
+import {Route, Switch} from 'react-router-dom'
+import WelcomePage from './pages/WelcomePage'
+import MainPage from './pages/MainPage'
+import ARdemoPage from './pages/ARdemoPage'
+import ErrorPage from './pages/ErrorPage'
 
 class App extends Component {
 
   render() { 
     return (
-        <MainPage />
+      <React.Fragment>
+        <Switch>
+          <Route path="/" component={WelcomePage} exact />
+          {/* <Route path="/login" component={Login} exact /> */}
+          <Route path="/home" component={MainPage} exact />
+          {/* <Route path="/main" component={ARView} exact /> */}
+          <Route component={ErrorPage} />
+        </Switch>
+      </React.Fragment>
     );
   }
 }

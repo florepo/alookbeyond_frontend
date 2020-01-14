@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Container, Grid } from 'semantic-ui-react'
 
-import NavBar from './NavBar'
-import MainDisplay from './MainDisplay'
-import Footer from './Footer'
+import NavBar from '../containers/NavBar'
+import MainDisplay from '../containers/MainDisplay'
+import Footer from '../containers/Footer'
 
 class MainPage extends Component {
 
@@ -16,6 +16,7 @@ class MainPage extends Component {
     render() { 
         return (
             <div>
+                <NavBar />
                 <MainDisplay className="MainDisplay"
                     watchlist={this.state.watchlist}
                     addSatToWatchList={this.addToWatchlist}  

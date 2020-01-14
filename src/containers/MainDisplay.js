@@ -6,7 +6,7 @@ import {_, differenceBy} from 'lodash'
 import * as API from '../adapters/api'
 
 import Viewport from './Viewport'
-import SelectionContainer from './SelectionContainer'
+import SelectionContainer from '../backup/SelectionContainer'
 import ListElement from '../components/ListElement'
 import WatchListElement from '../components/WatchListElement'
 
