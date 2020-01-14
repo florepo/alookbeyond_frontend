@@ -17,6 +17,7 @@ class App extends Component {
           {/* <Route path="/login" component={Login} exact /> */}
           <Route path="/home" component={MainPage} exact />
           {/* <Route path="/main" component={ARView} exact /> */}
+          <Route path="/demo" component={ARdemoPage} exact />
           <Route component={ErrorPage} />
         </Switch>
       </React.Fragment>

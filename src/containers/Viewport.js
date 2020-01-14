@@ -4,8 +4,7 @@ import OrbitControls from 'threejs-orbit-controls'
 import {differenceBy} from 'lodash'
 
 import { createSatelliteGeoModel, createOrbitGeoModel, EarthGeoModel, AmbientLight, Sun} from "../components/ThreeModels"
-import { intializeSatObject } from "../utils/sathelper.js";
-import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
+import { intializeSatObject } from "../utils/sathelper.js"
 
 //Control parameters
 const earthRadius = 6371      //[km]

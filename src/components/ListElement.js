@@ -18,9 +18,15 @@ const ListElement = ({item, addOnClick, removeOnClick}) => {
             onClick={() => handleClick(item)}
         >
             <List.Content floated='right'>
+                {item.displayed?
+                <Button size='mini' icon >
+                    <Icon name='hide'/>
+                </Button>
+                :
                 <Button size='mini' icon >
                     <Icon name='unhide'/>
                 </Button>
+                }
             </List.Content>
             <List.Content>{item.name}</List.Content>                               
         </List.Item>
