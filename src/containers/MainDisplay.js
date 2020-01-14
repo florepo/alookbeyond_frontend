@@ -6,7 +6,6 @@ import {_, differenceBy} from 'lodash'
 import * as API from '../adapters/api'
 
 import Viewport from './Viewport'
-import SelectionContainer from '../backup/SelectionContainer'
 import ListElement from '../components/ListElement'
 import WatchListElement from '../components/WatchListElement'
 
@@ -24,7 +23,7 @@ class MainDisplay extends Component {
     componentDidMount() {
         API.getConstellations().then(constellations => this.setState({constellations}))
         API.getSatellites().then(satellites => this.setState({satellites}))
-        // API.getSatellites().then(satellites => this.setState({watchlist: satellites}))
+        API.getSatellites().then(satellites => this.setState({watchlist: satellites}))
     }
 
     // addToDisplay=(satList)=>{ this.setState({currentDisplay: satList}) }
@@ -50,10 +49,7 @@ class MainDisplay extends Component {
         }
     }
 
-
-    handleColorChange = (e) => this.setState({ color: e.target.value })
-
-    // handleCatalogClick = (id) => {this.addToWatchlist(id)}
+    // handleColorChange = (e) => this.setState({ color: e.target.value })
 
     handleConstellationClick = (c) => {
         console.log("clicked", c)
@@ -65,12 +61,6 @@ class MainDisplay extends Component {
             this.setForDisplay(c.satellites)
         }
     }
-
-    //checks for clicks on Watchlist
-    // handleClickOnTab = (event) =>{
-    //     event.persist()
-    //     if (event.target.text=="Watchlist") {this.setState({ currentView: this.state.watchlist})}
-    // }
 
     addConToWatchList =(constellation)=> {
         if (constellation.displayed==true){
@@ -96,7 +86,6 @@ class MainDisplay extends Component {
         let filteredList = [...this.state.watchlist].filter( s => s.constellation_id!=sat.constellation_id )
         this.setState({watchlist: filteredList})
     }
-
   
     addSatToWatchlist = (sat) => {
         if (sat.displayed==true) { 

@@ -1,4 +1,12 @@
 
+export const adjustObjectZtop = (object) => {
+
+    // object.rotation.x = 90 * Math.PI / 180; //adapt to camera view (z-top)
+    object.rotation.y = 0 * Math.PI / 180; //align with Greenwich
+    // object.rotation.z = 90 * Math.PI / 180; //align with Greenwich
+    return object;
+};
+
 export const getGHA = (date) => {
     // Scope:     calculate Sun's longitude > Greenwoch Hour angle based on input date object
     // reference: https://astronavigationdemystified.com/converting-gmt-to-gha/

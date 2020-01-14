@@ -1,6 +1,7 @@
 import React, { Component, Suspense } from "react";
 import * as THREE from "three";
 import OrbitControls from 'threejs-orbit-controls'
+import TrackballControls from 'three-trackballcontrols'
 import {differenceBy} from 'lodash'
 
 import {
@@ -12,8 +13,14 @@ import {
 from "../components/ThreeModels"
 
 import {
+  adjustObjectZtop,
+}
+from "../utils/scenehelper.js"
+
+import {
   intializeSatObject,
-  updateSatPostion
+  updateSatPostion,
+  alignXaxis2Equinox
 } from "../utils/sathelper.js"
 
 //Control parameters
@@ -24,13 +31,22 @@ let satScaleFactor = 200;
 
 const currentTimeStamp   = new Date();
 
+// window.addEventListener( 'resize', onWindowResize, false );
+// function onWindowResize(){
+//     this.renderer.setSize( this.mount.innerWidth, this.mount.innerHeight );
+// }
+
 class Viewport extends Component {
   constructor(props) {
     super(props);
-    this.state = {removable_items: []};
+    this.state = {removable_items: [],
+                  height: 0,
+                  width: 0};
   }
 
   componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+
     //get canvas size
     console.log(this.mount)
     const width = this.mount.clientWidth;   
@@ -43,21 +59,26 @@ class Viewport extends Component {
     //ADD CAMERA
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
     this.camera.position.z = (cameraAltitude-earthRadius)*sceneScaleFactor;
-    this.camera.lookAt(0,0,0);                   // looking target
     this.camera.up.set(0,0,1);  
+    // this.camera.lookAt(0,0,0);                   // looking target
+    
     this.addToSceneAndTrack(this.camera, this.scene)                 // set camera direction to z=up
-
-    //ADD ORBITCONTROLS
-    this.controls = new OrbitControls(this.camera)
-    this.controls.enabled = true
-    this.controls.minDistance = 1.5 * earthRadius*sceneScaleFactor
-    this.controls.maxDistance = 10 * earthRadius*sceneScaleFactor
 
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setClearColor("#000000");
     this.renderer.setSize(width, height);
     this.mount.appendChild(this.renderer.domElement);
+
+    //ADD ORBITCONTROLS
+    this.controls = new OrbitControls(this.camera,this.renderer.domElement)
+    // this.controls = new TrackballControls(this.camera, this.scene)
+    this.controls.enabled = true
+    this.controls.minDistance = 1.5 * earthRadius*sceneScaleFactor
+    this.controls.maxDistance = 10 * earthRadius*sceneScaleFactor
+    // this.controls.autoRotate = true;
+    // this.controls.autoRotateSpeed = 1;
+    
 
     //ADD LIGHTSOURCES
     let ambientLight = AmbientLight()
@@ -67,6 +88,8 @@ class Viewport extends Component {
 
     //ADD EARTH
     let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
+    earth = adjustObjectZtop(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
+    earth = alignXaxis2Equinox(earth,currentTimeStamp); // align coordinate system with vernal equinox
     this.addToSceneAndTrack(earth, this.scene)   //tracking for garbage collection
 
     //ADD SATELLITE FLEET CONTAINER
@@ -77,6 +100,7 @@ class Viewport extends Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
     this.stop();
     this.removeEntities(this.state.removable_items)
     this.mount.removeChild(this.renderer.domElement);
@@ -95,6 +119,14 @@ class Viewport extends Component {
     //re-render scene
     this.renderer.render(this.scene, this.camera);
   }
+
+  updateDimensions = () => {
+    this.renderer.setSize(this.mount.clientWidth,this.mount.clientHeight);
+    this.setState({
+      height: this.mount.clientHeight, 
+      width: this.mount.clientWidth
+    })
+  };
 
   removeEntities = (removedEntities, prevState = null)  => {
     let entitiesNames = removedEntities.map(entity => entity.name)
@@ -164,10 +196,15 @@ class Viewport extends Component {
 
   animate = () => {
     this.renderScene();
+    this.controls.update();
     this.frameId = window.requestAnimationFrame(this.animate);
   };
 
   renderScene = () => {
+    // console.log(this.mount.clientWidth);
+    // this.renderer.setSize( this.mount.clientWidth, this.mount.clientHeigth );
+    // this.camera.aspect = (this.mount.clientWidth / this.mount.clientHeigth);
+    // this.camera.updateProjectionMatrix();
     this.renderer.render(this.scene, this.camera);
   };
 

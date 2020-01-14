@@ -28,6 +28,18 @@ export const updateSatPostion = (satObject, date, scaleFactor=1) => {
   return satObject;
 }
 
+export const alignXaxis2Equinox = (object,date) => {
+
+  var gmst = gstime(date);  //GMST rad is same as GHA of Aries (Vernal Equinox)
+  console.log('gmst [deg]',gmst*180/Math.PI)
+  console.log('gmst [rad]',gmst)
+  object.rotation.y = object.rotation.y + gmst*180/Math.PI //Tilting the earth
+  console.log('ory',object.rotation.y)
+
+  return object;
+
+};
+
 
 // export const updatedDate = (currentDate,deltatime,timefactor) => {
 //     const addSeconds = deltatime*timefactor;
