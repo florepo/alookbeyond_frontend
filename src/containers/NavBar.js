@@ -13,24 +13,24 @@ class NavBar extends Component {
         return ( 
             <Menu pointing secondary>
                 <Menu.Item
-                as={Link}
-                to={'/'}
-                name='Welcome'
-                active={activeItem === 'home'}
-                onClick={this.handleItemClick}
+                    as={Link}
+                    to={'/'}
+                    name='Welcome'
+                    active={activeItem === 'home'}
+                    onClick={this.handleItemClick}
                 />
                 <Menu.Item
-                as={Link}
-                to={'/home'}
-                name="3D-view"
-                active={activeItem === '3Dview'}
-                onClick={this.handleItemClick}
+                    as={Link}
+                    to={'/home'}
+                    name="3D-view"
+                    active={activeItem === '3Dview'}
+                    onClick={this.handleItemClick}
                 />
                 <Menu.Menu position='right'>
                 <Menu.Item
-                name='AR-view'
-                active={activeItem === 'arview'}
-                onClick={this.handleItemClick}
+                    name='AR-view'
+                    active={activeItem === 'arview'}
+                    onClick={this.handleItemClick}
                 />
                 <Menu.Item
                     name='logout'

@@ -1,13 +1,13 @@
 import React,{ Component } from 'react'
 
-import {Tab, List, Button, Icon, Image} from 'semantic-ui-react'
-import {_, differenceBy} from 'lodash'
+import {Tab, List} from 'semantic-ui-react'
+import {_} from 'lodash'
 
 import * as API from '../adapters/api'
 
 import Viewport from './Viewport'
-import ListElement from '../components/ListElement'
-import WatchListElement from '../components/WatchListElement'
+import ConstListElement from '../components/ConstListElement'
+import SatListElement from '../components/SatListElement'
 
 class MainDisplay extends Component {
     constructor(props) {
@@ -22,12 +22,10 @@ class MainDisplay extends Component {
 
     componentDidMount() {
         API.getConstellations().then(constellations => this.setState({constellations}))
-        API.getSatellites().then(satellites => this.setState({satellites}))
-        // API.getSatellites().then(satellites => this.setState({watchlist: satellites}))
+        API.getSatellites().then(satellites => this.setState({satellites})).then(console.log)
     }
 
     addSatToWatchlist = (sat) => {
-        console.log("sat. add check-in")
         if (!!this.state.watchlist.find(s => s==sat )) { 
             console.log("already selected")
         } else {
@@ -36,18 +34,8 @@ class MainDisplay extends Component {
         }
     }
 
-    handleConstellationClick = (c) => {
-        console.log("clicked", c)
-        console.log("already shown?",this.state.currentView.includes(c))
-        if (this.state.currentView.includes(c)){
-            console.log("should remove now")
-        } else  {
-            this.setForDisplay(c.satellites)
-        }
-    }
-
     addConToWatchList =(constellation)=> {
-        if (constellation.displayed==true){
+        if (constellation.displayed==true) {
             console.log("already selected")
         } else {
             constellation.displayed=true
@@ -55,17 +43,16 @@ class MainDisplay extends Component {
             let sats=[...constellation.satellites]
             let updatedWatchlist= [...this.state.watchlist].concat(sats)
             this.setState({watchlist: updatedWatchlist})
-
         }
     }
 
-    removeConFromWatchList =(constellation)=> {
+    removeConFromWatchList = (constellation) => {
         constellation.displayed=false
         let filteredList = [...this.state.watchlist].filter( s => s.constellation_id!=constellation.id )
         this.setState({watchlist: filteredList})
     }
 
-    removeSatAndConFromWatchList =(sat)=> {
+    removeSatAndConFromWatchList = (sat) => {
         sat.displayed=false
         let filteredList = [...this.state.watchlist].filter( s => s.constellation_id!=sat.constellation_id )
         this.setState({watchlist: filteredList})
@@ -82,7 +69,6 @@ class MainDisplay extends Component {
     }
 
     removeSatFromWatchlist = (sat) => {
-        console.log("here")
         sat.displayed=false
         let filteredList = [...this.state.watchlist].filter( s => s!=sat )
         this.setState({watchlist: filteredList})
@@ -94,13 +80,13 @@ class MainDisplay extends Component {
             render: () =>   <Tab.Pane attached={false}>
                                 <List divided verticalAlign='middle'>
                                     {this.state.constellations.map( constellation =>
-                                        <ListElement
+                                        <ConstListElement
                                             key={constellation.name}
                                             item={constellation}
                                             addOnClick={this.addConToWatchList}
                                             removeOnClick={this.removeConFromWatchList}
                                         >
-                                        </ListElement>
+                                        </ConstListElement>
                                     )}
                                 </List>
                             </Tab.Pane>,
@@ -109,7 +95,7 @@ class MainDisplay extends Component {
             render: () =>   <Tab.Pane attached={false}>
                                 <List divided verticalAlign='middle'>
                                     {this.state.satellites.map( item =>
-                                        <ListElement
+                                        <SatListElement
                                             key={item.name}
                                             item={item}
                                             addOnClick={this.addSatToWatchlist}
@@ -123,7 +109,7 @@ class MainDisplay extends Component {
             render: () =>   <Tab.Pane attached={false}>
                                 <List divided verticalAlign='middle'>
                                     {this.state.watchlist.map(item =>
-                                        <WatchListElement
+                                        <SatListElement
                                             key={item.name}
                                             item={item}
                                             removeSatOnClick={this.removeSatFromWatchlist}

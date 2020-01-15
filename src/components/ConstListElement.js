@@ -1,7 +1,7 @@
 import React from 'react'
-import {List, Button, Icon, Image} from 'semantic-ui-react'
+import {List, Button, Icon, Header} from 'semantic-ui-react'
 
-const ListElement = ({item, addOnClick, removeOnClick}) => {
+const ConstListElement = ({item, addOnClick, removeOnClick}) => {
 
     const handleClick = (item) => {
         console.log("clicked")
@@ -28,9 +28,11 @@ const ListElement = ({item, addOnClick, removeOnClick}) => {
                 </Button>
                 }
             </List.Content>
-            <List.Content>{item.name}</List.Content>                               
+            <List.Content>
+                <Header as='h5'>{item.name}</Header>
+            </List.Content>                               
         </List.Item>
         );
 }
  
-export default ListElement;
+export default ConstListElement;
