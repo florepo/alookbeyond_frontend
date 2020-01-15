@@ -77,10 +77,9 @@ class Viewport extends Component {
     // earth = alignXaxis2Equinox(earth,currentTimeStamp); // align coordinate system with vernal equinox
     this.addToSceneAndTrack(earth, this.scene)   //tracking for garbage collection
 
-    let axis = new THREE.AxesHelper(15);
-
-    this.scene.add(axis);
-    this.addToSceneAndTrack(ambientLight, this.scene)
+    // let axis = new THREE.AxesHelper(15);
+    // this.scene.add(axis);
+    // this.addToSceneAndTrack(ambientLight, this.scene)
 
     //ADD SATELLITE FLEET CONTAINER
     this.start();

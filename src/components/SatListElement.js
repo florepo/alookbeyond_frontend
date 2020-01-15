@@ -2,7 +2,9 @@ import React from "react";
 import { List, Button, Icon, Header } from "semantic-ui-react";
 
 const SatListElement = ({ item, addOnClick, removeOnClick }) => {
+
   const handleClick = item => {
+    debugger
     if (item.displayed) {
       removeOnClick(item);
     } else {

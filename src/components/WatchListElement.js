@@ -4,6 +4,7 @@ import {List, Button, Icon, Header} from 'semantic-ui-react'
 const WatchListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
 
     const handleSatClick = (item) =>{
+        debugger
         removeSatOnClick(item)
     }
 
@@ -11,6 +12,7 @@ const WatchListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
         removeSatAndConOnClick(item)
     }
 
+    if (!item.constellation) return <div></div>;
     return ( 
         <List.Item key={item.name}>
             <List.Content floated='right'>
@@ -28,8 +30,8 @@ const WatchListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
                 </Button>
             </List.Content>
             <List.Content>
-                <Header as='h5'>{item.name}</Header>
-                <Header as='h6'>{item.constellation_id}</Header>
+                <Header as="h5">{item.name}</Header>
+                <Header as="h6">part of {item.constellation.name}</Header>
             </List.Content>                               
         </List.Item>
         );

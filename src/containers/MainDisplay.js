@@ -8,6 +8,7 @@ import * as API from '../adapters/api'
 import Viewport from './Viewport'
 import ConstListElement from '../components/ConstListElement'
 import SatListElement from '../components/SatListElement'
+import WatchListElement from '../components/WatchListElement'
 
 class MainDisplay extends Component {
     constructor(props) {
@@ -58,16 +59,6 @@ class MainDisplay extends Component {
         this.setState({watchlist: filteredList})
     }
   
-    addSatToWatchlist = (sat) => {
-        if (sat.displayed==true) { 
-            console.log("already selected")
-        } else {
-            sat.displayed=true
-            let updatedWatchlist= [...this.state.watchlist].concat(sat)
-            this.setState({watchlist: updatedWatchlist})
-        }
-    }
-
     removeSatFromWatchlist = (sat) => {
         sat.displayed=false
         let filteredList = [...this.state.watchlist].filter( s => s!=sat )
@@ -109,7 +100,7 @@ class MainDisplay extends Component {
             render: () =>   <Tab.Pane attached={false}>
                                 <List divided verticalAlign='middle'>
                                     {this.state.watchlist.map(item =>
-                                        <SatListElement
+                                        <WatchListElement
                                             key={item.name}
                                             item={item}
                                             removeSatOnClick={this.removeSatFromWatchlist}
