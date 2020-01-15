@@ -1,11 +1,36 @@
 
-export const adjustObjectZtop = (object) => {
+import {Vector3, Matrix4} from "three";
 
+export const adjustObjectOrientation = (object) => {
     // object.rotation.x = 90 * Math.PI / 180; //adapt to camera view (z-top)
-    object.rotation.y = 0 * Math.PI / 180; //align with Greenwich
+    // object.rotation.y = -90 * Math.PI / 180; //align with Greenwich
     // object.rotation.z = 90 * Math.PI / 180; //align with Greenwich
     return object;
 };
+
+export const adjustGlobalOrientation = (vector) => {
+    // const xAxis = new Vector3(0, 0, 1);
+    // const yAxis = new Vector3(0, 1, 0);
+    // const zAxis = new Vector3(1, 0, 0);
+    // let xRotation = new Matrix4().makeRotationAxis(xAxis, -90*Math.PI / 180)
+    // let yRotation = new Matrix4().makeRotationAxis(yAxis, -90*Math.PI / 180)
+    // let zRotation = new Matrix4().makeRotationAxis(zAxis, -90*Math.PI / 180)
+
+    // vector.applyMatrix4(xRotation)
+    // vector.applyMatrix4(yRotation)
+    // vector.applyMatrix4(zRotation)
+    // return vector
+}
+
+// export const coordTransformation = (object) => {
+//     //apply following coorrections .. to three.js  coord system
+//     //rotation "z-xis" from "to screen" to oritation "top"
+//     object.applyMatrix(new Matrix4().makeRotationX(-90 * Math.PI/180));
+//     //rotate "new y" from "away from screen" to "left"
+//     object.applyMatrix(new Matrix4().makeRotationY(-90 * Math.PI /180));
+//     return object
+//   }
+
 
 export const getGHA = (date) => {
     // Scope:     calculate Sun's longitude > Greenwoch Hour angle based on input date object

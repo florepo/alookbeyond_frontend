@@ -23,21 +23,8 @@ class MainDisplay extends Component {
     componentDidMount() {
         API.getConstellations().then(constellations => this.setState({constellations}))
         API.getSatellites().then(satellites => this.setState({satellites}))
-        API.getSatellites().then(satellites => this.setState({watchlist: satellites}))
+        // API.getSatellites().then(satellites => this.setState({watchlist: satellites}))
     }
-
-    // addToDisplay=(satList)=>{ this.setState({currentDisplay: satList}) }
-
-    // removeFromDisplay = (id) =>{
-    //     console.log("remove from view",id)
-    //     let updatedList = [...this.state.currentView].filter( sat => sat.id!=id )
-    //     this.setForDisplay(updatedList)
-    // }
-
-    // removeFromDisplay = (satlist) => {
-    //     differenceBy(satlist,this.state)
-    // }
-
 
     addSatToWatchlist = (sat) => {
         console.log("sat. add check-in")
@@ -49,11 +36,8 @@ class MainDisplay extends Component {
         }
     }
 
-    // handleColorChange = (e) => this.setState({ color: e.target.value })
-
     handleConstellationClick = (c) => {
         console.log("clicked", c)
-        // this needs to change, needs to be broken down into single satellites
         console.log("already shown?",this.state.currentView.includes(c))
         if (this.state.currentView.includes(c)){
             console.log("should remove now")
@@ -98,6 +82,7 @@ class MainDisplay extends Component {
     }
 
     removeSatFromWatchlist = (sat) => {
+        console.log("here")
         sat.displayed=false
         let filteredList = [...this.state.watchlist].filter( s => s!=sat )
         this.setState({watchlist: filteredList})
@@ -152,7 +137,7 @@ class MainDisplay extends Component {
 
     render() {
       return (  <div className="flex-row-container">
-                    <Tab className='sidebar'
+                    <Tab className='sidetabs'
                         menu={{ attached: false }}
                         panes={this.panes}
                     />

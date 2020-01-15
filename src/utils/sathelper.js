@@ -1,32 +1,29 @@
-import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
+import { sgp4, twoline2satrec, propagate, gstime, eciToGeodetic, degreesLat, degreesLong } from "satellite.js";
+import {Matrix4} from 'three'
 
-  // sat.name, sat.TLE1, sat.TLE1, geoModel,scaleFactor
-  export const intializeSatObject = (name, tle1, tle2, threeJSobject, scaleFactor=1, timeSinceEpoch = 0)=> {
-
-    let satrec = twoline2satrec(tle1, tle2);
-    let positionAndVelocity = sgp4(satrec, timeSinceEpoch);
-
-    threeJSobject.userData.name = name;
-    threeJSobject.userData.satrec = satrec;
-
-    threeJSobject.position.set(
-      positionAndVelocity.position.x * scaleFactor, //map ECI to ThreeJS coord system > x(js) = z(ECI), y(js) = x(ECI), z(js)=y(ECI)
-      positionAndVelocity.position.y * scaleFactor,
-      positionAndVelocity.position.z * scaleFactor
-    );
-    return threeJSobject;
-  }
+export const intializeSatObject = (name, tle1, tle2, threeJSobject, scaleFactor=1, timeSinceEpoch = 0)=> {
+  let satrec = twoline2satrec(tle1, tle2);
+  let positionAndVelocity = sgp4(satrec, timeSinceEpoch);
+  threeJSobject.userData.name = name;
+  threeJSobject.userData.satrec = satrec;
+  
+  threeJSobject.position.set(
+    -positionAndVelocity.position.y * scaleFactor, //map ECI to ThreeJS coord system
+    positionAndVelocity.position.z * scaleFactor,
+    -positionAndVelocity.position.x * scaleFactor
+  );
+  return threeJSobject;
+}
 
 export const updateSatPostion = (satObject, date, scaleFactor=1) => {
-
   let pAv = propagate(satObject.userData.satrec,date);
-  satObject.position.set(pAv.position.x*scaleFactor,     
-                            pAv.position.y*scaleFactor,
-                            pAv.position.z*scaleFactor); 
-  // setSatGeoLocation(satContainer,pAv,date)
-
+  satObject.position.set(-pAv.position.y*scaleFactor,    // map to three.js coord system  y* >> x
+                         pAv.position.z*scaleFactor,    // map to three.js coord system  z* >> y
+                         -pAv.position.x*scaleFactor);  // map to three.js coord system -x* >> z
   return satObject;
 }
+
+
 
 export const alignXaxis2Equinox = (object,date) => {
 
@@ -39,6 +36,21 @@ export const alignXaxis2Equinox = (object,date) => {
   return object;
 
 };
+
+const setSatGeoLocation = (satContainer,pAv,date) => {
+
+  let gmst = gstime(date);
+
+  let positionEci  = pAv.position;
+  let positionGd   = eciToGeodetic(positionEci, gmst);
+
+  satContainer.userData.latitude  = degreesLat(positionGd.latitude);
+  satContainer.userData.longitude = degreesLong(positionGd.longitude);
+  satContainer.userData.height    = positionGd.height;
+
+  return satContainer;
+}
+
 
 
 // export const updatedDate = (currentDate,deltatime,timefactor) => {

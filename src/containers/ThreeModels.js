@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
-
+import {adjustGlobalOrientation} from '../utils/scenehelper.js'
 
 export const createSatelliteGeoModel = (name="unknown", satScaleFactor=1, scaleFactor=1, )=> {
 
@@ -34,9 +34,11 @@ export const createOrbitGeoModel = (satRec, name="default", scaleFactor) => {
 
     for (let i = 0; i <= plotpoints; i++){
       let pAv=sgp4(satRec,timeSinceEpoch + i*deltaT);
-      geometry.vertices.push(new THREE.Vector3(pAv.position.x*scaleFactor,
-                                               pAv.position.y*scaleFactor,
-                                               pAv.position.z*scaleFactor));
+      let position = new THREE.Vector3( -pAv.position.y*scaleFactor, //map to three.js coord system
+                                        pAv.position.z*scaleFactor, //map to three.js coord system
+                                        -pAv.position.x*scaleFactor) //map to three.js coord system
+      position.name=identifier
+      geometry.vertices.push(position);
     };
   
     let mesh = new THREE.Line(geometry,material)
@@ -46,27 +48,25 @@ export const createOrbitGeoModel = (satRec, name="default", scaleFactor) => {
 }
 
 export const Sun = () => {
-
+  const identifier ="sun"
   const sun = new THREE.DirectionalLight(0xffffff, 1, 4000);
-
-  sun.name='sun';
+  sun.name=identifier;
   sun.position.set(-100, 400, 400);           //set intial sun position (arbitrary)
-  
   return sun;
 }
 
 export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
 
     const identifier ="earth"
+
     const radius = earthRadius*scaleFactor
-    console.log(radius)
     let geometry = new THREE.SphereGeometry(radius, 32, 32);
     geometry.name = identifier
     let loader = new THREE.TextureLoader()
     loader.name = identifier
+
     let earthMap = loader.load(require("../images/surface.jpg"))
     let bumpMap = loader.load(require("../images/bump.jpeg"))
-    // let earthMap = loader.load("https://stemkoski.github.io/AR-Examples/images/earth-sphere.jpg")
     let material = new THREE.MeshPhongMaterial({
         map: earthMap,
         bump: bumpMap,
