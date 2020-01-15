@@ -48,29 +48,21 @@ class Viewport extends Component {
     //ADD CAMERA
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
     this.camera.position.z = (cameraAltitude-earthRadius)*sceneScaleFactor;
-    // this.camera.up.set(0,0,1);                  // looking target camera’s up-vector is (0, 1, 0) by default.
-    // this.camera.lookAt(0,0,0)         //orbit controls
-    // this.addToSceneAndTrack(this.camera, this.scene) //doesnt capture it yet
+    this.camera.lookAt(0,0,0)         //orbit controls
+    this.addToSceneAndTrack(this.camera, this.scene) //doesnt capture it yet
 
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setClearColor("#000000");
     this.renderer.setSize(width, height);
     this.mount.appendChild(this.renderer.domElement);
 
     //ADD ORBITCONTROLS
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.enabled = true
-    this.controls.minDistance = 1.5 * earthRadius*sceneScaleFactor
+    this.controls.minDistance = 3 * earthRadius*sceneScaleFactor
     this.controls.maxDistance = 20 * earthRadius*sceneScaleFactor
-
-    let axis = new THREE.AxesHelper(15);
-
-    this.scene.add(axis);
-
-    // this.controls.update()
-    // this.controls.autoRotate = true;
-    // this.controls.autoRotateSpeed = 1;
+    this.controls.autoRotate = true;
+    this.controls.autoRotateSpeed = 0.5;
   
     //ADD LIGHTSOURCES
     let ambientLight = AmbientLight()
@@ -84,6 +76,11 @@ class Viewport extends Component {
     earth = adjustObjectOrientation(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
     // earth = alignXaxis2Equinox(earth,currentTimeStamp); // align coordinate system with vernal equinox
     this.addToSceneAndTrack(earth, this.scene)   //tracking for garbage collection
+
+    let axis = new THREE.AxesHelper(15);
+
+    this.scene.add(axis);
+    this.addToSceneAndTrack(ambientLight, this.scene)
 
     //ADD SATELLITE FLEET CONTAINER
     this.start();

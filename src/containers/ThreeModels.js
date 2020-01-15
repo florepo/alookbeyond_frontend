@@ -7,9 +7,14 @@ export const createSatelliteGeoModel = (name="unknown", satScaleFactor=1, scaleF
     const size = satScaleFactor*scaleFactor
     console.log(size)
     const identifier = name
-    let geometry = new THREE.BoxGeometry(size, size, size);
+    // let geometry = new THREE.BoxGeometry(size, size, size);
+    let geometry = new THREE.SphereGeometry(size, 32, 32);
     geometry.name=identifier
-    let material = new THREE.MeshBasicMaterial({ color: "#42f54e"});
+    // let material = new THREE.MeshBasicMaterial({ color: "#42f54e"});
+    let material = new THREE.MeshPhongMaterial({
+      color: "#42f54e",
+      opacity: 0.1
+    });
     material.name=identifier
     let mesh = new THREE.Mesh(geometry, material);
     mesh.name= identifier
