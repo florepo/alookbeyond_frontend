@@ -132,15 +132,17 @@ class Viewport extends Component {
       let satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
       let satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
       satObject = updateSatPostion(satObject, currentTimeStamp, sceneScaleFactor)
-      this.trackObject(satObject, this.scene)
+      this.trackObject(satObject)
+      this.scene.add(satObject)
       console.log(satObject)
       let orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec,  satObject.name, sceneScaleFactor)  
       console.log(orbitGeoModel)   
-      this.trackObject(orbitGeoModel, this.scene)
+      this.scene.add(satObject)
+      this.trackObject(orbitGeoModel)
     });
   }
 
-  trackObject = (object, scene) => {
+  trackObject = (object) => {
     // console.log("tracking: ", object)
 
     let trackingList = [...this.state.removable_items]
@@ -148,7 +150,6 @@ class Viewport extends Component {
     trackingList.push(object)
     // console.log(trackingList.length)
     this.setState({removable_items: trackingList})
-    return scene
   }
 
   removeEntities = (removedEntities, prevState = null)  => {

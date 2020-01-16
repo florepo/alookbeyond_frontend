@@ -2,6 +2,18 @@
 import {sgp4, twoline2satrec, propagate, gstime} from "satellite.js"
 // import {Scene} from 'react-fiber-three'
 
+import {createSatelliteGeoModel, 
+  createOrbitGeoModel,
+  EarthGeoModel,
+  AmbientLight,
+  Sun}
+from "../containers/ThreeModels"
+
+import {adjustObjectOrientation,
+  adjustGlobalOrientation}
+from "../utils/scenehelper.js"
+
+
 var scene, camera, renderer, clock, deltaTime, totalTime; // move to local component?? with import 'three'
 
 
@@ -10,8 +22,15 @@ var markerRoot1;    // where does it need to be available?
 var mesh1;          // where does it need to be available?
 var testSatObject;  // where does it need to be available?
 
+//Control parameters
+const earthRadius = 6371      //[km]
+const cameraAltitude = 40000  //[km]
+let sceneScaleFactor = 1 / 10000;         //is 10x the value of 3D visualizer
+let satScaleFactor = 200;
+
 // for satellite model//      //global??
 let scaleFactor = 1/10000
+console.log("test",scaleFactor)
 let satSize = 0.5
 let timefactor = 2000
 let ARview = {}
@@ -225,33 +244,22 @@ function alignXaxis2Equinox(object,date){
 
 
   //////////////////////////////////////////////////////////
+  let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
+  earth = adjustObjectOrientation(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
+  // earth = alignXaxis2Equinox(earth,currentTimeStamp); // align coordinate system with vernal equinox
 
+ console.log(earth)
 
-  let geometry1 = new window.THREE.SphereGeometry(0.5, 32, 32);
-
-  let loader = new window.THREE.TextureLoader();
-  let texture = loader.load(
-    "https://stemkoski.github.io/AR-Examples/images/earth-sphere.jpg",
-    render
-  );
-  let material1 = new window.THREE.MeshLambertMaterial({
-    map: texture,
-    opacity: 0.5
-  });
-
-  mesh1 = new window.THREE.Mesh(geometry1, material1);
-  // earth = alignXaxis2Equinox(earth,currentDate);
-
-  mesh1.position.x = ModelOffset.x;
-  mesh1.position.y = ModelOffset.y;
-  mesh1.position.z = ModelOffset.z;
+  earth.position.x = ModelOffset.x;
+  earth.position.y = ModelOffset.y;
+  earth.position.z = ModelOffset.z;
 
   if (ARview) {
-    markerRoot1.add(mesh1);
+    markerRoot1.add(earth);
     markerRoot1.add(testSatObject)
   } else {
-    scene.add(mesh1)        //remove for aR
-    scene.add(testSatObject) 
+    // scene.add(mesh1)        //remove for aR
+    // scene.add(testSatObject) 
   }
 
   let pointLight = new window.THREE.PointLight(0xffffff, 1, 100);

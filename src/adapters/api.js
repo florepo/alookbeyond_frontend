@@ -1,6 +1,8 @@
-
+export const FRONTEND_URL = "http://localhost:3001"
 
 export const BACKEND_URL = "http://localhost:3000"
+
+
 
 export const get = (url) => {
     fetch(url)
@@ -29,4 +31,4 @@ export const getWatchlist = (id) => {
 
 
 
-export default {BACKEND_URL, get}
+export default {BACKEND_URL, FRONTEND_URL, get}

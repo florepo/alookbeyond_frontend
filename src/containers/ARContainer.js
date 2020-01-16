@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { mount } from "../ar/arstuff";
+import { mount } from "../ar/ar_visualizer";
 
 const ARContainer = ({ ARview, sats}) => {
   

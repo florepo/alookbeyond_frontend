@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import {FRONTEND_URL} from '../adapters/api'
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
 import {adjustGlobalOrientation} from '../utils/scenehelper.js'
 
@@ -70,13 +71,13 @@ export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
     let loader = new THREE.TextureLoader()
     loader.name = identifier
 
-    let earthMap = loader.load(require("../images/surface.jpg"))
+    let earthMap = loader.load('http://localhost:3001/assets/images/surface.jpg')
     console.log(earthMap)
-    let bumpMap = loader.load(require("../images/bump.jpeg"))
+    // let bumpMap = loader.load(require(FRONTEND_URL+"/assets/images/bump.jpeg"))
     let material = new THREE.MeshPhongMaterial({
-        // map: earthMap,
+        map: earthMap,
         // bump: bumpMap,
-        // bumpScale: 0.05,
+        bumpScale: 0.05,
         opacity: 1.0
       });
     material.name = identifier
