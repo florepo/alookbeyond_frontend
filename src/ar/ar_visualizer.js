@@ -226,7 +226,7 @@ function update() {
 
   // update artoolkit on every frame
   if (ARview) {
-    if (arToolkitSource.ready !== false)
+    // if (arToolkitSource.ready !== false)
       arToolkitContext.update(arToolkitSource.domElement);
     }
   }
