@@ -40,7 +40,7 @@ jobs:
 
       - aws-s3/sync:
           from: ~/repo/build/
-          to: "s3://a-look-beyond-frontend"
+          to: "s3://a-look-beyond"
           arguments: |
             --acl public-read \
           overwrite: true
