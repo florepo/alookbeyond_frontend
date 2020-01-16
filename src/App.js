@@ -4,7 +4,7 @@ import './App.css';
 import {Route, Switch} from 'react-router-dom'
 import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
-import ARdemoPage from './pages/ARdemoPage'
+import DemoPage from './pages/DemoPage'
 import ErrorPage from './pages/ErrorPage'
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
         <Switch>
           <Route path="/" component={WelcomePage} exact />
           <Route path="/home" component={MainPage} exact />
-          <Route path="/demo" component={ARdemoPage} exact />
+          <Route path="/demo" component={DemoPage} exact />
           <Route component={ErrorPage} />
         </Switch>
       </React.Fragment>

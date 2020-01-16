@@ -23,10 +23,11 @@ class MainDisplay extends Component {
 
     componentDidMount() {
         API.getConstellations().then(constellations => this.setState({constellations}))
-        API.getSatellites().then(satellites => this.setState({satellites})).then(console.log)
+        // API.getSatellites().then(satellites => this.setState({satellites}))
     }
 
     addSatToWatchlist = (sat) => {
+        console.log("add to watchlist")
         if (!!this.state.watchlist.find(s => s==sat )) { 
             console.log("already selected")
         } else {
@@ -36,13 +37,15 @@ class MainDisplay extends Component {
     }
 
     addConToWatchList =(constellation)=> {
+        console.log("add to watchlist")
         if (constellation.displayed==true) {
             console.log("already selected")
         } else {
             constellation.displayed=true
             console.log(constellation)
             let sats=[...constellation.satellites]
-            let updatedWatchlist= [...this.state.watchlist].concat(sats)
+            let updatedWatchlist= [...this.state.watchlist]
+            updatedWatchlist.concat(sats)
             this.setState({watchlist: updatedWatchlist})
         }
     }

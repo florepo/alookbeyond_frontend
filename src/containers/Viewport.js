@@ -35,86 +35,96 @@ class Viewport extends Component {
     this.state = {removable_items: []}
   }
 
+
   componentDidMount() {
+    console.log("we mount here", this.canvas)
+    this.initialize()
+    this.start();
+  }
+
+  componentWillUnmount() {
+    this.cleanUp()
+  }
+ 
+  componentDidUpdate(prevProps, prevState){
+    this.trackPropsChangesAndRerender(prevProps, prevState)
+  }
+  
+  initialize = () => {
+
+    //GET CANVAS DIMENSIONS
+    let height = this.canvas.clientHeight;
+    let width = this.canvas.clientWidth;   
+
+    //SET UP SCENE, CAMERA, RENDERER, AMBIENTLIGHT
+    this.setupScene(height, width)
+
+    //SET WINDOW RESIZE LISTENER AND UPDATE RENDERER AND CAMERA BASED ON CANVAS SIZE
     window.addEventListener("resize", this.updateViewportDimensions);
 
-    //get canvas siz
-    let width = this.mount.clientWidth;   
-    let height = this.mount.clientHeight;
-
-    //ADD SCENE
-    this.scene = new THREE.Scene();
-
-    //ADD CAMERA
-    this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
-    this.camera.position.z = (cameraAltitude-earthRadius)*sceneScaleFactor;
-    this.camera.lookAt(0,0,0)         //orbit controls
-    this.addToSceneAndTrack(this.camera, this.scene) //doesnt capture it yet
-
-    //ADD RENDERER
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setSize(width, height);
-    this.mount.appendChild(this.renderer.domElement);
-
-    //ADD ORBITCONTROLS
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.enabled = true
-    this.controls.minDistance = 3 * earthRadius*sceneScaleFactor
-    this.controls.maxDistance = 20 * earthRadius*sceneScaleFactor
-    this.controls.autoRotate = true;
-    this.controls.autoRotateSpeed = 0.5;
-  
-    //ADD LIGHTSOURCES
-    let ambientLight = AmbientLight()
-    this.addToSceneAndTrack(ambientLight, this.scene)
-
+    //ADD SUN
     let sun = Sun()
-    this.addToSceneAndTrack(sun, this.scene)
+    this.scene.add(sun)
+    // this.trackObject(sun)
 
     //ADD EARTH
     let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
     earth = adjustObjectOrientation(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
     // earth = alignXaxis2Equinox(earth,currentTimeStamp); // align coordinate system with vernal equinox
-    this.addToSceneAndTrack(earth, this.scene)   //tracking for garbage collection
-
-    // let axis = new THREE.AxesHelper(15);
-    // this.scene.add(axis);
-    // this.addToSceneAndTrack(ambientLight, this.scene)
-
-    //ADD SATELLITE FLEET CONTAINER
-    this.start();
+    this.scene.add(earth)
+    // this.trackObject(earth)   //tracking for garbage collection
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateViewportDimensions);
-    this.stop();
-    this.removeEntities(this.state.removable_items)
-    this.mount.removeChild(this.renderer.domElement);
-  }
- 
-  componentDidUpdate(prevProps, prevState){
-    console.log("props difference", prevProps.sats.length-this.props.sats.length)
+  
+  start = () => {
+    if (!this.frameId) {
+      this.frameId = requestAnimationFrame(this.animate);
+    }
+  };
+
+  animate = () => {
+    this.renderScene();
+    this.controls.update(); // required if controls.enableDamping or controls.autoRotate are set to true
+    this.frameId = window.requestAnimationFrame(this.animate);
+  };
+
+  renderScene = () => {
+    this.renderer.render(this.scene, this.camera);
+  };
+
+  updateViewportDimensions = () => {
+    this.renderer.setSize(this.canvas.clientWidth,this.canvas.clientHeight);
+    this.camera.aspect = this.canvas.clientWidth /this.canvas.clientHeight;
+    this.camera.updateProjectionMatrix();
+    this.controls.update()
+  };
+
+  //--------------------------------------
+
+  trackPropsChangesAndRerender = (prevProps, prevState) =>{
     //handle removed elements
     if (prevProps.sats.length>this.props.sats.length) {
       const removedElements = differenceBy(prevProps.sats, this.props.sats)
       this.removeEntities(removedElements, prevState)
      //handle added elements
     } else if (prevProps.sats.length<this.props.sats.length) {
-      const addedElements = differenceBy(this.props.sats,prevProps.sats)
-      console.log(addedElements)
+      const addedElements = differenceBy(this.props.sats, prevProps.sats)
       this.addEntities(addedElements)
-      console.log("elements added")
     } else {}
-    console.log("re-render scene")
-    this.renderer.render(this.scene, this.camera);
+    this.renderer.render(this.scene, this.camera)
   }
 
-  updateViewportDimensions = () => {
-    this.renderer.setSize(this.mount.clientWidth,this.mount.clientHeight);
-    this.camera.aspect = this.mount.children[0].clientWidth /this.mount.children[0].clientHeight;
-    this.camera.updateProjectionMatrix();
-    this.controls.update()
-  };
+  cleanUp = () =>{
+    window.removeEventListener("resize", this.updateViewportDimensions);
+    this.stop();
+    this.removeEntities(this.state.removable_items)
+    this.canvas.removeChild(this.renderer.domElement);
+  }
+
+
+  
+
+
 
   addEntities =(entities) =>{
     entities.forEach(sat => {
@@ -122,17 +132,17 @@ class Viewport extends Component {
       let satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
       let satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
       satObject = updateSatPostion(satObject, currentTimeStamp, sceneScaleFactor)
-      this.addToSceneAndTrack(satObject, this.scene)
+      this.trackObject(satObject, this.scene)
       console.log(satObject)
       let orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec,  satObject.name, sceneScaleFactor)  
       console.log(orbitGeoModel)   
-      this.addToSceneAndTrack(orbitGeoModel, this.scene)
+      this.trackObject(orbitGeoModel, this.scene)
     });
   }
 
-  addToSceneAndTrack = (object, scene) => {
+  trackObject = (object, scene) => {
     // console.log("tracking: ", object)
-    scene.add(object)
+
     let trackingList = [...this.state.removable_items]
     // console.log(trackingList.length)
     trackingList.push(object)
@@ -180,32 +190,55 @@ class Viewport extends Component {
   }
 
 
-  start = () => {
-    if (!this.frameId) {
-      this.frameId = requestAnimationFrame(this.animate);
-    }
-  };
+
 
   stop = () => {
     cancelAnimationFrame(this.frameId);
   };
 
-  animate = () => {
-    this.renderScene();
-    this.controls.update(); // required if controls.enableDamping or controls.autoRotate are set to true
-    this.frameId = window.requestAnimationFrame(this.animate);
-  };
 
-  renderScene = () => {
-    this.renderer.render(this.scene, this.camera);
-  };
 
 
   render() {
     return (
-      <div className = "viewport"ref={mount => {this.mount = mount;}} />
+      <div className = "viewport" ref={mount => {this.canvas = mount;}} />
+      ///"canvas" we will the div-tag we will be mounting and attaching the Three.js scene
     );
   }
+
+  //Working
+
+  setupScene = (height, width) => {
+    //ADD SCENE
+    this.scene = new THREE.Scene();
+
+    //ADD CAMERA
+    this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
+    this.camera.position.z = (cameraAltitude-earthRadius)*sceneScaleFactor;
+    this.camera.lookAt(0,0,0)         //orbit controls
+    // this.trackObject(this.camera, this.scene) //doesnt capture it yet
+
+    //ADD RENDERER
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setSize(width, height);
+    console.log("we add renderer here", this.canvas)
+    this.canvas.appendChild(this.renderer.domElement);
+
+    //ADD ORBITCONTROLS
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+    this.controls.enabled = true
+    this.controls.minDistance = 3 * earthRadius*sceneScaleFactor
+    this.controls.maxDistance = 20 * earthRadius*sceneScaleFactor
+    this.controls.autoRotate = true;
+    this.controls.autoRotateSpeed = 0.5;
+
+    //ADD LIGHTSOURCES
+    let ambientLight = AmbientLight()
+    this.scene.add(ambientLight)
+    // this.trackObject(ambientLight, this.scene)
+  }
+
+
 }
 
 export default Viewport;

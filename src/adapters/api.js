@@ -20,6 +20,13 @@ export const getSatellites = () => {
         .then(response  => response.json())
 }
 
+export const getWatchlist = (id) => {
+    const url = BACKEND_URL +'/watchlists/' + id
+    console.log(url)
+    return fetch(url)
+        .then(response  => response.json())
+}
+
 
 
 export default {BACKEND_URL, get}

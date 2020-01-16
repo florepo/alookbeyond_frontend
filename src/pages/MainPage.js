@@ -10,8 +10,6 @@ class MainPage extends Component {
                     }
       }
 
-    //Abort Controller needed!
-
     render() { 
         return (
             <div>

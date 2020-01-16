@@ -71,11 +71,12 @@ export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
     loader.name = identifier
 
     let earthMap = loader.load(require("../images/surface.jpg"))
+    console.log(earthMap)
     let bumpMap = loader.load(require("../images/bump.jpeg"))
     let material = new THREE.MeshPhongMaterial({
-        map: earthMap,
-        bump: bumpMap,
-        bumpScale: 0.05,
+        // map: earthMap,
+        // bump: bumpMap,
+        // bumpScale: 0.05,
         opacity: 1.0
       });
     material.name = identifier
