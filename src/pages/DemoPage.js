@@ -16,7 +16,7 @@ class DemoPage extends Component {
       }
 
     componentDidMount() {
-        API.getConstellationSats(60)
+        API.getConstellationSats(4)
         .then(watchlist => this.setState({watchlist: watchlist.satellites}))
     }
 
