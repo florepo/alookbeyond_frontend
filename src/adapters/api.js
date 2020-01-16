@@ -9,11 +9,16 @@ export const get = (url) => {
         .then(resp => resp.json())
 }
 
-export const getConstellations =()=>{
+export const getConstellations = () => {
     const url = BACKEND_URL +'/constellations'
     return fetch(url)
         .then(response  => response.json())
-       
+}
+
+export const getConstellationSats = (id) => {
+    const url = BACKEND_URL +'/constellations/' + id
+    return fetch(url)
+        .then(response  => response.json())
 }
 
 export const getSatellites = () => {

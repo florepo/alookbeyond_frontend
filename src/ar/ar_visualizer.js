@@ -9,9 +9,10 @@ import {createSatelliteGeoModel,
   Sun}
 from "../containers/ThreeModels"
 
-import {adjustObjectOrientation,
-  adjustGlobalOrientation}
-from "../utils/scenehelper.js"
+import {intializeSatObject,
+  updateSatPostion,
+  alignXaxis2Equinox}
+from "../utils/sathelper.js"
 
 
 var scene, camera, renderer, clock, deltaTime, totalTime; // move to local component?? with import 'three'
@@ -28,8 +29,10 @@ const cameraAltitude = 40000  //[km]
 let sceneScaleFactor = 1 / 10000;         //is 10x the value of 3D visualizer
 let satScaleFactor = 200;
 
+const currentTimeStamp   = new Date();
+
 // for satellite model//      //global??
-let scaleFactor = 1/10000
+let scaleFactor = 1/40000
 console.log("test",scaleFactor)
 let satSize = 0.5
 let timefactor = 2000
@@ -44,15 +47,16 @@ if (ARview) {
 
 const initialTimeStamp = new Date()
 
-export const mount = (domElement,ARview_2) => {
+export const mount = (domElement,sats,ARview_2) => {
   ARview = true
-  console.log('we mount here', ARview_2)
-  initialize(domElement);
+  console.log('we mount here', domElement)
+  console.log("we received", sats.length,"satellites")
+  initialize(domElement, sats);
   animate();
 };
 
 
-function initialize(domElement) {
+function initialize(domElement, sats) {
 
   scene = new window.THREE.Scene();
 
@@ -93,7 +97,7 @@ function initialize(domElement) {
   else{
     arToolkitSource = new window.THREEx.ArToolkitSource({
       sourceType: "webcam",
-      parentElement: domElement
+      // parentElement: domElement
     });
 
     function onResize() {
@@ -154,94 +158,9 @@ function initialize(domElement) {
   // build model
   ////////////////////////////////////////////////////////////////////////
 
-  // add satellite
-  let TLEdata=[
-    {
-    name: 'LightSail 2',
-    TLE1: '1 44420U 19036AC  20008.13579535  .00003678  00000-0  80410-3 0  9991',
-    TLE2: '2 44420  24.0061  45.8725 0019024 144.4109 215.7714 14.54048754 26792'
-    },
-    {
-    name: 'ISS',
-    TLE1: '1 25544U 98067A   20008.29189198  .00001108  00000-0  27822-4 0  9992',
-    TLE2: '2 25544  51.6455  64.5943 0005137 111.2659   7.8376 15.49548321207079'
-    },
-  ]
-  
-  function createSatelliteModel(){
-
-    let sat = new window.THREE.Object3D();
-  
-    let cubeMat = new window.THREE.MeshPhongMaterial({
-      color: 0xd3d3d3,
-      opacity: 1,
-      transparent: true,
-      wireframe: false
-    });
-    let cubeGeo = new window.THREE.BoxGeometry(satSize / 8, satSize / 8, satSize / 8);
-    let cube = new window.THREE.Mesh(cubeGeo, cubeMat);
-  
-    cube.name = "cube";
-
-    cube.position.x = ModelOffset.x
-    cube.position.y = ModelOffset.y
-    cube.position.z = ModelOffset.z
-  
-    sat.add(cube);
-
-  
-    return sat;
-  }
-
-   
-  function createSatellite(satDataContainer){
-   
-    // console.log('create Satellite: ',satDataContainer.name)
-    // console.log('sat data',satDataContainer)
-    let TsE    = 0; //[min]
-    let pAv = {}
-    let satrec = {}
-  
-    let sat = new createSatelliteModel();
-    console.log('here', sat)
-
-    satrec  = twoline2satrec(satDataContainer.TLE1, satDataContainer.TLE2);
-    pAv     = sgp4(satrec, TsE);
-  
-    sat.position.set( pAv.position.x*scaleFactor,     //map ECI to ThreeJS coord system > x(js) = z(ECI), y(js) = x(ECI), z(js)=y(ECI)
-                      pAv.position.y*scaleFactor,
-                      pAv.position.z*scaleFactor);   
-   console.log('sat position initial', sat.position)
-
-    sat.userData.satrec  = satrec;
-  
-  return sat;
-}
 
 
-function alignXaxis2Equinox(object,date){
-
-  var gmst = gstime(date);  //GMST rad is same as GHA of Aries (Vernal Equinox)
-  console.log('gmst',gmst)
-  console.log('ory',object.rotation.y)
-  object.rotation.y = object.rotation.y + gmst //Tilting the earth
-
-  return object;
-
-};
-
-
-  //add satellites
-  // console.log(TLEdata[1])
-  // let testSatModel = createSatelliteModel()
-  // console.log('model type',testSatModel.type)
-  // console.log('model',testSatModel)
-  // console.log('model intitial',testSatModel.position)
-  testSatObject = createSatellite(TLEdata[1])
-  // console.log('object type',testSatObject.type)
-  // console.log('object',testSatObject)
-  // console.log('model intitial',testSatObject.position)
-  // updateSatPosition(testSatObject, currentDate)
+  addEntities(sats)
 
 
 
@@ -260,7 +179,6 @@ function alignXaxis2Equinox(object,date){
 
   if (ARview) {
     markerRoot1.add(earth);
-    markerRoot1.add(testSatObject)
   } else {
     // scene.add(mesh1)        //remove for aR
     // scene.add(testSatObject) 
@@ -283,11 +201,27 @@ function alignXaxis2Equinox(object,date){
 }
 
 
+const addEntities =(entities) =>{
+  entities.forEach(sat => {
+
+    let satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
+    let satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
+    satObject = updateSatPostion(satObject, currentTimeStamp, sceneScaleFactor)
+    // trackObject(satObject)
+    markerRoot1.add(satObject)
+    console.log(satObject)
+    let orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec,  satObject.name, sceneScaleFactor)  
+    console.log(orbitGeoModel)   
+    markerRoot1.add(orbitGeoModel)
+    // trackObject(orbitGeoModel)
+  });
+}
+
 function update() {
 
   if (markerRoot1.visible) {
     // mesh1.rotation.y += 0.01
-     testSatObject.rotation.y +=0.1
+    //  testSatObject.rotation.y +=0.1
   };   //rotate globe
 
   // update artoolkit on every frame
@@ -304,19 +238,7 @@ function render() {
 function animate() {
   // console.log(satObject)
 
-  function updateSatPosition(satContainer,date){
-
-    let pAv = propagate(satContainer.userData.satrec,date);
   
-    satContainer.position.set(pAv.position.x*scaleFactor,     
-                              pAv.position.y*scaleFactor,
-                              pAv.position.z*scaleFactor); 
-  
-    // console.log('sat position updated', satContainer.position)
-  
-    return satContainer;
-  }
-
   function updatedDate(currentDate,deltatime,timefactor){
 
     let addSeconds = deltatime*timefactor;
@@ -331,7 +253,7 @@ function animate() {
   totalTime += deltaTime;
   // console.log(deltaTime)
   let currentTimeStampDate = updatedDate(initialTimeStamp,totalTime,timefactor)
-  updateSatPosition(testSatObject,currentTimeStampDate)
+  // updateSatPosition(testSatObject,currentTimeStampDate)
   // console.log(currentTimeStampDate)
   update();
   render();

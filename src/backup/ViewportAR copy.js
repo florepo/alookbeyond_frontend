@@ -14,7 +14,7 @@ import {
   EarthGeoModel,
   AmbientLight,
   Sun
-} from "./ThreeModels";
+} from "../containers/ThreeModels";
 
 //Control parameters
 let counter =0 

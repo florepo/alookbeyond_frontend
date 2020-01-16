@@ -121,11 +121,6 @@ class Viewport extends Component {
     this.canvas.removeChild(this.renderer.domElement);
   }
 
-
-  
-
-
-
   addEntities =(entities) =>{
     entities.forEach(sat => {
 
@@ -137,7 +132,7 @@ class Viewport extends Component {
       console.log(satObject)
       let orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec,  satObject.name, sceneScaleFactor)  
       console.log(orbitGeoModel)   
-      this.scene.add(satObject)
+      this.scene.add(orbitGeoModel)
       this.trackObject(orbitGeoModel)
     });
   }

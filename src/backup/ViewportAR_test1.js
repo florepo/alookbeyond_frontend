@@ -14,7 +14,7 @@ import {createSatelliteGeoModel,
         EarthGeoModel,
         AmbientLight,
         Sun}
-from "./ThreeModels"
+from "../containers/ThreeModels"
 
 import {intializeSatObject,
         updateSatPostion,

@@ -4,11 +4,13 @@ import {List, Button, Icon, Header} from 'semantic-ui-react'
 const ConstListElement = ({item, addOnClick, removeOnClick}) => {
 
     const handleClick = (item) => {
-        console.log("clicked")
+        console.log("clicked here")
+
         if (item.displayed){
             removeOnClick(item)
          } else {
-            addOnClick(item)
+            console.log(addOnClick)
+            addOnClick(item.id)
          }
     }
 

@@ -26,6 +26,17 @@ class MainDisplay extends Component {
         // API.getSatellites().then(satellites => this.setState({satellites}))
     }
 
+    loadSatsForSelectedConstellation = (id) => {
+        console.log("fetch satellites for constellation")
+        API.getConstellationSats(id)
+            .then(constellation => constellation.satellites)
+            .then(sats => this.addSatsToWatchList(sats))
+    }
+
+    addSatsToWatchList = (sats) => {
+        sats.map(sat =>  this.addSatToWatchlist(sat))
+    }
+
     addSatToWatchlist = (sat) => {
         console.log("add to watchlist")
         if (!!this.state.watchlist.find(s => s==sat )) { 
@@ -77,7 +88,7 @@ class MainDisplay extends Component {
                                         <ConstListElement
                                             key={constellation.name}
                                             item={constellation}
-                                            addOnClick={this.addConToWatchList}
+                                            addOnClick={this.loadSatsForSelectedConstellation}
                                             removeOnClick={this.removeConFromWatchList}
                                         >
                                         </ConstListElement>

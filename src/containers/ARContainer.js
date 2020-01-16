@@ -9,15 +9,14 @@ const ARContainer = ({ ARview, sats}) => {
   useEffect(() => {
     console.log("ARview",ARview)
     console.log("sats",sats)
-    console.log(sats.length)
 
-    if(sats.length>0){mount(canvasEl.current)};
+    if(sats && sats.length>0){mount(canvasEl.current, sats, ARview)};
   },);
 
   return (
     <div>
       {ARview ? (
-        <div className="viewport_ar" ref={canvasEl}></div>
+        <div className="viewport_ar" ref={canvasEl} sats={sats}></div>
       ) : (
         <div className="viewport_ar" ref={canvasEl} hidden></div>
       )}
