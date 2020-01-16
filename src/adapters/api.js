@@ -1,4 +1,4 @@
-export const FRONTEND_URL = "http://localhost:3001"
+export const FRONTEND_URL = "http://a-look-beyond.s3-website.eu-west-2.amazonaws.com/demo"
 
 export const BACKEND_URL = "http://localhost:3000"
 

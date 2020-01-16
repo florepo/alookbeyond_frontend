@@ -71,9 +71,9 @@ export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
     let loader = new THREE.TextureLoader()
     loader.name = identifier
 
-    let earthMap = loader.load('http://localhost:3001/assets/images/surface.jpg')
+    let earthMap = loader.load('http://a-look-beyond.s3-website.eu-west-2.amazonaws.com/assets/images/surface.jpg')
     console.log(earthMap)
-    let bumpMap = loader.load(FRONTEND_URL+"/assets/images/bump.jpeg")
+    let bumpMap = loader.load("http://a-look-beyond.s3-website.eu-west-2.amazonaws.com/demo/assets/images/bump.jpeg")
     let material = new THREE.MeshPhongMaterial({
         map: earthMap,
         bump: bumpMap,
