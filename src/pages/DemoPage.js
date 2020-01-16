@@ -7,7 +7,7 @@ class DemoPage extends Component {
     constructor(props) {
         super(props);
         this.state = { ARview: true,
-                       watchlist: ["satellite"] }
+                       watchlist: [] }
       }
     
       handleClick= () =>{
