@@ -254,7 +254,7 @@ function animate() {
   // console.log(deltaTime)
   let currentTimeStampDate = updatedDate(initialTimeStamp,totalTime,timefactor)
   // updateSatPosition(testSatObject,currentTimeStampDate)
-  // console.log(currentTimeStampDate)
+    // console.log(currentTimeStampDate)
   update();
   render();
 }
