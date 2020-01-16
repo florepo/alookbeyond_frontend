@@ -232,6 +232,7 @@ const HomepageLayout = () => (
             </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
+            <Image bordered rounded size='large'/>
           </Grid.Column>
         </Grid.Row>
       </Grid>
