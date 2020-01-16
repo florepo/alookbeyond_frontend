@@ -60,6 +60,8 @@ function initialize(domElement) {
   scene.add(ambientLight);
 
   camera = new window.THREE.Camera();
+  camera.up.set( 0, 1, 0 );
+  camera.lookAt(0,0,0) 
   scene.add(camera);
 
   renderer = new window.THREE.WebGLRenderer({
@@ -245,7 +247,9 @@ function alignXaxis2Equinox(object,date){
 
   //////////////////////////////////////////////////////////
   let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
-  earth = adjustObjectOrientation(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
+  earth.rotation.x = -90 * Math.PI/180
+   earth.rotation.y = -90 * Math.PI/180
+  // earth = adjustObjectOrientation(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
   // earth = alignXaxis2Equinox(earth,currentTimeStamp); // align coordinate system with vernal equinox
 
  console.log(earth)

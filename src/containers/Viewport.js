@@ -217,6 +217,7 @@ class Viewport extends Component {
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 8000);
     this.camera.position.z = (cameraAltitude-earthRadius)*sceneScaleFactor;
     this.camera.lookAt(0,0,0)         //orbit controls
+    this.camera.up.set( 0, 1, 0 );
     // this.trackObject(this.camera, this.scene) //doesnt capture it yet
 
     //ADD RENDERER
@@ -227,7 +228,7 @@ class Viewport extends Component {
 
     //ADD ORBITCONTROLS
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.enabled = true
+    this.controls.enabled = false
     this.controls.minDistance = 3 * earthRadius*sceneScaleFactor
     this.controls.maxDistance = 20 * earthRadius*sceneScaleFactor
     this.controls.autoRotate = true;
