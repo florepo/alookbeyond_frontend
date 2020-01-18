@@ -97,7 +97,7 @@ function initialize(domElement, sats) {
   else{
     arToolkitSource = new window.THREEx.ArToolkitSource({
       sourceType: "webcam",
-      // parentElement: domElement
+      parentElement: domElement
     });
 
     function onResize() {

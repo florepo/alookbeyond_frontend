@@ -17,6 +17,7 @@ class MainDisplay extends Component {
                         constellations: [],
                         satellites: [],
                         watchlist: [],
+                        tracking: [],
                         display: [],
                         color: 'blue' }
         }

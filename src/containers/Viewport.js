@@ -223,11 +223,11 @@ class Viewport extends Component {
 
     //ADD ORBITCONTROLS
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.enabled = false
+    this.controls.enabled = true
     this.controls.minDistance = 3 * earthRadius*sceneScaleFactor
     this.controls.maxDistance = 20 * earthRadius*sceneScaleFactor
     this.controls.autoRotate = true;
-    this.controls.autoRotateSpeed = 0.5;
+    // this.controls.autoRotateSpeed = 0.5;
 
     //ADD LIGHTSOURCES
     let ambientLight = AmbientLight()
