@@ -8,7 +8,7 @@ class Footer extends Component {
     render() { 
         return ( 
             <React.Fragment>
-
+                Footer
             </React.Fragment>
          );
     }

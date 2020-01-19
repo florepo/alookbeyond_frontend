@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Accordion, Icon, List, Divider } from 'semantic-ui-react'
 import ConstListElement from '../components/ConstListElement'
 
-export default class ConstellationList extends Component {
+class ListOfConstellations extends Component {
   state = { activeIndex: 0 }
 
   handleClick = (e, titleProps) => {
@@ -17,6 +17,7 @@ export default class ConstellationList extends Component {
 
     const { activeIndex } = this.state
     const { constellations, addOnClick, removeOnClick, showInfoOnClick} = this.props
+    debugger
     return (
       <Accordion>
         <Accordion.Title
@@ -89,3 +90,5 @@ export default class ConstellationList extends Component {
     )
   }
 }
+
+export default ListOfConstellations

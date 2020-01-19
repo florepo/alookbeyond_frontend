@@ -79,23 +79,17 @@
   background-color: #888;
 }
 
-.navbar{
-  display: block;
-  flex: 0 0 200px;
-  margin: 3px 4px 3px 4px;
-  background-color: #888;
-}
 
 
 
-.sidebar {
+/* .sidebar {
   display: block;
   flex: 0 0 200px;
   background-color: #888;
   margin: 3px 4px 3px 4px;
   box-sizing: border-box;
   border: 1px solid #888;
-}
+} */
 
 .title.active {
   background-color: #d6d6d6;
@@ -107,22 +101,6 @@
   border-radius: 5px
 }
 
-.sidetabs {
-  /* display: block;
-  flex: 0 0 200px; */
-  max-height: 100vh;
-  overflow-y: auto;
-  background-color: 445;
-  margin: 3px 4px 3px 4px;
-}
-
-.viewport {
-  flex: 1 1 auto;
-  overflow: hidden;
-  height: 100vh;
-  width: 100vh;
-}
-
 .viewport-ar {
   flex: 1 1 auto;
   overflow: hidden;
@@ -130,17 +108,57 @@
   width: 100vh;
 }
 
-.flex-row-container {
-  display: flex;
-  flex-flow: row;
-  height: 100vh;
-  width: 100%;
+/* NAVBAR */
+
+.navbar{
+  display: block;
+  flex: 0 0 200px;
+  margin: 3px 4px 3px 4px;
+  background-color: #888;
 }
 
 
+/* MAINPAGE */
+
+.main-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.main-display-container {
+  display: flex;
+  flex-flow: row;
+  margin: 3px 4px 3px 4px;
+}
+
+.sidetabs {
+  /* display: block;
+  flex: 0 0 200px; */
+  height: 85vh;
+  width: 20vw;
+  overflow-y: auto;
+
+  background-color: 445;
+  margin: 3px 4px 3px 4px;
+}
+
+.viewport {
+  height: 85vh;
+  width: 80vw;
+  border-radius: 5px;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
 .canvas {
   flex: 1 1 auto;
-  height: 90vh;
-  width: 90vh;
+  height: 85vh;
+  width:80vh;
   overflow: hidden;
 } 
+
+/* FOOTER */
+.footer {
+background-color: #888;
+}

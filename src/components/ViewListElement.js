@@ -35,7 +35,7 @@ const ViewListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
                     </Button>
                 </List.Content>
                 <List.Content>
-                    <Header as="h5">{item.name}</Header>
+                    <Header as="h6">{item.name}</Header>
                 </List.Content>                               
             </List.Item>
         </React.Fragment>

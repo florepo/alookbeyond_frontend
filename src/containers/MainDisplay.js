@@ -6,7 +6,8 @@ import {_} from 'lodash'
 import * as API from '../adapters/api'
 
 import Viewport from './Viewport'
-import ConstellationList from './ConstellationList'
+import ListOfConstellations from './ListOfConstellations'
+import ListOfViewElements from './ListOfConstellations'
 import ConstListElement from '../components/ConstListElement'
 import SatListElement from '../components/SatListElement'
 import SaveViewModal from '../components/SaveViewModal'
@@ -18,9 +19,7 @@ class MainDisplay extends Component {
         this.state = { constellations: [],
                        satellites: [],
                        view: [],
-                       watchlists: [],
-                       modalOpen: false
-                    }
+                       watchlists: []}
     }
 
     componentDidMount(){
@@ -112,9 +111,9 @@ class MainDisplay extends Component {
     }
   
     panes =  [
-        {menuItem: { key: 'constellation', icon: 'bullseye', content: '' },
+        {   menuItem: { key: 'constellation', icon: 'bullseye', content: '' },
             render: () =>   <Tab.Pane attached={false}>
-                                <ConstellationList 
+                                <ListOfConstellations
                                     constellations={this.state.constellations}
                                     addOnClick={this.addOrFetchSatsForConstellationToView}
                                     removeOnClick={this.removeConstellationFromView}
@@ -122,15 +121,20 @@ class MainDisplay extends Component {
                                 />
                             </Tab.Pane>,
         },
-        { menuItem: { key: 'catalog', icon: 'list', content: '' },
+        {   menuItem: { key: 'catalog', icon: 'list', content: '' },
             render: () =>   <Tab.Pane attached={false}>
                             </Tab.Pane>,
         },
-        { menuItem: { key: 'view', icon: 'unhide', content: '' },
+        {   menuItem: { key: 'view', icon: 'unhide', content: '' },
             render: () =>   <Tab.Pane attached={false}>
-                                {(this.state.view.lengt==0)? 
+                                {(this.state.view.length==0)? 
                                 null 
                                 : 
+                                // <ListOfViewElements
+                                //     view={this.state.view}
+                                //     removeSatelliteFromView={this.removeSatelliteFromView}
+                                //     removeSatelliteWithConstellationFromView={this.removeSatelliteWithConstellationFromView}
+                                // />
                                 <React.Fragment>
                                     <Button
                                         attached='top'
@@ -138,8 +142,7 @@ class MainDisplay extends Component {
                                     >
                                         Save As
                                     </Button>
-                                    <SaveViewModal // invisible modal itself
-                                        key='modal1'
+                                    <SaveViewModal // invisible modal
                                         modalOpen={this.state.modalOpen}
                                         handleClose={ () => {this.setState({ modalOpen: false })}}
                                         valueIntoModal={this.state.view}
@@ -155,27 +158,14 @@ class MainDisplay extends Component {
                                             )}
                                         </List>
                                     </Segment>
-                                </React.Fragment>}
+                                </React.Fragment>
+                                }
                             </Tab.Pane>,
         },
-        // ,
-    // { menuItem: { key: 'watchlist', icon: 'copy outline unhide',  content: '' },
-    //     render: () =>   <Tab.Pane attached={false}>
-    //                     <List divided verticalAlign='middle'>
-    //                         {this.state.watchlists.map( item =>
-    //                             <ConstListElement
-    //                                 key={item.name} item={item}
-    //                                 addOnClick={this.addOrFetchSatsForConstellationToView}
-    //                                 removeOnClick={this.removeConstellationFromView}
-    //                             />
-    //                         )}
-    //                     </List>
-    //                 </Tab.Pane>,
-    // },
     ]
 
     render() {
-        return (  <div className="flex-row-container">
+        return (  <div className="main-display-container">
                     <Tab className='sidetabs'
                         menu={{ attached: false }}
                         panes={this.panes}

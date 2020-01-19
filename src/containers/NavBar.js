@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {Menu, Dropdown, Icon} from 'semantic-ui-react'
+import {Menu, Dropdown, Icon, Button} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
 
@@ -36,17 +36,22 @@ class NavBar extends Component {
                 <Menu vertical>
                     <Dropdown item text='Watchlists'>
                     <Dropdown.Menu>
-                        <Dropdown.Item>
+                        <Dropdown.Item
+                            
+                        >
                             Alpha
-                            <Icon
-                                name='load'
-                                onClick={() => this.handleClick()}
-                            />
+                            <Button
+                                onClick={this.handleClick}
+                            > load </Button>
                         </Dropdown.Item>
-                        <Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={this.handleClick}
+                        >
                             Bravo
                         </Dropdown.Item>
-                        <Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={this.handleClick}
+                        >
                             Charlie
                         </Dropdown.Item>
                         <Dropdown.Item>
