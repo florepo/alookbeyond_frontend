@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -36,15 +36,19 @@
     transform: rotate(360deg);
   }
 }
-
+/* 
 .NavBar {
   text-align: center;
-  background-color: #28A281;
-}
+  margin: 3px 4px 3px 4px;
+} */
 
 .MainDisplay {
   text-align: center;
   background-color: #16868A;
+}
+
+.Accordion {
+  background-color: #16868A
 }
 
 .SideContainer {
@@ -68,15 +72,40 @@
   width: 100%;
 }
 
+.ui.menu{
+  display: block;
+  flex: 0 0 200px;
+  margin: 3px 4px 3px 4px;
+  background-color: #888;
+}
+
+.navbar{
+  display: block;
+  flex: 0 0 200px;
+  margin: 3px 4px 3px 4px;
+  background-color: #888;
+}
+
+
+
 .sidebar {
   display: block;
   flex: 0 0 200px;
-  background-color: 445;
+  background-color: #888;
   margin: 3px 4px 3px 4px;
   box-sizing: border-box;
   border: 1px solid #888;
 }
 
+.title.active {
+  background-color: #d6d6d6;
+  border-radius: 5px
+}
+
+.title {
+  background-color: #f9f9f9;
+  border-radius: 5px
+}
 
 .sidetabs {
   /* display: block;

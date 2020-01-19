@@ -14,25 +14,31 @@ const ViewListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
 // if (!item.constellation) {return <div></div>};
     // {console.log("list view elements", item)}
     return ( 
-        <List.Item key={item.name}>
-            <List.Content floated='right'>
-                <Button size='mini' icon >
-                    <Icon
-                        name='minus'
-                        onClick={()=> handleSatClick(item)}
-                    />
-                </Button>
-                <Button size='medium' icon >
-                    <Icon
-                        name='minus circle'
-                        onClick={()=> handleConClick(item)}
+        <React.Fragment>
+            <List.Item key={item.name}>
+                <List.Content floated='right'>
+                    <Button size='mini' icon >
+                        <Icon
+                            name='window close'
+                            onClick={()=> handleSatClick(item)}
                         />
-                </Button>
-            </List.Content>
-            <List.Content>
-                <Header as="h5">{item.name}</Header>
-            </List.Content>                               
-        </List.Item>
+                    </Button>
+                    <Button size='mini' icon
+                        onClick={()=> handleConClick(item)} >
+                        <Icon
+                            name='bullseye'
+                        />
+                        <Icon
+                            name='window close'
+                            onClick={()=> handleConClick(item)}
+                            />
+                    </Button>
+                </List.Content>
+                <List.Content>
+                    <Header as="h5">{item.name}</Header>
+                </List.Content>                               
+            </List.Item>
+        </React.Fragment>
         );
 }
  

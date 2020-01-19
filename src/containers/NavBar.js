@@ -1,6 +1,9 @@
-import React, { Component } from 'react'
-import {Menu} from 'semantic-ui-react'
+import React,{Component} from 'react'
+import {Menu, Dropdown, Icon} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+
+
+
 
 
 class NavBar extends Component {
@@ -8,6 +11,11 @@ class NavBar extends Component {
         super(props);
         this.state = { activeItem: '3dview'   }
     }
+
+    handleClick = () => {
+        console.log("clicked")
+    }
+
     render() { 
         const { activeItem } = this.state
         return ( 
@@ -19,24 +27,34 @@ class NavBar extends Component {
                     active={activeItem === 'home'}
                     onClick={this.handleItemClick}
                 />
-                <Menu.Item
-                    as={Link}
-                    to={'/home'}
-                    name="3D-view"
-                    active={activeItem === '3Dview'}
-                    onClick={this.handleItemClick}
-                />
                 <Menu.Menu position='right'>
                 <Menu.Item
-                    name='AR-view'
+                    name='AR-Preview'
                     active={activeItem === 'arview'}
                     onClick={this.handleItemClick}
                 />
-                <Menu.Item
-                    name='logout'
-                    active={activeItem === 'logout'}
-                    onClick={this.handleItemClick}
-                />
+                <Menu vertical>
+                    <Dropdown item text='Watchlists'>
+                    <Dropdown.Menu>
+                        <Dropdown.Item>
+                            Alpha
+                            <Icon
+                                name='load'
+                                onClick={() => this.handleClick()}
+                            />
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            Bravo
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            Charlie
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            Delta
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                    </Dropdown>
+                    </Menu>
                 </Menu.Menu>
           </Menu>
          );

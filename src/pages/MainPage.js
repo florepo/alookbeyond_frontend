@@ -13,8 +13,9 @@ class MainPage extends Component {
     render() { 
         return (
             <div>
-                <NavBar />
-                <MainDisplay className="MainDisplay"
+                <NavBar className="navbar"/>
+                <MainDisplay
+                    className="MainDisplay"
                     watchlist={this.state.watchlist}
                     addSatToWatchList={this.addToWatchlist}  
                     removeSat={this.removeFromWatchlist} 

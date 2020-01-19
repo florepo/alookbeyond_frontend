@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Accordion, Icon, List } from 'semantic-ui-react'
+import { Accordion, Icon, List, Divider } from 'semantic-ui-react'
 import ConstListElement from '../components/ConstListElement'
 
 export default class ConstellationList extends Component {
@@ -30,13 +30,16 @@ export default class ConstellationList extends Component {
         <Accordion.Content active={activeIndex === 0}>
             <List >
                 {constellations.filter(c=>c.category=="Navigation & Positioning").map( constellation =>
-                    <ConstListElement
-                        key={constellation.name}
-                        item={constellation}
-                        addOnClick={addOnClick}
-                        removeOnClick={removeOnClick}
-                        showInfoOnClick={showInfoOnClick}
-                    />
+                    <React.Fragment key={constellation.name}>
+                        <ConstListElement 
+                            key={constellation.name}
+                            item={constellation}
+                            addOnClick={addOnClick}
+                            removeOnClick={removeOnClick}
+                            showInfoOnClick={showInfoOnClick}
+                        />
+                        <Divider />
+                    </React.Fragment>
                 )}
             </List>
         </Accordion.Content>

@@ -1,6 +1,6 @@
 import React,{ Component} from 'react'
 
-import {Tab, List} from 'semantic-ui-react'
+import {Tab, List, Button, Segment} from 'semantic-ui-react'
 import {_} from 'lodash'
 
 import * as API from '../adapters/api'
@@ -9,6 +9,7 @@ import Viewport from './Viewport'
 import ConstellationList from './ConstellationList'
 import ConstListElement from '../components/ConstListElement'
 import SatListElement from '../components/SatListElement'
+import SaveViewModal from '../components/SaveViewModal'
 import ViewListElement from '../components/ViewListElement'
 
 class MainDisplay extends Component {
@@ -17,7 +18,9 @@ class MainDisplay extends Component {
         this.state = { constellations: [],
                        satellites: [],
                        view: [],
-                       watchlists: []}
+                       watchlists: [],
+                       modalOpen: false
+                    }
     }
 
     componentDidMount(){
@@ -109,7 +112,7 @@ class MainDisplay extends Component {
     }
   
     panes =  [
-        {menuItem: { key: 'constellation', icon: 'bullseye', content: 'Constellations' },
+        {menuItem: { key: 'constellation', icon: 'bullseye', content: '' },
             render: () =>   <Tab.Pane attached={false}>
                                 <ConstellationList 
                                     constellations={this.state.constellations}
@@ -119,49 +122,56 @@ class MainDisplay extends Component {
                                 />
                             </Tab.Pane>,
         },
-        { menuItem: { key: 'catalog', icon: 'list', content: 'Catalog' },
+        { menuItem: { key: 'catalog', icon: 'list', content: '' },
             render: () =>   <Tab.Pane attached={false}>
-
-                    {/* <List divided verticalAlign='middle'>
-                                    {this.state.satellites.map( item =>
-                                        <SatListElement
-                                            key={ item.name}
-                                            item={item}
-                                            addOnClick={this.addSatelliteToView}
-                                            removeOnClick={this.removeSatelliteFromView}
-                                        />
-                                    )}
-                                </List> */}
                             </Tab.Pane>,
         },
-        { menuItem: { key: 'view', icon: 'unhide', content: 'View' },
+        { menuItem: { key: 'view', icon: 'unhide', content: '' },
             render: () =>   <Tab.Pane attached={false}>
-                            <List divided verticalAlign='middle'>
-                                {this.state.view.map( item =>
-                                    <ViewListElement
-                                        key={item.name}
-                                        item={item}
-                                        removeSatOnClick={this.removeSatelliteFromView}
-                                        removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
+                                {(this.state.view.lengt==0)? 
+                                null 
+                                : 
+                                <React.Fragment>
+                                    <Button
+                                        attached='top'
+                                        onClick={() => {this.setState({ modalOpen: true })}}
+                                    >
+                                        Save As
+                                    </Button>
+                                    <SaveViewModal // invisible modal itself
+                                        key='modal1'
+                                        modalOpen={this.state.modalOpen}
+                                        handleClose={ () => {this.setState({ modalOpen: false })}}
+                                        valueIntoModal={this.state.view}
                                     />
-                                )}
-                            </List>
-                        </Tab.Pane>,
+                                    <Segment attached>
+                                        <List divided verticalAlign='middle'>
+                                            {this.state.view.map( item =>
+                                                <ViewListElement
+                                                    key={item.name} item={item}
+                                                    removeSatOnClick={this.removeSatelliteFromView}
+                                                    removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
+                                                />
+                                            )}
+                                        </List>
+                                    </Segment>
+                                </React.Fragment>}
+                            </Tab.Pane>,
         },
-    { menuItem: { key: 'watchlist', icon: 'unhide', content: 'Watchlist' },
-        render: () =>   <Tab.Pane attached={false}>
-                        <List divided verticalAlign='middle'>
-                            {this.state.watchlists.map( item =>
-                                <ConstListElement
-                                    key={item.name}
-                                    item={item}
-                                    addOnClick={this.addOrFetchSatsForConstellationToView}
-                                    removeOnClick={this.removeConstellationFromView}
-                                />
-                            )}
-                        </List>
-                    </Tab.Pane>,
-    },
+        // ,
+    // { menuItem: { key: 'watchlist', icon: 'copy outline unhide',  content: '' },
+    //     render: () =>   <Tab.Pane attached={false}>
+    //                     <List divided verticalAlign='middle'>
+    //                         {this.state.watchlists.map( item =>
+    //                             <ConstListElement
+    //                                 key={item.name} item={item}
+    //                                 addOnClick={this.addOrFetchSatsForConstellationToView}
+    //                                 removeOnClick={this.removeConstellationFromView}
+    //                             />
+    //                         )}
+    //                     </List>
+    //                 </Tab.Pane>,
+    // },
     ]
 
     render() {
