@@ -6,6 +6,7 @@ import {_} from 'lodash'
 import * as API from '../adapters/api'
 
 import Viewport from './Viewport'
+import ConstellationList from './ConstellationList'
 import ConstListElement from '../components/ConstListElement'
 import SatListElement from '../components/SatListElement'
 import ViewListElement from '../components/ViewListElement'
@@ -101,32 +102,27 @@ class MainDisplay extends Component {
         constellations.push(constellation)
         let updatedViewlist = [...this.state.view].filter( s => s.constellation_id != sat.constellation_id )
         this.setState({view: updatedViewlist, constellations: constellations})
-
     }
 
-    handleTabClick = (e) => {
-        console.log(e.target.value)
+    showConstellationInfoOnClick = (item) => {
+       console.log(item.description)
     }
   
     panes =  [
         {menuItem: { key: 'constellation', icon: 'bullseye', content: 'Constellations' },
             render: () =>   <Tab.Pane attached={false}>
-                                <List divided verticalAlign='middle'>
-                                    {this.state.constellations.map( constellation =>
-                                        <ConstListElement
-                                            key={constellation.name}
-                                            item={constellation}
-                                            addOnClick={this.addOrFetchSatsForConstellationToView}
-                                            removeOnClick={this.removeConstellationFromView}
-                                        >
-                                        </ConstListElement>
-                                    )}
-                                </List>
+                                <ConstellationList 
+                                    constellations={this.state.constellations}
+                                    addOnClick={this.addOrFetchSatsForConstellationToView}
+                                    removeOnClick={this.removeConstellationFromView}
+                                    showInfoOnClick={this.showConstellationInfoOnClick}
+                                />
                             </Tab.Pane>,
         },
         { menuItem: { key: 'catalog', icon: 'list', content: 'Catalog' },
             render: () =>   <Tab.Pane attached={false}>
-                    <List divided verticalAlign='middle'>
+
+                    {/* <List divided verticalAlign='middle'>
                                     {this.state.satellites.map( item =>
                                         <SatListElement
                                             key={ item.name}
@@ -135,7 +131,7 @@ class MainDisplay extends Component {
                                             removeOnClick={this.removeSatelliteFromView}
                                         />
                                     )}
-                                </List>
+                                </List> */}
                             </Tab.Pane>,
         },
         { menuItem: { key: 'view', icon: 'unhide', content: 'View' },
