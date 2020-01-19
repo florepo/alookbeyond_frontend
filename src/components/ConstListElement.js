@@ -2,15 +2,17 @@ import React from 'react'
 import {List, Button, Icon, Header} from 'semantic-ui-react'
 
 const ConstListElement = ({item, addOnClick, removeOnClick}) => {
-
+    console.log(item)
     const handleClick = (item) => {
-        console.log("clicked here")
+        console.log("clicked")
 
         if (item.displayed){
+            console.log("remove")
             removeOnClick(item)
          } else {
+            console.log("add")
             console.log(addOnClick)
-            addOnClick(item.id)
+            addOnClick(item)
          }
     }
 
@@ -22,11 +24,11 @@ const ConstListElement = ({item, addOnClick, removeOnClick}) => {
             <List.Content floated='right'>
                 {item.displayed?
                 <Button size='mini' icon >
-                    <Icon name='hide'/>
+                    <Icon name='unhide'/>
                 </Button>
                 :
                 <Button size='mini' icon >
-                    <Icon name='unhide'/>
+                    <Icon name='hide'/>
                 </Button>
                 }
             </List.Content>

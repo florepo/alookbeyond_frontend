@@ -1,4 +1,4 @@
-import React,{ Component } from 'react'
+import React,{ Component, useState, useEffect } from 'react'
 
 import {Tab, List} from 'semantic-ui-react'
 import {_} from 'lodash'
@@ -10,87 +10,97 @@ import ConstListElement from '../components/ConstListElement'
 import SatListElement from '../components/SatListElement'
 import WatchListElement from '../components/WatchListElement'
 
-class MainDisplay extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  
-                        constellations: [],
-                        satellites: [],
-                        watchlist: [],
-                        tracking: [],
-                        display: [],
-                        color: 'blue' }
+const MainDisplay = (props) => {
+
+    const [constellations, setConstellations] = useState([])
+    const [satellites, setVatellites] = useState([])
+    const [view, setView] = useState([])
+    const [tracking, setTracking] = useState([])
+    const [count, setCount] = useState(0)
+
+       
+    useEffect(() => {
+        API.getConstellations()
+            .then(constellations => setConstellations(constellations))
+       }, [])
+
+    const addOrFetchSatsForConstellationToView = (constellation) => {
+
+        if (constellation.displayed==true) {
+            console.log("already selected")
+        } else if (!constellation.satellites) {
+            console.log("fetch satellites for constellation and to view")
+            constellation.displayed=true
+            API.getConstellationSats(constellation.id)
+                .then(constellation => constellation.satellites)
+                .then(sats => setView(sats))
+        } else {
+            console.log("add to vieew")
+            debugger
+            constellation.displayed=true
+            let sats = [...constellation.satellites]
+            let updatedViewlist= [...view]
+            updatedViewlist.concat(sats)
+            setView(updatedViewlist)
         }
-
-    componentDidMount() {
-        API.getConstellations().then(constellations => this.setState({constellations}))
-        // API.getSatellites().then(satellites => this.setState({satellites}))
     }
 
-    loadSatsForSelectedConstellation = (id) => {
-        console.log("fetch satellites for constellation")
-        API.getConstellationSats(id)
-            .then(constellation => constellation.satellites)
-            .then(sats => this.addSatsToWatchList(sats))
-    }
 
-    addSatsToWatchList = (sats) => {
-        sats.map(sat =>  this.addSatToWatchlist(sat))
-    }
-
-    addSatToWatchlist = (sat) => {
-        console.log("add to watchlist")
-        if (!!this.state.watchlist.find(s => s==sat )) { 
+    const addSatToView = (sat) => {
+        console.log("add to view")
+        if (!!setView.find(s => s==sat )) { 
             console.log("already selected")
         } else {
-            let updatedWatchlist= [...this.state.watchlist].concat(sat)
-            this.setState({watchlist: updatedWatchlist})
+            sat.displayed=true
+            let updatedViewlist= [...view].concat(sat)
+            setView(updatedViewlist)
         }
     }
 
-    addConToWatchList =(constellation)=> {
-        console.log("add to watchlist")
+    const removeSatFromView = (sat) => {
+        console.log("remove from view")
+        sat.displayed=false
+        let filteredList = [...view].filter( s => s!=sat )
+        setView(filteredList)
+    }
+
+    const addConstellationToView =(constellation)=> {
         if (constellation.displayed==true) {
             console.log("already selected")
         } else {
+            console.log("add to vieew")
             constellation.displayed=true
-            console.log(constellation)
-            let sats=[...constellation.satellites]
-            let updatedWatchlist= [...this.state.watchlist]
-            updatedWatchlist.concat(sats)
-            this.setState({watchlist: updatedWatchlist})
+            let sats = [...constellation.satellites]
+            let updatedViewlist= [...view]
+            updatedViewlist.concat(sats)
+            setView(updatedViewlist)
         }
     }
 
-    removeConFromWatchList = (constellation) => {
+    const removeConstellationFromView = (constellation) => {
+        console.log("remove from view")
         constellation.displayed=false
-        let filteredList = [...this.state.watchlist].filter( s => s.constellation_id!=constellation.id )
-        this.setState({watchlist: filteredList})
+        let filteredList = [...view].filter( s => s.constellation_id != constellation.id )
+        setView(filteredList)
     }
 
-    removeSatAndConFromWatchList = (sat) => {
+    const removeSatAndConFromView = (sat) => {
+        console.log("remove from view")
         sat.displayed=false
-        let filteredList = [...this.state.watchlist].filter( s => s.constellation_id!=sat.constellation_id )
-        this.setState({watchlist: filteredList})
+        let filteredList = [...view].filter( s => s.constellation_id != sat.constellation_id )
+        setView(filteredList)
     }
   
-    removeSatFromWatchlist = (sat) => {
-        sat.displayed=false
-        let filteredList = [...this.state.watchlist].filter( s => s!=sat )
-        this.setState({watchlist: filteredList})
-    }
-
-  
-    panes = [
+    const panes = [
         {menuItem: { key: 'constellation', icon: 'bullseye', content: 'Constellations' },
             render: () =>   <Tab.Pane attached={false}>
                                 <List divided verticalAlign='middle'>
-                                    {this.state.constellations.map( constellation =>
+                                    {constellations.map( constellation =>
                                         <ConstListElement
                                             key={constellation.name}
                                             item={constellation}
-                                            addOnClick={this.loadSatsForSelectedConstellation}
-                                            removeOnClick={this.removeConFromWatchList}
+                                            addOnClick={addOrFetchSatsForConstellationToView}
+                                            removeOnClick={removeConstellationFromView}
                                         >
                                         </ConstListElement>
                                     )}
@@ -99,47 +109,46 @@ class MainDisplay extends Component {
         },
         { menuItem: { key: 'catalog', icon: 'list', content: 'Catalog' },
             render: () =>   <Tab.Pane attached={false}>
-                                <List divided verticalAlign='middle'>
-                                    {this.state.satellites.map( item =>
+                    <List divided verticalAlign='middle'>
+                                    {satellites.map( item =>
                                         <SatListElement
-                                            key={item.name}
+                                            key={ item.name}
                                             item={item}
-                                            addOnClick={this.addSatToWatchlist}
-                                            removeOnClick={this.removeSatFromWatchlist}
+                                            addOnClick={addSatToView}
+                                            removeOnClick={this.removeSatFromView}
                                         />
                                     )}
                                 </List>
                             </Tab.Pane>,
         },
-        { menuItem: { key: 'watchlist', icon: 'unhide', content: 'Watchlist' },
-            render: () =>   <Tab.Pane attached={false}>
-                                <List divided verticalAlign='middle'>
-                                    {this.state.watchlist.map(item =>
-                                        <WatchListElement
-                                            key={item.name}
-                                            item={item}
-                                            removeSatOnClick={this.removeSatFromWatchlist}
-                                            removeSatAndConOnClick={this.removeSatAndConFromWatchList}
-                                        />
-                                    )}
-                                </List>
-                            </Tab.Pane>,
-        },
+        { menuItem: { key: 'view', icon: 'unhide', content: 'View' },
+        render: () =>   <Tab.Pane attached={false}>
+                            <List divided verticalAlign='middle'>
+                                {view.map( item =>
+                                    <WatchListElement
+                                        key={item.name}
+                                        item={item}
+                                        removeSatOnClick={removeSatFromView}
+                                        removeSatAndConOnClick={removeSatAndConFromView}
+                                    />
+                                )}
+                            </List>
+                        </Tab.Pane>,
+    }
+       
     ]
 
-    render() {
       return (  <div className="flex-row-container">
                     <Tab className='sidetabs'
                         menu={{ attached: false }}
-                        panes={this.panes}
+                        panes={panes}
                     />
                     <Viewport 
                         className="viewport"
-                        sats={this.state.watchlist}
+                        sats={view}
                     />
                  </div>
             )
-    }
 }
 
 export default MainDisplay;
