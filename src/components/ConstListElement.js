@@ -10,7 +10,6 @@ const ConstListElement = ({item, addOnClick, removeOnClick}) => {
             removeOnClick(item)
          } else {
             console.log("add")
-            console.log(addOnClick)
             addOnClick(item)
          }
     }

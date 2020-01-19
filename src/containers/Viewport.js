@@ -125,7 +125,7 @@ class Viewport extends Component {
     entities.forEach(sat => {
 
       let satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
-      let satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
+      let satObject = intializeSatObject(sat.name, sat.line1, sat.line2, satGeoModel, sceneScaleFactor)
       satObject = updateSatPostion(satObject, currentTimeStamp, sceneScaleFactor)
       this.trackObject(satObject)
       this.scene.add(satObject)
@@ -167,8 +167,6 @@ class Viewport extends Component {
     const updatedItems = oldItems.filter( item => {return item.name != entity.name} )
     this.setState({removable_items: updatedItems})
   }
-
- 
 
   removeEntityfromScene = (entity) => {
 
@@ -225,7 +223,7 @@ class Viewport extends Component {
     this.controls.minDistance = 3 * earthRadius*sceneScaleFactor
     this.controls.maxDistance = 20 * earthRadius*sceneScaleFactor
     this.controls.autoRotate = true;
-    // this.controls.autoRotateSpeed = 0.5;
+    this.controls.autoRotateSpeed = 0.1;
 
     //ADD LIGHTSOURCES
     let ambientLight = AmbientLight()

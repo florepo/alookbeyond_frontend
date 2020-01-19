@@ -6,7 +6,6 @@ import {adjustGlobalOrientation} from '../utils/scenehelper.js'
 export const createSatelliteGeoModel = (name="unknown", satScaleFactor=1, scaleFactor=1, )=> {
 
     const size = satScaleFactor*scaleFactor
-    console.log(size)
     const identifier = name
     // let geometry = new THREE.BoxGeometry(size, size, size);
     let geometry = new THREE.SphereGeometry(size, 32, 32);
@@ -70,9 +69,7 @@ export const EarthGeoModel = (earthRadius = 6371, scaleFactor = 1/1000)=> {
     geometry.name = identifier
     let loader = new THREE.TextureLoader()
     loader.name = identifier
-
     let earthMap = loader.load(process.env.PUBLIC_URL + '/assets/images/surface.jpg')
-    console.log(earthMap)
     let bumpMap = loader.load(process.env.PUBLIC_URL + '/assets/images/bump.jpeg')
     let material = new THREE.MeshPhongMaterial({
         map: earthMap,

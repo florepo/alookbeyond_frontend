@@ -1,18 +1,18 @@
 import React from 'react'
 import {List, Button, Icon, Header} from 'semantic-ui-react'
 
-const WatchListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
-
-    const handleSatClick = (item) =>{
-        debugger
+const ViewListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
+    const handleSatClick = (item) =>{ 
+        console.log("remove sat on click")
         removeSatOnClick(item)
     }
 
     const handleConClick = (item) => {
+        console.log("remove constellation on click")
         removeSatAndConOnClick(item)
     }
-
-    if (!item.constellation) return <div></div>;
+// if (!item.constellation) {return <div></div>};
+    // {console.log("list view elements", item)}
     return ( 
         <List.Item key={item.name}>
             <List.Content floated='right'>
@@ -31,10 +31,9 @@ const WatchListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
             </List.Content>
             <List.Content>
                 <Header as="h5">{item.name}</Header>
-                <Header as="h6">part of {item.constellation.name}</Header>
             </List.Content>                               
         </List.Item>
         );
 }
  
-export default WatchListElement;
+export default ViewListElement;

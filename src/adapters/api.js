@@ -1,6 +1,7 @@
-export const FRONTEND_URL = "http://a-look-beyond.s3-website.eu-west-2.amazonaws.com"
-
-export const BACKEND_URL = "https://vast-headland-62704.herokuapp.com"
+// export const FRONTEND_URL = "http://a-look-beyond.s3-website.eu-west-2.amazonaws.com"
+export const FRONTEND_URL = 'http://localhost:3001'
+// export const BACKEND_URL = "https://vast-headland-62704.herokuapp.com"
+export const BACKEND_URL = 'http://localhost:3000'
 
 
 
@@ -19,6 +20,7 @@ export const getConstellationSats = (id) => {
     const url = BACKEND_URL +'/constellations/' + id
     return fetch(url)
         .then(response  => response.json())
+        // .then(console.log)
 }
 
 export const getSatellites = () => {
@@ -34,6 +36,12 @@ export const getWatchlist = (id) => {
         .then(response  => response.json())
 }
 
+export const getWatchlists = () => {
+    const url = BACKEND_URL +'/watchlists'
+    console.log(url)
+    return fetch(url)
+        .then(response  => response.json())
+}
 
 
 export default {BACKEND_URL, FRONTEND_URL, get}
