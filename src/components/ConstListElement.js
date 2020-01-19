@@ -2,7 +2,6 @@ import React from 'react'
 import {List, Button, Icon, Header} from 'semantic-ui-react'
 
 const ConstListElement = ({item, addOnClick, removeOnClick}) => {
-    console.log(item)
     const handleClick = (item) => {
         console.log("clicked")
 

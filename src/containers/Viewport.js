@@ -129,9 +129,7 @@ class Viewport extends Component {
       satObject = updateSatPostion(satObject, currentTimeStamp, sceneScaleFactor)
       this.trackObject(satObject)
       this.scene.add(satObject)
-      console.log(satObject)
       let orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec,  satObject.name, sceneScaleFactor)  
-      console.log(orbitGeoModel)   
       this.scene.add(orbitGeoModel)
       this.trackObject(orbitGeoModel)
     });
@@ -173,13 +171,13 @@ class Viewport extends Component {
  
 
   removeEntityfromScene = (entity) => {
-    console.log("entity to be removed:",entity.name)
+
     this.scene.remove( entity );
     this.renderer.render(this.scene, this.camera);
   }
 
   removeEntityFromMemory = (entity) =>{
-    console.log("entity to be clean up:",entity.name)
+    // console.log("entity to be clean up:",entity.name)
     entity.material.dispose();
     entity.geometry.dispose();
     //possibly add texture.dispose()
