@@ -97,13 +97,10 @@ class MainDisplay extends Component {
     }
 
     loadWatchlistInView = (item) => {
-        console.log("load watchlist")
-        console.log("stats:", item.satellites.length)
         this.setState({view: item.satellites})
     }
 
     clearView = () => {
-        console.log("clear view")
         this.setState({view: []})
     }
   
@@ -131,6 +128,7 @@ class MainDisplay extends Component {
                                     view={this.state.view}
                                     removeSatOnClick={this.removeSatelliteFromView}
                                     removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
+                                    clearView={this.clearView}
                                 />
                                 }
                             </Tab.Pane>,

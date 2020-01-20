@@ -16,13 +16,15 @@ class SelectionContainer extends Component {
         const {info} = this.props
 
         return ( 
-            <div>
+            <div
+            className="info-box"
+            >
                 {(info.length==0)?
                 <div>
                     <SelectionNavInfo />
                 </div>
                 :
-                <div>
+                <div >
                     <h4>{info[0].name}</h4>
                     <p>{info[0].description}</p>
                 </div>

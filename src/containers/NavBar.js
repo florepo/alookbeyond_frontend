@@ -21,7 +21,7 @@ class NavBar extends Component {
                 <Menu.Item
                     as={Link}
                     to={'/'}
-                    name='Welcome'
+                    name='Home'
                     active={activeItem === 'home'}
                     onClick={this.handleItemClick}
                 />
@@ -31,15 +31,15 @@ class NavBar extends Component {
                         active={activeItem === 'arview'}
                         onClick={this.handleItemClick}
                     />
-                    <Menu.Item
+                    {/* <Menu.Item
                         name='Watchlists'
                         active={activeItem === 'watchlist'}
                         onClick={this.handleItemClick}
                     >
-                        <DropdownWatchlists
+                        {/* <DropdownWatchlists
                          onClick={this.handleWatchListClick}
-                        />
-                    </Menu.Item>
+                        /> */}
+                    {/* </Menu.Item> */} 
                 </Menu.Menu>
           </Menu>
          );

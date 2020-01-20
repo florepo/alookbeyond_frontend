@@ -4,15 +4,15 @@ import PropTypes from 'prop-types'
 import API from '../adapters/api';
 
 
-class SaveViewModal extends React.Component {
+class ModalSaveView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = { open: false }
   }
 
   confirmClick = (data, id) => {
     console.log("Passed in Prop Value: ", this.props.valueIntoModal);
-    API.patchWatchlist(data, id)
+    // API.patchWatchlist(data, id)
     this.props.handleClose();
   }
   
@@ -54,10 +54,10 @@ class SaveViewModal extends React.Component {
   }
 }
 
-SaveViewModal.propTypes = {
+ModalSaveView.propTypes = {
   modalOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   valueIntoModal: PropTypes.array.isRequired
 }
 
-export default SaveViewModal
+export default ModalSaveView
