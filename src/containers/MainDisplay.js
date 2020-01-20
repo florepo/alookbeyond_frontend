@@ -126,6 +126,7 @@ class MainDisplay extends Component {
                                 : 
                                 <ListOfViewElements 
                                     view={this.state.view}
+                                    watchlists={this.state.watchlists}
                                     removeSatOnClick={this.removeSatelliteFromView}
                                     removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
                                     clearView={this.clearView}

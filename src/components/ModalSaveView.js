@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Header, Button, Icon } from 'semantic-ui-react'
+import { Modal, Header, Button, Dropdown } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import API from '../adapters/api';
 
@@ -7,14 +7,18 @@ import API from '../adapters/api';
 class ModalSaveView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false }
+    this.state = { open: this.props.display }
   }
 
   confirmClick = (data, id) => {
     console.log("Passed in Prop Value: ", this.props.valueIntoModal);
     // API.patchWatchlist(data, id)
-    this.props.handleClose();
+    this.props.handleClose(data);
   }
+
+  selection = this.props.valueIntoModal.map( list => {
+    return {key: list.name, text: list.name, value: list.name}
+  })
   
   render() {
     return (
@@ -28,7 +32,14 @@ class ModalSaveView extends React.Component {
           icon='browser' 
           content='Save Current View' />
         <Modal.Content>
-          <h3>Please confirm:</h3>
+          <h3>Please slot to Save:</h3>
+          <Dropdown
+            placeholder='Select Slot'
+            fluid
+            selection
+            options={this.selection}
+          />
+
         </Modal.Content>
 
         <Modal.Actions>
