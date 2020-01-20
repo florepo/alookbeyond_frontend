@@ -1,10 +1,7 @@
 import React,{Component} from 'react'
-import {Menu, Dropdown, Icon, Button} from 'semantic-ui-react'
+import {Menu} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
-
-
-
-
+import DropdownWatchlists from './DropdownWatchlists'
 
 class NavBar extends Component {
     constructor(props) {
@@ -12,8 +9,9 @@ class NavBar extends Component {
         this.state = { activeItem: '3dview'   }
     }
 
-    handleClick = () => {
-        console.log("clicked")
+    handleWatchListClick = (id) => {
+        console.log("clicked", id)
+        this.props.onClick(id)
     }
 
     render() { 
@@ -28,38 +26,20 @@ class NavBar extends Component {
                     onClick={this.handleItemClick}
                 />
                 <Menu.Menu position='right'>
-                <Menu.Item
-                    name='AR-Preview'
-                    active={activeItem === 'arview'}
-                    onClick={this.handleItemClick}
-                />
-                <Menu vertical>
-                    <Dropdown item text='Watchlists'>
-                    <Dropdown.Menu>
-                        <Dropdown.Item
-                            
-                        >
-                            Alpha
-                            <Button
-                                onClick={this.handleClick}
-                            > load </Button>
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={this.handleClick}
-                        >
-                            Bravo
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={this.handleClick}
-                        >
-                            Charlie
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            Delta
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                    </Dropdown>
-                    </Menu>
+                    <Menu.Item
+                        name='AR-Preview'
+                        active={activeItem === 'arview'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='Watchlists'
+                        active={activeItem === 'watchlist'}
+                        onClick={this.handleItemClick}
+                    >
+                        <DropdownWatchlists
+                         onClick={this.handleWatchListClick}
+                        />
+                    </Menu.Item>
                 </Menu.Menu>
           </Menu>
          );

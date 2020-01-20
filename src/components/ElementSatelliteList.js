@@ -1,7 +1,7 @@
 import React from "react";
 import { List, Button, Icon, Header } from "semantic-ui-react";
 
-const SatListElement = ({ item, addOnClick, removeOnClick }) => {
+const ElementSatelliteList. = ({ item, addOnClick, removeOnClick }) => {
 
   const handleClick = item => {
     debugger
@@ -34,4 +34,4 @@ const SatListElement = ({ item, addOnClick, removeOnClick }) => {
   );
 };
 
-export default SatListElement;
+export default ElementSatelliteList.;

@@ -3,53 +3,57 @@ export const FRONTEND_URL = 'http://localhost:3001'
 // export const BACKEND_URL = "https://vast-headland-62704.herokuapp.com"
 export const BACKEND_URL = 'http://localhost:3000'
 
-export const WIKIPEDIA_API = 'https://en.wikipedia.org/api/rest_v1/page/summary/'
-
+const apiHeaders = {
+    "Content-Type": "application/json",
+    Accept: "application/json"
+  };
 
 export const get = (url) => {
     fetch(url)
         .then(resp => resp.json())
 }
 
-export const getWikiSummary = () => {
-    const url = WIKIPEDIA_API +'/constellations'
-    return fetch(url)
-        .then(response  => response.json())
+export const patch = (url, data) => {
 
+    let configObject  ={ method: "POST",
+                    headers: apiHeaders,
+                    body: JSON.stringify({data})}
+
+        return fetch(url, configObject)
+            .then(resp => resp.json());
 }
+
 
 export const getConstellations = () => {
     const url = BACKEND_URL +'/constellations'
-    return fetch(url)
-        .then(response  => response.json())
+    return get(url)
 }
 
 export const getConstellationSats = (id) => {
     const url = BACKEND_URL +'/constellations/' + id
-    return fetch(url)
-        .then(response  => response.json())
-        // .then(console.log)
+    return get(url)
 }
 
 export const getSatellites = () => {
     const url = BACKEND_URL +'/satellites'
-    return fetch(url)
-        .then(response  => response.json())
+    return get(url)
 }
 
 export const getWatchlist = (id) => {
     const url = BACKEND_URL +'/watchlists/' + id
-    console.log(url)
-    return fetch(url)
-        .then(response  => response.json())
+    return get(url)
 }
 
 export const getWatchlists = () => {
     const url = BACKEND_URL +'/watchlists'
     console.log(url)
-    return fetch(url)
-        .then(response  => response.json())
+    return get(url)
 }
 
+export const patchWatchList = (data, id) => {
+    const url = BACKEND_URL +'/watchlists'+ id
+    console.log("posting")
+    patch(url,data)
+}
 
-export default {BACKEND_URL, FRONTEND_URL, get}
+export default {BACKEND_URL, FRONTEND_URL}

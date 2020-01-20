@@ -1,7 +1,7 @@
 import React from 'react'
 import {List, Button, Icon, Header} from 'semantic-ui-react'
 
-const ConstListElement = ({item, addOnClick, removeOnClick, showInfoOnClick}) => {
+const ElementConstellationList = ({item, addOnClick, removeOnClick, showInfoOnClick}) => {
     
     const handleInfoClick = (item) => {
         console.log("clicked")
@@ -54,4 +54,4 @@ const ConstListElement = ({item, addOnClick, removeOnClick, showInfoOnClick}) =>
         );
 }
  
-export default ConstListElement;
+export default ElementConstellationList;

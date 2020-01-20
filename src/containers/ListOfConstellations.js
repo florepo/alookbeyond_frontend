@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Accordion, Icon, List, Divider } from 'semantic-ui-react'
-import ConstListElement from '../components/ConstListElement'
+import ElementConstellationList from '../components/ElementConstellationList'
 
 class ListOfConstellations extends Component {
   state = { activeIndex: 0 }
@@ -17,7 +17,6 @@ class ListOfConstellations extends Component {
 
     const { activeIndex } = this.state
     const { constellations, addOnClick, removeOnClick, showInfoOnClick} = this.props
-    debugger
     return (
       <Accordion>
         <Accordion.Title
@@ -32,7 +31,7 @@ class ListOfConstellations extends Component {
             <List >
                 {constellations.filter(c=>c.category=="Navigation & Positioning").map( constellation =>
                     <React.Fragment key={constellation.name}>
-                        <ConstListElement 
+                        <ElementConstellationList
                             key={constellation.name}
                             item={constellation}
                             addOnClick={addOnClick}
@@ -56,7 +55,7 @@ class ListOfConstellations extends Component {
         <Accordion.Content active={activeIndex === 1}>
             <List >
                 {constellations.filter(c=>c.category=="Communication").map( constellation =>
-                    <ConstListElement
+                    <ElementConstellationList
                         key={constellation.name}
                         item={constellation}
                         addOnClick={addOnClick}
@@ -77,7 +76,7 @@ class ListOfConstellations extends Component {
         <Accordion.Content active={activeIndex === 2}>
             <List >
                 {constellations.filter(c=>c.category=="Weather and Earth Resources").map( constellation =>
-                    <ConstListElement
+                    <ElementConstellationList
                         key={constellation.name}
                         item={constellation}
                         addOnClick={addOnClick}

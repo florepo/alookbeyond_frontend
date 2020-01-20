@@ -1,7 +1,7 @@
 import React from 'react'
 import {List, Button, Icon, Header} from 'semantic-ui-react'
 
-const ViewListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
+const ElementViewList = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
     const handleSatClick = (item) =>{ 
         console.log("remove sat on click")
         removeSatOnClick(item)
@@ -42,4 +42,4 @@ const ViewListElement = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
         );
 }
  
-export default ViewListElement;
+export default ElementViewList;

@@ -64,13 +64,7 @@
   background-color: #11F281;
 }
 
-/* viewport example */
-.flex-row-container {
-  display: flex;
-  flex-flow: row;
-  height: 100%;
-  width: 100%;
-}
+
 
 .ui.menu{
   display: block;
@@ -143,6 +137,18 @@
   margin: 3px 4px 3px 4px;
 }
 
+/* viewport example */
+.flex-ccolumn-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+}
+
+.selection-container {
+  background-color: 445;
+}
+
 .viewport {
   height: 85vh;
   width: 80vw;
@@ -160,5 +166,6 @@
 
 /* FOOTER */
 .footer {
+border-radius: 5px;
 background-color: #888;
 }

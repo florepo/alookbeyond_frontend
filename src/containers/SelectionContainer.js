@@ -1,28 +1,34 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {List, Button, Icon} from 'semantic-ui-react'
+import SelectionNavInfo from '../components/SelectionNavInfo.js'
 
-const SelectionContainer =({sats, remove})=> {
 
-    const handleClick = (id) =>{
-        console.log("clicked")
-        remove(id)
+class SelectionContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  }
     }
 
-    return ( 
-        <div className="selectionContainer">
-            <List selection verticalAlign='middle'>
-                {sats.map(sat => {
-                    return  <List.Item key={sat.name} >
-                                {sat.name}
-                                <Button icon onClick={()=>handleClick(sat.id)}>
-                                    <Icon name='minus'/>
-                                </Button>
-                            </List.Item>
-                })}
-            </List>
-        </div>
-    );
+    handleClick = (id) =>{
+        console.log("clicked")
+    }
+    render() { 
+        const {info} = this.props
 
+        return ( 
+            <div>
+                {(info.length==0)?
+                <div>
+                    <SelectionNavInfo />
+                </div>
+                :
+                <div>
+                    <h4>{info[0].name}</h4>
+                    <p>{info[0].description}</p>
+                </div>
+                }
+            </div> );
+    }
 }
  
 export default SelectionContainer;

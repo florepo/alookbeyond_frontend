@@ -1,11 +1,18 @@
 import React from 'react'
 import { Modal, Header, Button, Icon } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import API from '../adapters/api';
 
-export default class SaveViewModal extends React.Component {
 
-  confirmClick = (event, data) => {
+class SaveViewModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {  }
+  }
+
+  confirmClick = (data, id) => {
     console.log("Passed in Prop Value: ", this.props.valueIntoModal);
+    API.patchWatchlist(data, id)
     this.props.handleClose();
   }
   
@@ -17,10 +24,13 @@ export default class SaveViewModal extends React.Component {
         closeOnEscape={true}
         closeOnRootNodeClick={true}
       >
-        <Header icon='browser' content='Save Current View' />
+        <Header
+          icon='browser' 
+          content='Save Current View' />
         <Modal.Content>
           <h3>Please confirm:</h3>
         </Modal.Content>
+
         <Modal.Actions>
           <Button
             negative
@@ -49,3 +59,5 @@ SaveViewModal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   valueIntoModal: PropTypes.array.isRequired
 }
+
+export default SaveViewModal
