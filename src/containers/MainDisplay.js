@@ -105,6 +105,7 @@ class MainDisplay extends Component {
     }
   
     saveViewToWatchlist = (item) => {
+        console.log(item)
         console.log("API call here")
     }
 

@@ -7,16 +7,17 @@ import API from '../adapters/api';
 class ModalSaveView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: this.props.display }
+    this.state = { open: this.props.display,
+                   value: null }
   }
 
+  confirmClick = (input) => {
+    console.log("Seledcted Value: ", input);
+    this.props.handleConfirm(this.state.value);
+  }
 
-
-  confirmClick = (data, id) => {
-    console.log("Passed in Prop Value: ", this.props.valueIntoModal);
-    // API.patchWatchlist(data, id)
-    this.props.handleConfirm(data);
-
+  handleChange = (e, {value}) =>{
+    this.setState({ value })
   }
 
   selection = this.props.valueIntoModal.map( list => {
@@ -41,6 +42,7 @@ class ModalSaveView extends React.Component {
             fluid
             selection
             options={this.selection}
+            onChange={this.handleChange}
           />
 
         </Modal.Content>
@@ -59,7 +61,7 @@ class ModalSaveView extends React.Component {
             type='button'
             icon='checkmark'
             labelPosition='right'
-            onClick={this.confirmClick}
+            onClick={(event) => this.confirmClick(event.target)}
             content='Confirm'
           />
         </Modal.Actions>
