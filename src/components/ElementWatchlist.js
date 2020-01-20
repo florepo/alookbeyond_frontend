@@ -22,6 +22,7 @@ const ElementWatchlist = ({item, loadWatchlistInView}) => {
                 </List.Content>
                 <List.Content>
                     <Header as="h6">{item.name}</Header>
+                    {(item.satellites.length=[])? "empty": null}
                 </List.Content>                               
             </List.Item>
         </React.Fragment>

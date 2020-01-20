@@ -104,9 +104,22 @@ class MainDisplay extends Component {
         this.setState({view: []})
     }
   
-    saveViewToWatchlist = (item) => {
-        console.log(item)
+    saveViewToWatchlist = (watchlist_name) => {
+        console.log(watchlist_name)
         console.log("API call here")
+
+        // data = {satellites: this.state.view}
+        let target = this.state.watchlists.filter( watchlist => watchlist.name== watchlist_name )
+        console.log("target", target)
+        console.log("target.id", target[0].id)
+
+        let sat_ids = this.state.view.map( sat => sat.id)
+            console.log("sat_ids", sat_ids)
+        let data = {sat_ids: sat_ids, watchlist_id: target[0].id}
+
+        API.updateWatchList(data, target[0].id).then(API.getWatchlists().then(console.log)).then(watchlists => this.setState({watchlists}))
+        
+        //
     }
 
 

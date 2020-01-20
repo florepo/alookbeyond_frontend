@@ -16,10 +16,12 @@ export const get = (url) => {
 
 export const patch = (url, data) => {
 
-    let configObject  ={ method: "POST",
+    let configObject  ={ method: "PATCH",
                     headers: apiHeaders,
-                    body: JSON.stringify({data})}
-
+                    body: JSON.stringify({data})
+                };
+                console.log(configObject)
+                console.log(url)
         return fetch(url, configObject)
             .then(resp => resp.json());
 }
@@ -51,10 +53,10 @@ export const getWatchlists = () => {
     return get(url)
 }
 
-export const patchWatchList = (data, id) => {
-    const url = BACKEND_URL +'/watchlists'+ id
+export const updateWatchList = (data, id) => {
+    const url = BACKEND_URL +'/watchlists/'+ id
     console.log("posting")
-    patch(url,data)
+    return patch(url, data)
 }
 
 export default {BACKEND_URL, FRONTEND_URL}
