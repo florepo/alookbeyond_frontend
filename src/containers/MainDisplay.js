@@ -4,7 +4,7 @@ import Viewport from './Viewport'
 import ListOfViewElements from '../containers/ListOfViewElements'
 import ListOfConstellations from './ListOfConstellations'
 import SelectionContainer from './SelectionContainer'
-import SaveViewModal from '../components/ModalSaveView'
+import ListOfWatchlists from '../containers/ListOfWatchlists'
 import {_} from 'lodash'
 import * as API from '../adapters/api'
 
@@ -96,6 +96,16 @@ class MainDisplay extends Component {
        this.setState({selection: [item]})
     }
 
+    loadWatchlistInView = (item) => {
+        console.log("load watchlist")
+        console.log("stats:", item.satellites.length)
+        this.setState({view: item.satellites})
+    }
+
+    clearView = () => {
+        console.log("clear view")
+        this.setState({view: []})
+    }
   
     panes =  [
         {   menuItem: { key: 'constellation', icon: 'bullseye', content: '' },
@@ -117,35 +127,6 @@ class MainDisplay extends Component {
                                 {(this.state.view.length==0)? 
                                 null 
                                 : 
-                                // <ListOfViewElements
-                                //     view={this.state.view}
-                                //     removeSatelliteFromView={this.removeSatelliteFromView}
-                                //     removeSatelliteWithConstellationFromView={this.removeSatelliteWithConstellationFromView}
-                                // />
-                                // <React.Fragment>
-                                //     <Button
-                                //         attached='top'
-                                //         onClick={() => {this.setState({ modalOpen: true })}}
-                                //     >
-                                //         Save As
-                                //     </Button>
-                                //     <SaveViewModal // invisible modal
-                                //         modalOpen={this.state.modalOpen}
-                                //         handleClose={ () => {this.setState({ modalOpen: false })}}
-                                //         valueIntoModal={this.state.view}
-                                //     />
-                                //     <Segment attached>
-                                //         <List divided verticalAlign='middle'>
-                                //             {this.state.view.map( item =>
-                                //                 <ViewListElement
-                                //                     key={item.name} item={item}
-                                //                     removeSatOnClick={this.removeSatelliteFromView}
-                                //                     removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
-                                //                 />
-                                //             )}
-                                //         </List>
-                                //     </Segment>
-                                // </React.Fragment>
                                 <ListOfViewElements 
                                     view={this.state.view}
                                     removeSatOnClick={this.removeSatelliteFromView}
@@ -156,6 +137,10 @@ class MainDisplay extends Component {
         },
         {   menuItem: { key: 'catalog', icon: 'list', content: '' },
         render: () =>   <Tab.Pane attached={false}>
+                            <ListOfWatchlists 
+                                 watchlists={this.state.watchlists}
+                                 loadWatchlistInView={this.loadWatchlistInView}
+                            />
                         </Tab.Pane>,
         },
     ]
