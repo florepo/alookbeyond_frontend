@@ -10,10 +10,13 @@ class ModalSaveView extends React.Component {
     this.state = { open: this.props.display }
   }
 
+
+
   confirmClick = (data, id) => {
     console.log("Passed in Prop Value: ", this.props.valueIntoModal);
     // API.patchWatchlist(data, id)
-    this.props.handleClose(data);
+    this.props.handleConfirm(data);
+
   }
 
   selection = this.props.valueIntoModal.map( list => {

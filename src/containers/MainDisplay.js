@@ -21,7 +21,7 @@ class MainDisplay extends Component {
 
     componentDidMount(){
         API.getConstellations().then(constellations => this.setState({constellations}))
-        API.getWatchlists().then(watchlists => this.setState({watchlists: watchlists.slice(4, watchlists.length)}))
+        API.getWatchlists().then(watchlists => this.setState({watchlists}))
         // this.setState({view: this.props.loadedView})
     }
 
@@ -104,6 +104,11 @@ class MainDisplay extends Component {
         this.setState({view: []})
     }
   
+    saveViewToWatchlist = (item) => {
+        console.log("API call here")
+    }
+
+
     panes =  [
         {   menuItem: { key: 'constellation', icon: 'bullseye', content: '' },
             render: () =>   <Tab.Pane attached={false}>
@@ -130,11 +135,12 @@ class MainDisplay extends Component {
                                     removeSatOnClick={this.removeSatelliteFromView}
                                     removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
                                     clearView={this.clearView}
+                                    saveViewToWatchlist={this.saveViewToWatchlist}
                                 />
                                 }
                             </Tab.Pane>,
         },
-        {   menuItem: { key: 'catalog', icon: 'list', content: '' },
+        {   menuItem: { key: 'watchlists', icon: 'list', content: '' },
         render: () =>   <Tab.Pane attached={false}>
                             <ListOfWatchlists 
                                  watchlists={this.state.watchlists}

@@ -15,8 +15,7 @@ class ListOfViewElements extends Component {
         console.log("show modal")
         this.setState({ modelOpen: true })
     }
-    // handleConfirm = () => this.setState({ open: false })
-    // handleCancel = () => this.setState({ open: false })
+
   
     handleClearButtonClick = () => {
         console.log("clearview")
@@ -24,12 +23,13 @@ class ListOfViewElements extends Component {
     }
 
     handleModalClose = () => {
-        // this.setState({modelOpen: false})
+        this.setState({modelOpen: false})
     }
 
     handleModalConfirm = (item) => {
-        // this.setState({modelOpen: false})
-        console.log("confirm")
+        this.setState({modelOpen: false})
+        this.props.saveViewToWatchlist(item)
+        
     }
 
 
