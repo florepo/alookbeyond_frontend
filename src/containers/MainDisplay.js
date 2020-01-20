@@ -1,10 +1,10 @@
 import React,{ Component} from 'react'
 import {Tab, List, Button, Segment} from 'semantic-ui-react'
 import Viewport from './Viewport'
+import ListOfViewElements from '../containers/ListOfViewElements'
 import ListOfConstellations from './ListOfConstellations'
 import SelectionContainer from './SelectionContainer'
 import SaveViewModal from '../components/ModalSaveView'
-import ViewListElement from '../components/ElementViewList'
 import {_} from 'lodash'
 import * as API from '../adapters/api'
 
@@ -15,12 +15,13 @@ class MainDisplay extends Component {
                        satellites: [],
                        view: [],
                        watchlists: [],
-                       selection: []}
+                       selection: [],
+                       modalOpen: false }
     }
 
     componentDidMount(){
-        // API.getConstellations().then(constellations => this.setState({constellations}))
-        // API.getWatchlists().then(watchlists => this.setState({watchlists: watchlists.slice(4, watchlists.length)}))
+        API.getConstellations().then(constellations => this.setState({constellations}))
+        API.getWatchlists().then(watchlists => this.setState({watchlists: watchlists.slice(4, watchlists.length)}))
         // this.setState({view: this.props.loadedView})
     }
 
@@ -121,42 +122,51 @@ class MainDisplay extends Component {
                                 //     removeSatelliteFromView={this.removeSatelliteFromView}
                                 //     removeSatelliteWithConstellationFromView={this.removeSatelliteWithConstellationFromView}
                                 // />
-                                <React.Fragment>
-                                    <Button
-                                        attached='top'
-                                        onClick={() => {this.setState({ modalOpen: true })}}
-                                    >
-                                        Save As
-                                    </Button>
-                                    <SaveViewModal // invisible modal
-                                        modalOpen={this.state.modalOpen}
-                                        handleClose={ () => {this.setState({ modalOpen: false })}}
-                                        valueIntoModal={this.state.view}
-                                    />
-                                    <Segment attached>
-                                        <List divided verticalAlign='middle'>
-                                            {this.state.view.map( item =>
-                                                <ViewListElement
-                                                    key={item.name} item={item}
-                                                    removeSatOnClick={this.removeSatelliteFromView}
-                                                    removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
-                                                />
-                                            )}
-                                        </List>
-                                    </Segment>
-                                </React.Fragment>
+                                // <React.Fragment>
+                                //     <Button
+                                //         attached='top'
+                                //         onClick={() => {this.setState({ modalOpen: true })}}
+                                //     >
+                                //         Save As
+                                //     </Button>
+                                //     <SaveViewModal // invisible modal
+                                //         modalOpen={this.state.modalOpen}
+                                //         handleClose={ () => {this.setState({ modalOpen: false })}}
+                                //         valueIntoModal={this.state.view}
+                                //     />
+                                //     <Segment attached>
+                                //         <List divided verticalAlign='middle'>
+                                //             {this.state.view.map( item =>
+                                //                 <ViewListElement
+                                //                     key={item.name} item={item}
+                                //                     removeSatOnClick={this.removeSatelliteFromView}
+                                //                     removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
+                                //                 />
+                                //             )}
+                                //         </List>
+                                //     </Segment>
+                                // </React.Fragment>
+                                <ListOfViewElements 
+                                    view={this.state.view}
+                                    removeSatOnClick={this.removeSatelliteFromView}
+                                    removeSatAndConOnClick={this.removeSatelliteWithConstellationFromView }
+                                />
                                 }
                             </Tab.Pane>,
+        },
+        {   menuItem: { key: 'catalog', icon: 'list', content: '' },
+        render: () =>   <Tab.Pane attached={false}>
+                        </Tab.Pane>,
         },
     ]
 
     render() {
-        return (  <div className="main-display-container">
-                    <Tab 
-                        className='sidetabs'
-                        menu={{ attached: false }}
-                        panes={this.panes}
-                    />
+        return (    <div className="main-display-container">
+                        <Tab 
+                            className='sidetabs'
+                            menu={{ attached: false }}
+                            panes={this.panes}
+                        />
                     <div className='flex-ccolumn-container'>
                         <Viewport 
                             className="viewport"

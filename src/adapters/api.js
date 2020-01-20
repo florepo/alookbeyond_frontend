@@ -1,5 +1,6 @@
 // export const FRONTEND_URL = "http://a-look-beyond.s3-website.eu-west-2.amazonaws.com"
 export const FRONTEND_URL = 'http://localhost:3001'
+
 // export const BACKEND_URL = "https://vast-headland-62704.herokuapp.com"
 export const BACKEND_URL = 'http://localhost:3000'
 
@@ -9,7 +10,7 @@ const apiHeaders = {
   };
 
 export const get = (url) => {
-    fetch(url)
+    return fetch(url)
         .then(resp => resp.json())
 }
 
