@@ -55,21 +55,21 @@
 
 .video {
   object-fit: fill;
-  }
+}
 .sidetabs {
   min-width: 250px;
   overflow-y: auto;
   margin: 3px 4px 3px 4px;
-  z-index: 1
-/* 
+  z-index: 1;
+  /* 
   background-color: rgb(90, 74, 74); */
 }
 
-.ui.segment.segment {
+.ui.vertical.center.aligned.segment {
   /* background-color: rgb(63, 63, 63); */
+  background-image: url("./css-assets/welcomeBackground.jpeg");
   /* color: white */
 }
-
 
 /* viewport example */
 .flex-column-container {
@@ -82,7 +82,6 @@
 
 .selection-container {
   background-color: 445;
-
 }
 
 .info-box {
@@ -106,28 +105,26 @@
 .canvas {
   flex: 1 1 auto;
   height: 85vh;
-  width:80vh;
+  width: 80vh;
   overflow: hidden;
   /* background-color: rgb(1, 110, 110); */
-} 
+}
 
-.ui.menu{
+.ui.menu {
   display: block;
   flex: 0 0 200px;
   margin: 3px 4px 3px 4px;
   background-color: rgb(87, 13, 13);
 }
 
-
-
 .title.active {
   background-color: #d6d6d6;
-  border-radius: 5px
+  border-radius: 5px;
 }
 
 .title {
   background-color: #f9f9f9;
-  border-radius: 5px
+  border-radius: 5px;
 }
 
 .viewport-ar {
@@ -139,13 +136,10 @@
 
 /* NAVBAR */
 
-
-
-
 /* FOOTER */
 .footer {
-border-radius: 5px;
-background-color: #888;
+  border-radius: 5px;
+  background-color: #888;
 }
 
 .ui.menu:not(.vertical) .item {
