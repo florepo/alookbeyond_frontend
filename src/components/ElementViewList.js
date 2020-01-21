@@ -1,7 +1,7 @@
 import React from 'react'
 import {List, Button, Icon, Header} from 'semantic-ui-react'
 
-const ElementViewList = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
+const ElementViewList = ({item, removeSatOnClick, removeSatAndConOnClick, constellationOfSelectedSatellite}) => {
     const handleSatClick = (item) =>{ 
         console.log("remove sat on click")
         removeSatOnClick(item)
@@ -23,7 +23,7 @@ const ElementViewList = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
                             onClick={()=> handleSatClick(item)}
                         />
                     </Button>
-                    <Button size='mini' icon
+                    {/* <Button size='mini' icon
                         onClick={()=> handleConClick(item)} >
                         <Icon
                             name='bullseye'
@@ -32,10 +32,11 @@ const ElementViewList = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
                             name='window close'
                             onClick={()=> handleConClick(item)}
                             />
-                    </Button>  
+                    </Button>   */}
                 </List.Content>
                 <List.Content>
                     <Header as="h6">{item.name}</Header>
+                    <Header as="h6">{constellationOfSelectedSatellite.name}</Header>
                     {/* <Header as="h6">{item.constellation.name}</Header> */}
                 </List.Content>               
             </List.Item>
