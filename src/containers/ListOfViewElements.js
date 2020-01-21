@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Tab, List, Button, Segment, Confirm } from "semantic-ui-react";
 
 import ElementViewList from "../components/ElementViewList";
+import ElementViewConstellation from "../components/ElementViewConstellation"
 import ModalSaveView from "../components/ModalSaveView";
 
 class ListOfViewElements extends Component {
@@ -34,15 +35,17 @@ class ListOfViewElements extends Component {
   };
 
   render() {
-    const { view, constellations } = this.props;
+    const { view, constellations,  constellationsInView, removeConOnClick } = this.props;
     return (
       <React.Fragment>
+
         <ModalSaveView
           modalOpen={this.state.modelOpen}
           handleClose={this.handleModalClose}
           handleConfirm={this.handleModalConfirm}
           valueIntoModal={this.props.watchlists}
         />
+
         <Button attached="top" onClick={this.show}>
           Save as Watchlist
         </Button>
@@ -50,6 +53,19 @@ class ListOfViewElements extends Component {
         <Button attached="top" onClick={this.handleClearButtonClick}>
           Clear View
         </Button>
+
+        <Segment attached>
+            Dummy Title Constellations
+            <List divided verticalAlign="middle">
+                {constellationsInView.map(constellation =>
+                    <ElementViewConstellation 
+                        item={constellation}    
+                        removeConOnClick={removeConOnClick}
+                    />
+                )}
+            </List>
+       </Segment>
+
         <Segment attached>
           <List divided verticalAlign="middle">
             {view.map(item => (
@@ -66,6 +82,8 @@ class ListOfViewElements extends Component {
             ))}
           </List>
         </Segment>
+
+        
       </React.Fragment>
     );
   }
