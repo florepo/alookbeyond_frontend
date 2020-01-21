@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Button, CardMetaProps, Card } from "semantic-ui-react";
+import React, from "react";
+import { Button, Card } from "semantic-ui-react";
 
 const SideContainer = ({ sats, addSat }) => {
   const handleClick = id => {

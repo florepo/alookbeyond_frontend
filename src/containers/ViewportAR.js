@@ -19,8 +19,8 @@ import {
 //Control parameters
 let counter =0 
 const earthRadius = 6371; //[km]
-const cameraAltitude = 40000; //[km]
-const sceneScaleFactor = 1 / 1000;
+const cameraAltitude = 60000; //[km]
+const sceneScaleFactor = 1 / 2000;
 const satScaleFactor = 200;
 const currentTimeStamp = new Date();
 
@@ -28,7 +28,6 @@ const currentTimeStamp = new Date();
 var arToolkitSource, arToolkitContext; //from html
 var markerRoot1; // where does it need to be available?
 var mesh1; // where does it need to be available?
-var testSatObject; // where does it need to be available?
 let ARview = true;
 let ModelOffset = {};
 
@@ -43,6 +42,7 @@ export const ViewportAR = canvas => {
   console.log("we mount here", canvas);
 
   if (canvas) {
+
     //GET CANVAS DIMENSIONS
     let height = canvas.clientHeight;
     let width = canvas.clientWidth;
@@ -55,6 +55,7 @@ export const ViewportAR = canvas => {
 
     // ADD CONTENT AND MANAGE RENDERER
     setupContent(canvas, current);
+
   }
 };
 
@@ -62,6 +63,7 @@ const setupContent = (domElement, current) => {
   console.log(domElement, current)
   current = initialize(domElement, current);
   animate(current);
+  onResize()
 };
 
 const initialize = (canvas, current) => {
@@ -90,25 +92,26 @@ const initialize = (canvas, current) => {
       parentElement: canvas
     });
 
-    function onResize() {
-      arToolkitSource.onResize();
-      arToolkitSource.copySizeTo(current.renderer.canvas);
-      if (arToolkitContext.arController !== null) {
-        arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
-      }
-    }
+    
     arToolkitSource.init(function onReady() {
       onResize();
     });
 
     // handle resize event
     window.addEventListener("resize", function() {
+      console.log("resize")
       onResize();
     });
   }
 
 
-  
+  const onResize = () => {
+    arToolkitSource.onResize();
+    arToolkitSource.copySizeTo(current.renderer.canvas);
+    if (arToolkitContext.arController !== null) {
+      arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
+    }
+  }
 
   ////////////////////////////////////////////////////////////
   // setup arToolkitContext
@@ -181,7 +184,7 @@ const initialize = (canvas, current) => {
 const animate = current => {
   renderScene(current);
   //   // controls.update(); // required if controls.enableDamping or controls.autoRotate are set to true
-  //   window.requestAnimationFrame(animate(current));
+    window.requestAnimationFrame(animate(current));
 };
 
 const renderScene = current => {
@@ -216,8 +219,8 @@ const setupScene = (height, width, canvas) => {
   canvas.appendChild(renderer.domElement);
 
   //ADD ORBITCONTROLS
-  // let controls = new OrbitControls(this.camera, this.renderer.domElement)
-  // controls.enabled = true
+  let controls = new OrbitControls(this.camera, this.renderer.domElement)
+  controls.enabled = true
   // controls.minDistance = 3 * earthRadius*sceneScaleFactor
   // controls.maxDistance = 20 * earthRadius*sceneScaleFactor
   // controls.autoRotate = true;
@@ -230,4 +233,5 @@ const setupScene = (height, width, canvas) => {
 
   console.log(counter)
   return { scene, renderer, camera, canvas };
+  onResize()
 };

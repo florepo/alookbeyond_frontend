@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {Menu} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
-import DropdownWatchlists from './DropdownWatchlists'
+import DropdownWatchlists from '../backup/DropdownWatchlists'
 
 class NavBar extends Component {
     constructor(props) {
@@ -21,16 +21,16 @@ class NavBar extends Component {
                 <Menu.Item
                     as={Link}
                     to={'/'}
-                    name='Home'
+                    name='Start Page'
                     active={activeItem === 'home'}
                     onClick={this.handleItemClick}
                 />
                 <Menu.Menu position='right'>
-                    <Menu.Item
+                    {/* <Menu.Item
                         name='AR-Preview'
                         active={activeItem === 'arview'}
                         onClick={this.handleItemClick}
-                    />
+                    /> */}
                     {/* <Menu.Item
                         name='Watchlists'
                         active={activeItem === 'watchlist'}

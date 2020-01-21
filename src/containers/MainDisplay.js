@@ -1,10 +1,12 @@
 import React,{ Component} from 'react'
-import {Tab, List, Button, Segment} from 'semantic-ui-react'
+import {Tab, Button} from 'semantic-ui-react'
 import Viewport from './Viewport'
+import ARContainer from './ARContainer'
 import ListOfViewElements from '../containers/ListOfViewElements'
 import ListOfConstellations from './ListOfConstellations'
 import SelectionContainer from './SelectionContainer'
 import ListOfWatchlists from '../containers/ListOfWatchlists'
+
 import {_} from 'lodash'
 import * as API from '../adapters/api'
 
@@ -16,16 +18,19 @@ class MainDisplay extends Component {
                        view: [],
                        watchlists: [],
                        selection: [],
+                       ARview: false,
                        modalOpen: false }
     }
 
     componentDidMount(){
         API.getConstellations().then(constellations => this.setState({constellations}))
         API.getWatchlists().then(watchlists => this.setState({watchlists}))
-        // this.setState({view: this.props.loadedView})
     }
 
+
+
     addOrFetchSatsForConstellationToView = (constellation) => {
+        this.setState({selection: []})
         if (constellation.displayed==true) {
             console.log("already selected")
         } else if (!constellation.satellites) {
@@ -42,6 +47,7 @@ class MainDisplay extends Component {
     }
 
     addSatellitesToView = (sats) =>{
+        this.setState({selection: []})
         let satsToAdd = sats.filter(s => s.displayed!=true)
         let updatedViewlist= [...this.state.view].concat(satsToAdd)
         this.setState({view: updatedViewlist})
@@ -105,21 +111,26 @@ class MainDisplay extends Component {
     }
   
     saveViewToWatchlist = (watchlist_name) => {
-        console.log(watchlist_name)
-        console.log("API call here")
 
-        // data = {satellites: this.state.view}
-        let target = this.state.watchlists.filter( watchlist => watchlist.name== watchlist_name )
+        let target = [...this.state.watchlists].filter( watchlist => watchlist.name == watchlist_name )
+        let non_targeted = [...this.state.watchlists].filter( watchlist => watchlist.name != watchlist_name )
         console.log("target", target)
+        console.log("non-target", non_targeted)
         console.log("target.id", target[0].id)
 
-        let sat_ids = this.state.view.map( sat => sat.id)
+        let sat_ids = [...this.state.view].map( sat => sat.id)
             console.log("sat_ids", sat_ids)
         let data = {sat_ids: sat_ids, watchlist_id: target[0].id}
+        debugger
+        API.updateWatchList(data, target[0].id)
+            .then(response => {return non_targeted.push(response)})
+            .then(watchlists => this.setState({watchlists}))
+            .then(console.log("wacthlist updated"))
+        debugger
+    }
 
-        API.updateWatchList(data, target[0].id).then(API.getWatchlists().then(console.log)).then(watchlists => this.setState({watchlists}))
-        
-        //
+    toggleARview = () =>{
+        this.setState({ARview: !this.state.ARview})
     }
 
 
@@ -162,25 +173,55 @@ class MainDisplay extends Component {
                             />
                         </Tab.Pane>,
         },
+
     ]
 
     render() {
-        return (    <div className="main-display-container">
-                        <Tab 
+        return (<div className="main-display-container">
+                        <Tab inverse
                             className='sidetabs'
                             menu={{ attached: false }}
                             panes={this.panes}
                         />
-                    <div className='flex-ccolumn-container'>
-                        <Viewport 
-                            className="viewport"
-                            sats={this.state.view}
-                        />
+                    <div className='flex-column-container'>
+                       {(!this.state.ARview)?
+                       <React.Fragment>
+                            <Viewport 
+                                className="viewport"
+                                sats={this.state.view}
+                            />
+                            <Button
+                                className="activate-ar-button"
+                                basic color='red'
+                                onClick={this.toggleARview}
+                            >
+                                AR Preview
+                            </Button>
+                        </React.Fragment>
+                        :
+                        <React.Fragment>
+                            <ARContainer
+                                ARview={this.state.ARview}
+                                sats={this.state.view}
+                            />
+                            <Button
+                            className="activate-ar-button"
+                            basic color='red'
+                            onClick={this.toggleARview}
+                            >
+                                3D View
+                            </Button>
+                        </React.Fragment>
+                       }
+
                         <SelectionContainer 
                             className="selection-container"
                             info={this.state.selection}
                         />
+                         
                     </div>
+                   
+                    
                 </div>
         )
     }

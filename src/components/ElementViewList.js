@@ -32,11 +32,12 @@ const ElementViewList = ({item, removeSatOnClick, removeSatAndConOnClick}) => {
                             name='window close'
                             onClick={()=> handleConClick(item)}
                             />
-                    </Button>
+                    </Button>  
                 </List.Content>
                 <List.Content>
                     <Header as="h6">{item.name}</Header>
-                </List.Content>                               
+                    {/* <Header as="h6">{item.constellation.name}</Header> */}
+                </List.Content>               
             </List.Item>
         </React.Fragment>
         );

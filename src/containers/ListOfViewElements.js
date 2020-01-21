@@ -50,12 +50,7 @@ class ListOfViewElements extends Component {
             >
                 Save as Watchlist
             </Button>
-            {/* <Confirm
-                    open={this.state.open}
-                    header='Select which slot to save it to'
-                    onCancel={this.handleCancel}
-                    onConfirm={this.handleConfirm}
-            /> */}
+         
             <Button
                 attached='top'
                 onClick={this.handleClearButtonClick}

@@ -2472,9 +2472,10 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
 
         // tune the maximum rate of pose detection in the source image
         maxDetectionRate: 60,
-        // resolution of at which we detect pose in the source image
-        canvasWidth: 640,
-        canvasHeight: 480,
+		// resolution of at which we detect pose in the source image
+		
+        canvasWidth: 800,
+        canvasHeight: 640,
 
         // the patternRatio inside the artoolkit marker - artoolkit only
         patternRatio: 0.5,
@@ -2482,8 +2483,9 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
         // enable image smoothing or not for canvas copy - default to true
         // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
         imageSmoothingEnabled: false,
-    }
-    // parameters sanity check
+	}
+	
+	// parameters sanity check
     console.assert(['artoolkit', 'aruco'].indexOf(this.parameters.trackingBackend) !== -1, 'invalid parameter trackingBackend', this.parameters.trackingBackend)
     console.assert(['color', 'color_and_matrix', 'mono', 'mono_and_matrix'].indexOf(this.parameters.detectionMode) !== -1, 'invalid parameter detectionMode', this.parameters.detectionMode)
 
@@ -2942,6 +2944,8 @@ ARjs.Profile.prototype.checkIfValid = function () {
 }
 var ARjs = ARjs || {}
 var THREEx = THREEx || {}
+
+
 
 ARjs.Source = THREEx.ArToolkitSource = function (parameters) {
     var _this = this

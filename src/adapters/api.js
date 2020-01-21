@@ -20,10 +20,9 @@ export const patch = (url, data) => {
                     headers: apiHeaders,
                     body: JSON.stringify({data})
                 };
-                console.log(configObject)
-                console.log(url)
         return fetch(url, configObject)
             .then(resp => resp.json());
+            
 }
 
 

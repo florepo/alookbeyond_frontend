@@ -16,6 +16,11 @@ class App extends Component {
           <Route path="/" component={WelcomePage} exact />
           <Route path="/home" component={MainPage} exact />
           <Route path="/demo" component={DemoPage} exact />
+          <Route path="/view1" component={DemoPage} exact />
+          <Route path="/view2" component={DemoPage} exact />
+          <Route path="/view3" component={DemoPage} exact />
+          <Route path="/view4" component={DemoPage} exact />
+
           <Route component={ErrorPage} />
         </Switch>
       </React.Fragment>

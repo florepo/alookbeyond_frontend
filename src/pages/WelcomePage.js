@@ -56,8 +56,8 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <Button primary size='huge'>
-      View Demo
+    <Button secondary size='huge' as={Link} to={'/home'}>
+      explore
       <Icon name='right arrow' />
     </Button>
   </Container>
@@ -87,9 +87,9 @@ class DesktopContainer extends Component {
           once={false}
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
+          className ='welcomeBackground'
         >
           <Segment
-            inverted
             textAlign='center'
             style={{ minHeight: 700, padding: '1em 0em' }}
             vertical
@@ -103,7 +103,7 @@ class DesktopContainer extends Component {
             >
               <Container>
                 <Menu.Item as={Link} to={'/'} active>
-                    Home 
+                    Welcome
                 </Menu.Item>
                 <Menu.Item as={Link} to={'/home'}>
                     Explore
@@ -111,14 +111,7 @@ class DesktopContainer extends Component {
                 <Menu.Item as={Link} to={'/demo'}>
                     Demo
                 </Menu.Item>
-                <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed}>
-                    Log in
-                  </Button>
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
-                </Menu.Item>
+                
               </Container>
             </Menu>
             <HomepageHeading />
@@ -135,82 +128,10 @@ DesktopContainer.propTypes = {
   children: PropTypes.node,
 }
 
-class MobileContainer extends Component {
-  state = {}
-
-  handleSidebarHide = () => this.setState({ sidebarOpened: false })
-
-  handleToggle = () => this.setState({ sidebarOpened: true })
-
-  render() {
-    const { children } = this.props
-    const { sidebarOpened } = this.state
-
-    return (
-      <Responsive
-        as={Sidebar.Pushable}
-        getWidth={getWidth}
-        maxWidth={Responsive.onlyMobile.maxWidth}
-      >
-        <Sidebar
-          as={Menu}
-          animation='push'
-          inverted
-          onHide={this.handleSidebarHide}
-          vertical
-          visible={sidebarOpened}
-        >
-          <Menu.Item as={Link} to={'/home'} active>
-            Explore
-          </Menu.Item>
-          <Menu.Item >
-              Demo
-        </Menu.Item>
-          <Menu.Item as='a'>About</Menu.Item>
-          <Menu.Item as='a'>Log in</Menu.Item>
-          <Menu.Item as='a'>Sign Up</Menu.Item>
-        </Sidebar>
-
-        <Sidebar.Pusher dimmed={sidebarOpened}>
-          <Segment
-            inverted
-            textAlign='center'
-            style={{ minHeight: 350, padding: '1em 0em' }}
-            vertical
-          >
-            <Container>
-              <Menu inverted pointing secondary size='large'>
-                <Menu.Item onClick={this.handleToggle}>
-                  <Icon name='sidebar' />
-                </Menu.Item>
-                <Menu.Item position='right'>
-                  <Button as='a' inverted>
-                    Log in
-                  </Button>
-                  <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            </Container>
-            <HomepageHeading mobile />
-          </Segment>
-
-          {children}
-        </Sidebar.Pusher>
-      </Responsive>
-    )
-  }
-}
-
-MobileContainer.propTypes = {
-  children: PropTypes.node,
-}
 
 const ResponsiveContainer = ({ children }) => (
   <div>
     <DesktopContainer>{children}</DesktopContainer>
-    <MobileContainer>{children}</MobileContainer>
   </div>
 )
 

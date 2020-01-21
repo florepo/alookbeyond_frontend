@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import {FRONTEND_URL} from '../adapters/api'
 import { sgp4, twoline2satrec, propagate, gstime } from "satellite.js";
 import {adjustGlobalOrientation} from '../utils/scenehelper.js'
 

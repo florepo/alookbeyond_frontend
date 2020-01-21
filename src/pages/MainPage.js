@@ -9,7 +9,8 @@ import * as API from '../adapters/api'
 class MainPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {loadedView: []
+        this.state = {loadedView: [],
+                     currentView: []
                     }
       }
 
@@ -18,6 +19,7 @@ class MainPage extends Component {
         API.getWatchlist(id).then(watchlist => this.setState({loadedView: watchlist}))
     }
 
+
     render() { 
         return (
             <div>
@@ -25,12 +27,11 @@ class MainPage extends Component {
                    onClick={this.handleItemClick}
                 />
                 <MainDisplay
-                    className="main-page"
+                    className="main-display"
                     loadedView={this.state.loadedView}
                     addSatToWatchList={this.addToWatchlist}  
                     removeSat={this.removeFromWatchlist} 
                 />
-                <Footer className="footer" />
             </div>
         )
     }

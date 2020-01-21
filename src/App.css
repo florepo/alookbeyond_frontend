@@ -1,6 +1,6 @@
-/* .App {
+.App {
   text-align: center;
-} */
+}
 
 .App-logo {
   height: 40vmin;
@@ -36,54 +36,80 @@
     transform: rotate(360deg);
   }
 }
-/* 
-.NavBar {
-  text-align: center;
+
+/* MAINPAGE */
+
+.main-display {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(33, 204, 204);
+  
+}
+
+
+.main-display-container {
+  display: flex;
+  flex-flow: row;
+  margin: 3px 3px 3px 4px;
+  background-color: rgb(20, 74, 74);
+
+}
+
+.sidetabs {
+  min-width: 250px;
+  overflow-y: auto;
   margin: 3px 4px 3px 4px;
-} */
-
-.MainDisplay {
-  text-align: center;
-  background-color: #16868A;
+  background-color: rgb(90, 74, 74);
 }
 
-.Accordion {
-  background-color: #16868A
+/* viewport example */
+.flex-column-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(109, 8, 8);
 }
 
-.SideContainer {
-  text-align: center;
-  background-color: #68E7BC;
+.selection-container {
+  background-color: 445;
 }
 
-
-
-
-.SatelliteContainer {
-  text-align: center;
-  background-color: #11F281;
+.info-box {
+  position: absolute;
+  bottom: 95px;
+  margin-left: 10px;
+  padding-right: 20px;
+  color: wheat;
+  background-color: rgb(109, 8, 8);
 }
 
+.viewport {
+  height: 85vh;
+  width: 80vw;
+  border-radius: 5px;
+  flex: 1 1 auto;
+  overflow: hidden;
+  background-color: rgb(197, 110, 110);
+}
 
+.canvas {
+  flex: 1 1 auto;
+  height: 85vh;
+  width:80vh;
+  overflow: hidden;
+  background-color: rgb(1, 110, 110);
+} 
 
 .ui.menu{
   display: block;
   flex: 0 0 200px;
   margin: 3px 4px 3px 4px;
-  background-color: #888;
+  background-color: rgb(87, 13, 13);
 }
 
 
-
-
-/* .sidebar {
-  display: block;
-  flex: 0 0 200px;
-  background-color: #888;
-  margin: 3px 4px 3px 4px;
-  box-sizing: border-box;
-  border: 1px solid #888;
-} */
 
 .title.active {
   background-color: #d6d6d6;
@@ -104,72 +130,19 @@
 
 /* NAVBAR */
 
-.navbar{
-  display: block;
-  flex: 0 0 200px;
-  margin: 3px 4px 3px 4px;
-  background-color: #888;
-}
 
 
-/* MAINPAGE */
-
-.main-page {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-}
-
-.main-display-container {
-  display: flex;
-  flex-flow: row;
-  margin: 3px 4px 3px 4px;
-}
-
-.sidetabs {
-  /* display: block;
-  flex: 0 0 200px; */
-  height: 85vh;
-  width: 20vw;
-  overflow-y: auto;
-
-  background-color: 445;
-  margin: 3px 4px 3px 4px;
-}
-
-/* viewport example */
-.flex-ccolumn-container {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  width: 100%;
-}
-
-.selection-container {
-  background-color: 445;
-}
-
-.info-box {
-
-}
-
-.viewport {
-  height: 85vh;
-  width: 80vw;
-  border-radius: 5px;
-  flex: 1 1 auto;
-  overflow: hidden;
-}
-
-.canvas {
-  flex: 1 1 auto;
-  height: 85vh;
-  width:80vh;
-  overflow: hidden;
-} 
 
 /* FOOTER */
 .footer {
 border-radius: 5px;
 background-color: #888;
+}
+
+.ui.menu:not(.vertical) .item {
+  display: block;
+  align-items: center;
+  float: left;
+  width: 25%;
+  text-align: center;
 }

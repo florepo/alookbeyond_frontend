@@ -7,10 +7,8 @@ const ARContainer = ({ ARview, sats}) => {
 
   //"component did mount"
   useEffect(() => {
-    console.log("ARview",ARview)
-    console.log("sats",sats)
-
     if(sats && sats.length>0){mount(canvasEl.current, sats, ARview)};
+    mount(canvasEl.current, sats, ARview);
   },);
 
   return (

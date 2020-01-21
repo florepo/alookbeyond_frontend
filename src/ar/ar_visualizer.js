@@ -205,13 +205,13 @@ const addEntities =(entities) =>{
   entities.forEach(sat => {
 
     let satGeoModel = createSatelliteGeoModel(sat.name, satScaleFactor, sceneScaleFactor)
-    let satObject = intializeSatObject(sat.name, sat.tle.line1, sat.tle.line2, satGeoModel, sceneScaleFactor)
+    let satObject = intializeSatObject(sat.name, sat.line1, sat.line2, satGeoModel, sceneScaleFactor)
     satObject = updateSatPostion(satObject, currentTimeStamp, sceneScaleFactor)
     // trackObject(satObject)
     markerRoot1.add(satObject)
-    console.log(satObject)
+    // console.log(satObject)
     let orbitGeoModel = createOrbitGeoModel(satObject.userData.satrec,  satObject.name, sceneScaleFactor)  
-    console.log(orbitGeoModel)   
+    // console.log(orbitGeoModel)   
     markerRoot1.add(orbitGeoModel)
     // trackObject(orbitGeoModel)
   });

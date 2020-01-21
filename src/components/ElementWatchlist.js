@@ -9,20 +9,25 @@ const ElementWatchlist = ({item, loadWatchlistInView}) => {
         loadWatchlistInView(item)
     }
 // if (!item.constellation) {return <div></div>};
-    // {console.log("list view elements", item)}
+    {console.log("list view elements", item.satellites.length)}
     return ( 
         <React.Fragment>
             <List.Item key={item.name}>
                 <List.Content floated='right'>
-                    <Button size='mini' icon >
-                        <Icon onClick={()=> handleButtonClick(item)}> 
-                            LOAD
-                        </Icon>
+                    <Button size='mini' icon  onClick={()=> handleButtonClick(item)}> >
+                    LOAD
                     </Button>
                 </List.Content>
                 <List.Content>
                     <Header as="h6">{item.name}</Header>
-                    {(item.satellites.length=[])? "empty": null}
+                    {(item.satellites.length>0)
+                    ? 
+                    <div>
+                    Satellites tracked: {item.satellites.length}
+                    </div>
+                    :
+                    "empty"
+                    }
                 </List.Content>                               
             </List.Item>
         </React.Fragment>
