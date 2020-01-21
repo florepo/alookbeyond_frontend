@@ -1,12 +1,13 @@
 import React from 'react'
 import {List, Button, Icon, Header} from 'semantic-ui-react'
 
-const ElementWatchlist = ({item, loadWatchlistInView}) => {
+const ElementWatchlist = ({item, loadWatchlistInView, switchToSecondTab}) => {
 
 
     const handleButtonClick = (item) => {
         console.log("handle button click")
         loadWatchlistInView(item)
+        switchToSecondTab()
     }
 // if (!item.constellation) {return <div></div>};
     {console.log("list view elements", item.satellites.length)}

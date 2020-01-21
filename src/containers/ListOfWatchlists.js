@@ -11,7 +11,7 @@ class ListOfWatchlists extends Component {
 
 
     render() { 
-        const {watchlists, loadWatchlistInView} = this.props
+        const {watchlists, loadWatchlistInView,  switchToSecondTab} = this.props
         return (
                 <Segment attached>
                     <List divided verticalAlign='middle'>
@@ -20,6 +20,7 @@ class ListOfWatchlists extends Component {
                                 key={item.name}
                                 item={item}
                                 loadWatchlistInView={loadWatchlistInView}
+                                switchToSecondTab={switchToSecondTab}
                             />
                         )}
                     </List>

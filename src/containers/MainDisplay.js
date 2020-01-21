@@ -21,7 +21,8 @@ class MainDisplay extends Component {
       watchlists: [],
       selection: [],
       ARview: false,
-      modalOpen: false
+      modalOpen: false,
+      activeIndex: 0 
     };
   }
 
@@ -182,6 +183,11 @@ class MainDisplay extends Component {
     this.setState({ ARview: !this.state.ARview });
   };
 
+  handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
+
+  switchToSecondTab = () => this.setState({ activeIndex: 1 });
+
+
   panes = [
     {
       menuItem: { key: "constellation", icon: "bullseye", content: "" },
@@ -205,7 +211,9 @@ class MainDisplay extends Component {
     {
       menuItem: { key: "view", icon: "unhide", content: "" },
       render: () => (
-        <Tab.Pane attached={false}>
+        <Tab.Pane
+            attached={false}
+          >
           {this.state.view.length == 0 ? null : (
             <ListOfViewElements
               view={this.state.view}
@@ -231,6 +239,7 @@ class MainDisplay extends Component {
           <ListOfWatchlists
             watchlists={this.state.watchlists}
             loadWatchlistInView={this.loadWatchlistInView}
+            switchToSecondTab={this.switchToSecondTab}
           />
         </Tab.Pane>
       )
@@ -245,6 +254,8 @@ class MainDisplay extends Component {
           className="sidetabs"
           menu={{ attached: false }}
           panes={this.panes}
+          activeIndex={this.state.activeIndex}
+          onTabChange={this.handleTabChange}
         />
         <div className="flex-column-container">
           {!this.state.ARview ? (

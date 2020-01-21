@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Tab, List, Button, Segment, Confirm } from "semantic-ui-react";
 
 import ElementViewList from "../components/ElementViewList";
-import ElementViewConstellation from "../components/ElementViewConstellation"
+import ElementViewConstellation from "../components/ElementViewConstellation";
 import ModalSaveView from "../components/ModalSaveView";
 
 class ListOfViewElements extends Component {
@@ -35,10 +35,14 @@ class ListOfViewElements extends Component {
   };
 
   render() {
-    const { view, constellations,  constellationsInView, removeConOnClick } = this.props;
+    const {
+      view,
+      constellations,
+      constellationsInView,
+      removeConOnClick
+    } = this.props;
     return (
       <React.Fragment>
-
         <ModalSaveView
           modalOpen={this.state.modelOpen}
           handleClose={this.handleModalClose}
@@ -55,16 +59,16 @@ class ListOfViewElements extends Component {
         </Button>
 
         <Segment attached>
-            Dummy Title Constellations
-            <List divided verticalAlign="middle">
-                {constellationsInView.map(constellation =>
-                    <ElementViewConstellation 
-                        item={constellation}    
-                        removeConOnClick={removeConOnClick}
-                    />
-                )}
-            </List>
-       </Segment>
+          Dummy Title Constellations
+          <List divided verticalAlign="middle">
+            {constellationsInView.map(constellation => (
+              <ElementViewConstellation
+                item={constellation}
+                removeConOnClick={removeConOnClick}
+              />
+            ))}
+          </List>
+        </Segment>
 
         <Segment attached>
           <List divided verticalAlign="middle">
@@ -78,12 +82,16 @@ class ListOfViewElements extends Component {
                   constellations,
                   item
                 )}
+                findConstellationOfSelectedSatellite={item =>
+                  this.findConstellationOfSelectedSatellite(
+                    constellations,
+                    item
+                  )
+                }
               />
             ))}
           </List>
         </Segment>
-
-        
       </React.Fragment>
     );
   }
