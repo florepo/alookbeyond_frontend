@@ -146,7 +146,9 @@ class MainDisplay extends Component {
                             </Tab.Pane>,
         },
         {   menuItem: { key: 'catalog', icon: 'list', content: '' },
-            render: () =>   <Tab.Pane attached={false}>
+            render: () =>   <Tab.Pane 
+                                inverted
+                                attached={false}>
                             </Tab.Pane>,
         },
         {   menuItem: { key: 'view', icon: 'unhide', content: '' },
@@ -178,7 +180,8 @@ class MainDisplay extends Component {
 
     render() {
         return (<div className="main-display-container">
-                        <Tab inverse
+                        <Tab 
+                            inverted
                             className='sidetabs'
                             menu={{ attached: false }}
                             panes={this.panes}

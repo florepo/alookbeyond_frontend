@@ -2474,8 +2474,8 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
         maxDetectionRate: 60,
 		// resolution of at which we detect pose in the source image
 		
-        canvasWidth: 800,
-        canvasHeight: 640,
+        canvasWidth: 300,
+        canvasHeight: 400,
 
         // the patternRatio inside the artoolkit marker - artoolkit only
         patternRatio: 0.5,
@@ -3107,8 +3107,8 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
     domElement.setAttribute('autoplay', '');
     domElement.setAttribute('muted', '');
     domElement.setAttribute('playsinline', '');
-    domElement.style.width = this.parameters.displayWidth + 'px'
-    domElement.style.height = this.parameters.displayHeight + 'px'
+    domElement.style.width = '100%'//this.parameters.displayWidth + 'px'
+    domElement.style.height = '100%'//this.parameters.displayHeight + 'px'
 
     // check API is available
     if (navigator.mediaDevices === undefined

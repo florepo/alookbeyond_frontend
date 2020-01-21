@@ -230,6 +230,7 @@ class Viewport extends Component {
     this.scene.add(ambientLight)
     // this.trackObject(ambientLight, this.scene)
   }
+  
 
 
 }

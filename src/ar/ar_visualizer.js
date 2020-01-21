@@ -132,6 +132,7 @@ function initialize(domElement, sats) {
   });
 
   // copy projection matrix to camera when initialization complete
+  debugger
   if (ARview) {
     arToolkitContext.init(function onCompleted() {
       camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
