@@ -51,15 +51,15 @@ class ListOfViewElements extends Component {
         />
 
         <Button attached="top" onClick={this.show}>
-          Save as Watchlist
+          Save current Selection
         </Button>
 
         <Button attached="top" onClick={this.handleClearButtonClick}>
-          Clear View
+          Clear all from View
         </Button>
 
         <Segment attached>
-          Dummy Title Constellations
+          Currently Selected Constellations
           <List divided verticalAlign="middle">
             {constellationsInView.map(constellation => (
               <ElementViewConstellation
@@ -71,6 +71,7 @@ class ListOfViewElements extends Component {
         </Segment>
 
         <Segment attached>
+        Currently Selected Satellites
           <List divided verticalAlign="middle">
             {view.map(item => (
               <ElementViewList

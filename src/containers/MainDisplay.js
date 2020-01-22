@@ -157,7 +157,9 @@ class MainDisplay extends Component {
   };
 
   clearView = () => {
-    this.setState({ view: [] });
+    let disableViewforAllConstellations = [...this.state.constellations].map( c => c.displayed=false)
+    this.setState({ view: [], constellatiom: disableViewforAllConstellations  });
+
   };
 
   saveViewToWatchlist = watchlist_name => {
@@ -216,7 +218,7 @@ class MainDisplay extends Component {
       menuItem: { key: "view", icon: "unhide", content: "" },
       render: () => (
         <Tab.Pane attached={false}>
-          {this.state.view.length == 0 ? null : (
+          {this.state.view.length == 0 ? "no items selected for view" : (
             <ListOfViewElements
               view={this.state.view}
               watchlists={this.state.watchlists}
