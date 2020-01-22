@@ -21,10 +21,7 @@ const ElementViewConstellation = ({item,  removeConOnClick}) => {
                             icon 
                             onClick={()=> handleConClick(item)}
                         >
-                            <Icon
-                                name='window close'
-                            
-                            />
+                            <Icon name='window close' />
                         </Button>
                     }/>
                 </List.Content>

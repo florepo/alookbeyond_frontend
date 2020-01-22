@@ -161,11 +161,73 @@ const HomepageLayout = () => (
         </Grid.Row>
       </Grid>
     </Segment>
+    <Segment style={{ padding: '8em 0em' }} vertical>
+      <Grid container stackable verticalAlign='middle'>
+        <Grid.Row>
+          <Grid.Column width={7}>
+            <Header as='h3' style={{ fontSize: '2em' }}>
+            <Icon name='bullseye'/> Select
+            </Header>
+            <p style={{ fontSize: '1.33em' }}>
+            Explore different categories of satellite constellation above us.
+            <br></br>
+            <Icon mini name='hide'/> 
+            <Icon mini name='unhide'/>
+            <br></br>
+            <br></br>
+            Click add/hide them to the view.
+            </p>
+          </Grid.Column>
+          <Grid.Column floated='right' width={7}>
+            <Image bordered rounded size='large' src='./assets/images/SelectConstellations.png' />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={7}>
+            <Header as='h3' style={{ fontSize: '2em' }}>
+            <Icon name='unhide'/> Save & Edit
+            </Header>
+            <p style={{ fontSize: '1.33em' }}>
+            Edit your current view, save yoru current selection, or reset it.
+            <br></br>
+            <Icon mini name='hide'/> 
+            <Icon mini name='unhide'/>
+            <br></br>
+            <br></br>
+            Click add/hide them to the view.
+            </p>
+          </Grid.Column>
+          <Grid.Column floated='right' width={7}>
+            <Image bordered rounded size='large' src="./assets/images/Welcome_Customize.png" />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={7}>
+            <Header as='h3' style={{ fontSize: '2em' }}>
+            <Icon name='list'/> Load
+            </Header>
+            <p style={{ fontSize: '1.33em' }}>
+            Explore different categories of satellite constellation above us.
+            <br></br>
+            <Icon mini name='hide'/> 
+            <Icon mini name='unhide'/>
+            <br></br>
+            <br></br>
+            Click add/hide them to the view.
+            </p>
+          </Grid.Column>
+          <Grid.Column floated='right' width={7}>
+            <Image bordered rounded size='large' src='./assets/images/Welcome_Load.png' />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Segment>
+
 
     <Segment inverted vertical style={{ padding: '5em 0em' }}>
       <Container>
         <Grid divided inverted stackable>
-          <Grid.Row>
+          {/* <Grid.Row> */}
             <Grid.Column width={3}>
               {/* <Header inverted as='h4' content='About' />
               <List link inverted>
@@ -181,7 +243,7 @@ const HomepageLayout = () => (
                 Extra space for a call to action inside the footer that could help re-engage users.
               </p> */}
             </Grid.Column>
-          </Grid.Row>
+          {/* </Grid.Row> */}
         </Grid>
       </Container>
     </Segment>
