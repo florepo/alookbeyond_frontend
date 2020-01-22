@@ -39,6 +39,10 @@
 
 /* MAINPAGE */
 
+.ui.menu.active.item {
+  background: rgba(41, 98, 22, 0.45);
+}
+
 .main-display {
   display: flex;
   height: 100vh;

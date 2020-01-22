@@ -17,8 +17,8 @@ const ElementViewList = ({
     <React.Fragment>
       <List.Item key={item.name}>
         <List.Content floated="right">
-        <Popup content='Add users to your feed' trigger={
-          <Button  icon onClick={() => handleSatClick(item)}>
+        <Popup basic content='Add users to your feed' trigger={
+          <Button color='orange' icon onClick={() => handleSatClick(item)}>
             <Icon name="window close"  />
           </Button>
         }/>

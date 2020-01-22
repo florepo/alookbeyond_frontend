@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Button, Icon, Header} from "semantic-ui-react";
+import { List, Button, Icon, Header, Popup} from "semantic-ui-react";
 
 const ElementViewConstellation = ({item,  removeConOnClick}) => {
 
@@ -15,16 +15,18 @@ const ElementViewConstellation = ({item,  removeConOnClick}) => {
             <React.Fragment>
             <List.Item key={item.name}>
                 <List.Content floated='right'>
-                    <Button 
-                        color='organe'
-                        icon 
-                        onClick={()=> handleConClick(item)}
-                    >
-                        <Icon
-                            name='window close'
-                           
-                        />
-                    </Button>
+                    <Popup basic content='Remove from View' trigger={
+                        <Button 
+                            color='orange'
+                            icon 
+                            onClick={()=> handleConClick(item)}
+                        >
+                            <Icon
+                                name='window close'
+                            
+                            />
+                        </Button>
+                    }/>
                 </List.Content>
                 <List.Content>
                     <Header as="h6">{item.name}</Header>
