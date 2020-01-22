@@ -15,10 +15,14 @@ const ElementViewConstellation = ({item,  removeConOnClick}) => {
             <React.Fragment>
             <List.Item key={item.name}>
                 <List.Content floated='right'>
-                    <Button size='mini' icon >
+                    <Button 
+                        color='organe'
+                        icon 
+                        onClick={()=> handleConClick(item)}
+                    >
                         <Icon
                             name='window close'
-                            onClick={()=> handleConClick(item)}
+                           
                         />
                     </Button>
                 </List.Content>

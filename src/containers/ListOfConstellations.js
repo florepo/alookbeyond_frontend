@@ -60,6 +60,7 @@ class ListOfConstellations extends Component {
                         item={constellation}
                         addOnClick={addOnClick}
                         removeOnClick={removeOnClick}
+                        showInfoOnClick={showInfoOnClick}
                     />
                 )}
             </List>
@@ -81,6 +82,7 @@ class ListOfConstellations extends Component {
                         item={constellation}
                         addOnClick={addOnClick}
                         removeOnClick={removeOnClick}
+                        showInfoOnClick={showInfoOnClick}
                     />
                 )}
             </List>

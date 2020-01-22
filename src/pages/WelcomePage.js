@@ -40,7 +40,7 @@ const HomepageHeading = ({ mobile }) => (
       content='a look beyond'
       inverted
       style={{
-        fontSize: mobile ? '2em' : '4em',
+        fontSize: mobile ? '2em' : '8em',
         fontWeight: 'normal',
         marginBottom: 0,
         marginTop: mobile ? '1.5em' : '3em',
@@ -51,7 +51,7 @@ const HomepageHeading = ({ mobile }) => (
       content='...visualizing satellite constellations above us'
       inverted
       style={{
-        fontSize: mobile ? '1.5em' : '1.7em',
+        fontSize: mobile ? '1.5em' : '3em',
         fontWeight: 'normal',
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
@@ -105,12 +105,12 @@ class DesktopContainer extends Component {
                 {/* <Menu.Item as={Link} to={'/'} active>
                     Welcome
                 </Menu.Item> */}
-                <Menu.Item as={Link} to={'/home'}>
+                {/* <Menu.Item as={Link} to={'/home'}>
                     Explore
                 </Menu.Item>
                 <Menu.Item as={Link} to={'/demo'}>
                     Demo
-                </Menu.Item>
+                </Menu.Item> */}
                 
               </Container>
             </Menu>
@@ -149,10 +149,10 @@ const HomepageLayout = () => (
               Explanation
             </Header> */}
             <br></br>
-            <p style={{ fontSize: '1.33em' }}>
+            <p style={{ fontSize: '2em' }}>
               "A look beyond" is a web-based tool for exploring and visualizing satellite constellations in 3D. 
               </p>
-              <p style={{ fontSize: '1.33em' }}>
+              <p style={{ fontSize: '2em' }}>
               It uses up-to-date orbital tracking data to calculate the current satellite positions and renderes selected constellations utilizing Three.js.
               </p>
           {/* </Grid.Column>

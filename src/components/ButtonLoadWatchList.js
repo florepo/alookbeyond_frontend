@@ -14,7 +14,8 @@ class ButtonLoadWatchList extends Component {
 
     render() { 
         return (  <Button
-            loated='right' size='mini'
+            color='organe'
+            loated='right'
             onClick={this.handleClick}
         > 
         load 

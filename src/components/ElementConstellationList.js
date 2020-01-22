@@ -1,5 +1,5 @@
 import React from 'react'
-import {List, Button, Icon, Header} from 'semantic-ui-react'
+import {List, Button, Icon, Header, Popup} from 'semantic-ui-react'
 
 const ElementConstellationList = ({item, addOnClick, removeOnClick, showInfoOnClick}) => {
     
@@ -25,26 +25,23 @@ const ElementConstellationList = ({item, addOnClick, removeOnClick, showInfoOnCl
             key={item.name}
         >
             <List.Content floated='right'>
-                <Button size='mini' icon >
-                    <Icon
-                        name='info'
-                        onClick={() => handleInfoClick(item)}
-                    />
-                </Button>
+                <Popup basic content='Display Constellation Info' trigger={
+                    <Button icon onClick={() => handleInfoClick(item)}>
+                        <Icon name='info' />
+                    </Button>
+                 }/>
                 {item.displayed?
-                <Button size='mini' icon >
-                    <Icon
-                        name='unhide'
-                        onClick={() => handleViewClick(item)}
-                    />
-                </Button>
+                 <Popup basic content='Hide Constellation from View' trigger={
+                    <Button  color='green' icon onClick={() => handleViewClick(item)}>
+                        <Icon name ='unhide' />
+                    </Button>
+                }/>
                 :
-                <Button size='mini' icon >
-                    <Icon
-                        name='hide'
-                        onClick={() => handleViewClick(item)}
-                    />
-                </Button>
+                <Popup basic content='Show Constellation in View' trigger={
+                    <Button color='blue' icon onClick={() => handleViewClick(item)}>
+                        <Icon name='hide' />
+                    </Button>
+                 }/>
                 }
             </List.Content>
             <List.Content>

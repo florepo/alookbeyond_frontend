@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Button, Icon, Header } from "semantic-ui-react";
+import { List, Button, Icon, Header, Popup } from "semantic-ui-react";
 
 const ElementViewList = ({
   item,
@@ -17,9 +17,12 @@ const ElementViewList = ({
     <React.Fragment>
       <List.Item key={item.name}>
         <List.Content floated="right">
-          <Button size="mini" icon>
-            <Icon name="window close" onClick={() => handleSatClick(item)} />
+        <Popup content='Add users to your feed' trigger={
+          <Button  icon onClick={() => handleSatClick(item)}>
+            <Icon name="window close"  />
           </Button>
+        }/>
+
         </List.Content>
         <List.Content>
           <Header as="h6">{item.name}</Header>

@@ -15,7 +15,7 @@ const ElementWatchlist = ({item, loadWatchlistInView, switchToSecondTab}) => {
         <React.Fragment>
             <List.Item key={item.name}>
                 <List.Content floated='right'>
-                    <Button size='mini' icon  onClick={()=> handleButtonClick(item)}> >
+                    <Button size='mini' icon  onClick={()=> handleButtonClick(item)} >
                     LOAD
                     </Button>
                 </List.Content>

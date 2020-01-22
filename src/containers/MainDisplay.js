@@ -78,30 +78,11 @@ class MainDisplay extends Component {
   };
 
   removeSatelliteFromView = sat => {
+      console.log("sat removed")
     sat.displayed = false;
     let updatedViewlist = [...this.state.view].filter(s => s.id != sat.id);
     this.setState({ view: updatedViewlist });
-
   };
-
-//   addConstellationToView = constellation => {
-//     if (constellation.displayed == true) {
-//       console.log("already selected");
-//     } else {
-//       constellation.displayed = true;
-//       let sats = [...constellation.satellites];
-//       let updatedViewlist = [...this.state.view];
-//       updatedViewlist.concat(sats);
-//       debugger;
-//       let viewedConstellationList = [...this.state.viewedConstellations];
-//       viewedConstellationList.push(constellation);
-
-//       this.setState({
-//         view: updatedViewlist,
-//         viewedConstellations: viewedConstellationList
-//       });
-//     }
-//   };
 
   removeConstellationFromView = constellation => {
     constellation.displayed = false;
@@ -152,57 +133,50 @@ class MainDisplay extends Component {
     this.setState({ selection: [item] });
   };
 
-  loadWatchlistInView = list => {
-      console.log("load watchlist")
+loadWatchlistInView = list => {
 
-    //get unique constellation names
     let SatelliteConstellationIdArray =  list.satellites.map( sat => sat.constellation_id)
     let uniqueArrayOfConstellationIds = [...new Set(SatelliteConstellationIdArray)]
-    //load constellations
 
     let constellationList = [...this.state.constellations]
 
-    let matchedConstellationsArray =uniqueArrayOfConstellationIds.map(ID => {
-         return constellationList.filter(constellation => constellation.id == ID)[0]
+    let matchedConstellationsArray =uniqueArrayOfConstellationIds.map( ID => {
+            return constellationList.filter(constellation => constellation.id == ID)[0]
         }
     )
 
     let matchedUniqueConstellationsArray = [...new Set(matchedConstellationsArray)]
-    console.log("set flag")
+    this.setState({ view: list.satellites, viewedConstellations: matchedUniqueConstellationsArray });
+    };
 
-    this.setState({ view: list.satellites, viewedConstellations: matchedUniqueConstellationsArray});
+    clearView = () => {
+    let disableViewforAllConstellations = [...this.state.constellations].map( c => c.displayed = false)
+    this.setState({ view: [], constellatiom: disableViewforAllConstellations });
 
-  };
+};
 
-  clearView = () => {
-    let disableViewforAllConstellations = [...this.state.constellations].map( c => c.displayed=false)
-    this.setState({ view: [], constellatiom: disableViewforAllConstellations  });
-
-  };
-
-  saveViewToWatchlist = watchlist_name => {
+saveViewToWatchlist = watchlist_name => {
     let target = [...this.state.watchlists].filter(
       watchlist => watchlist.name == watchlist_name
     );
     let non_targeted = [...this.state.watchlists].filter(
       watchlist => watchlist.name != watchlist_name
     );
-    console.log("target", target);
-    console.log("non-target", non_targeted);
-    console.log("target.id", target[0].id);
 
     let sat_ids = [...this.state.view].map(sat => sat.id);
-    console.log("sat_ids", sat_ids);
     let data = { sat_ids: sat_ids, watchlist_id: target[0].id };
- 
-    API.updateWatchList(data, target[0].id)
-      .then(response => {
-        return non_targeted.push(response);
-      })
-      .then(watchlists => this.setState({ watchlists }))
-      .then(console.log("watchlist updated"));
 
+    API.updateWatchList(data, target[0].id)
+      .then(response =>  this.addResponseToArrayAndReturnCombined (non_targeted,response))
+      .then(watchlists =>  this.setState({ watchlists }))
+ 
   };
+  
+  addResponseToArrayAndReturnCombined = (arrayOfElements, itemToAdd) =>{
+    arrayOfElements.push(itemToAdd)
+    return arrayOfElements
+  }
+
 
   toggleARview = () => {
     this.setState({ ARview: !this.state.ARview });
@@ -286,14 +260,6 @@ class MainDisplay extends Component {
                 className="viewport"
                 sats={this.state.view}
               />
-              <Button
-                className="activate-ar-button"
-                basic
-                color="red"
-                onClick={this.toggleARview}
-              >
-                AR Preview
-              </Button>
             </React.Fragment>
           ) : (
             <React.Fragment>
