@@ -219,7 +219,7 @@ class MainDisplay extends Component {
       menuItem: { key: "view", icon: "unhide", content: "" },
       render: () => (
         <Tab.Pane attached={false}>
-          {this.state.view.length == 0 ? "no items selected for view" : (
+          {this.state.view.length == 0 ? "currently no items selected" : (
             <ListOfViewElements
               view={this.state.view}
               watchlists={this.state.watchlists}
