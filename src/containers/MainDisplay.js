@@ -50,7 +50,6 @@ class MainDisplay extends Component {
       let sats = [...constellation.satellites];
       let updatedViewlist = [...this.state.view];
       updatedViewlist.concat(sats);
-    //   this.setState({ view: updatedViewlist });
 
       let viewedConstellationList = [...this.state.viewedConstellations];
        viewedConstellationList.push(constellation);
@@ -153,8 +152,34 @@ class MainDisplay extends Component {
     this.setState({ selection: [item] });
   };
 
-  loadWatchlistInView = item => {
-    this.setState({ view: item.satellites });
+  loadWatchlistInView = list => {
+      console.log("load watchlist")
+  
+
+
+    //get unique constellation names
+    let SatelliteConstellationIdArray =  list.satellites.map( sat => sat.constellation_id)
+    let uniqueArrayOfConstellationIds = [...new Set(SatelliteConstellationIdArray)]
+    //load constellations
+
+    //
+    let constellationList = [...this.state.constellations]
+
+    let matchedConstellationsArray =uniqueArrayOfConstellationIds.map(ID => {
+         return constellationList.filter(constellation => constellation.id == ID)[0]
+        }
+    )
+
+    let matchedUniqueConstellationsArray = [...new Set(matchedConstellationsArray)]
+    debugger
+
+    console.log("set flag")
+
+    this.setState({ view: list.satellites, viewedConstellations: matchedUniqueConstellationsArray});
+
+    // let viewedConstellationList = [...this.state.viewedConstellations];
+    // viewedConstellationList.push(constellation);
+
   };
 
   clearView = () => {
@@ -177,14 +202,14 @@ class MainDisplay extends Component {
     let sat_ids = [...this.state.view].map(sat => sat.id);
     console.log("sat_ids", sat_ids);
     let data = { sat_ids: sat_ids, watchlist_id: target[0].id };
-    debugger;
+ 
     API.updateWatchList(data, target[0].id)
       .then(response => {
         return non_targeted.push(response);
       })
       .then(watchlists => this.setState({ watchlists }))
-      .then(console.log("wacthlist updated"));
-    debugger;
+      .then(console.log("watchlist updated"));
+
   };
 
   toggleARview = () => {
@@ -265,7 +290,10 @@ class MainDisplay extends Component {
         <div className="flex-column-container">
           {!this.state.ARview ? (
             <React.Fragment>
-              <Viewport className="viewport" sats={this.state.view} />
+              <Viewport
+                className="viewport"
+                sats={this.state.view}
+              />
               <Button
                 className="activate-ar-button"
                 basic

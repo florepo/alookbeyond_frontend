@@ -59,7 +59,7 @@ class ListOfViewElements extends Component {
         </Button>
 
         <Segment attached>
-          Clear all Satellites of:
+          Remove all Satellites from:
           <List divided verticalAlign="middle">
             {constellationsInView.map(constellation => (
               <ElementViewConstellation
@@ -71,7 +71,7 @@ class ListOfViewElements extends Component {
         </Segment>
 
         <Segment attached>
-        Clear individual satellites
+        Remove Satellites:
           <List divided verticalAlign="middle">
             {view.map(item => (
               <ElementViewList
