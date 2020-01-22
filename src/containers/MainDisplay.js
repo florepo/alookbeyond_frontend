@@ -82,6 +82,7 @@ class MainDisplay extends Component {
     sat.displayed = false;
     let updatedViewlist = [...this.state.view].filter(s => s.id != sat.id);
     this.setState({ view: updatedViewlist });
+
   };
 
 //   addConstellationToView = constellation => {

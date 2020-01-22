@@ -48,7 +48,7 @@ const HomepageHeading = ({ mobile }) => (
     />
     <Header
       as='h2'
-      content='visualizing satellite constellations above us'
+      content='...visualizing satellite constellations above us'
       inverted
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
@@ -101,10 +101,10 @@ class DesktopContainer extends Component {
               secondary={!fixed}
               size='large'
             >
-              <Container>
-                <Menu.Item as={Link} to={'/'} active>
+              <Container >
+                {/* <Menu.Item as={Link} to={'/'} active>
                     Welcome
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item as={Link} to={'/home'}>
                     Explore
                 </Menu.Item>
@@ -141,20 +141,23 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-    <Segment style={{ padding: '8em 0em' }} vertical>
+    <Segment style={{ padding: '8em 0em' }} vertical  >
       <Grid container stackable verticalAlign='middle'>
         <Grid.Row>
-          <Grid.Column width={8}>
-            <Header as='h3' style={{ fontSize: '2em' }}>
+          {/* <Grid.Column width={8}> */}
+            {/* <Header as='h3' style={{ fontSize: '2em' }}   textAlign='center' verticalAlign='middle'>
               Explanation
-            </Header>
+            </Header> */}
+            <br></br>
             <p style={{ fontSize: '1.33em' }}>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            </p>
-          </Grid.Column>
+              "A look beyond" is a web-based tool for exploring and visualizing satellite constellations in 3D. 
+              </p>
+              <p style={{ fontSize: '1.33em' }}>
+              It uses up-to-date orbital tracking data to calculate the current satellite positions and renderes selected constellations utilizing Three.js.
+              </p>
+          {/* </Grid.Column>
           <Grid.Column floated='right' width={6}>
-            <Image bordered rounded size='large'/>
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid.Row>
       </Grid>
     </Segment>
@@ -164,19 +167,19 @@ const HomepageLayout = () => (
         <Grid divided inverted stackable>
           <Grid.Row>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='About' />
+              {/* <Header inverted as='h4' content='About' />
               <List link inverted>
                 <List.Item as='a'>Sitemap</List.Item>
                 <List.Item as='a'>Contact</List.Item>
-              </List>
+              </List> */}
             </Grid.Column>
             <Grid.Column width={7}>
-              <Header as='h4' inverted>
+              {/* <Header as='h4' inverted>
                 Footer Header
               </Header>
               <p>
                 Extra space for a call to action inside the footer that could help re-engage users.
-              </p>
+              </p> */}
             </Grid.Column>
           </Grid.Row>
         </Grid>
