@@ -236,7 +236,7 @@ saveViewToWatchlist = watchlist_name => {
             watchlists={this.state.watchlists}
             loadWatchlistInView={this.loadWatchlistInView}
             switchToSecondTab={this.switchToSecondTab}
-          />
+        />
         </Tab.Pane>
       )
     }
@@ -275,10 +275,10 @@ saveViewToWatchlist = watchlist_name => {
             </React.Fragment>
           )}
 
-          <SelectionContainer
+          {/* <SelectionContainer
             className="selection-container"
-            info={this.state.selection}
-          />
+            // info={this.state.selection}
+          /> */}
         </div>
       </div>
     );

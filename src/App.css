@@ -37,6 +37,12 @@
   }
 }
 
+
+.title {
+  background-color: #7abfff;
+  border-radius: 5px;
+}
+
 /* MAINPAGE */
 
 .ui.menu.active.item {
@@ -119,6 +125,17 @@
   /* background-color: rgb(1, 110, 110); */
 }
 
+.a.active.icon.item {
+  background-color: #3f99ec;
+}
+
+.ui.menu .active.item {
+  background: rgba(21, 129, 171, 0.4) !important;
+  color: rgba(0,0,0,.95);
+  font-weight: 400;
+  box-shadow: none;
+}
+
 .ui.menu {
   display: block;
   flex: 0 0 200px;
@@ -127,13 +144,15 @@
 }
 
 .title.active {
-  background-color: #d6d6d6;
+  background-color: #3f99ec;
   border-radius: 5px;
 }
 
 .title {
-  background-color: #f9f9f9;
+  background-color: #9bd7ffd2;
   border-radius: 5px;
+  border-color: #0574bed2;
+  border-width: thin;
 }
 
 .viewport-ar {

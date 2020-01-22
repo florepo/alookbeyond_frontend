@@ -25,11 +25,11 @@ const ElementConstellationList = ({item, addOnClick, removeOnClick, showInfoOnCl
             key={item.name}
         >
             <List.Content floated='right'>
-                <Popup basic content='Display Constellation Info' trigger={
+                <Popup basic trigger={
                     <Button icon onClick={() => handleInfoClick(item)}>
                         <Icon name='info' />
                     </Button>
-                 }/>
+                 } wide> {item.description}</Popup>
                 {item.displayed?
                  <Popup basic content='Hide Constellation from View' trigger={
                     <Button  color='green' icon onClick={() => handleViewClick(item)}>

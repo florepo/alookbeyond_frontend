@@ -29,7 +29,9 @@ const ElementViewConstellation = ({item,  removeConOnClick}) => {
                     }/>
                 </List.Content>
                 <List.Content>
+                <Popup basic content= {item.description} trigger={
                     <Header as="h6">{item.name}</Header>
+                }/>
                 </List.Content>               
             </List.Item>
 
