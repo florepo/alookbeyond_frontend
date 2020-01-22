@@ -109,8 +109,13 @@ class MainDisplay extends Component {
       s => s.constellation_id != constellation.id
     );
 
-    let viewedConstellationsWithoutSelectedConstellation = [...this.state.viewedConstellations].filter( c => c.id != constellation.id  )
-    this.setState({ view: updatedViewlist, viewedConstellations: viewedConstellationsWithoutSelectedConstellation });
+    let viewedConstellationsWithoutSelectedConstellation = [
+      ...this.state.viewedConstellations
+    ].filter(c => c.id != constellation.id);
+    this.setState({
+      view: updatedViewlist,
+      viewedConstellations: viewedConstellationsWithoutSelectedConstellation
+    });
   };
 
   removeSatelliteWithConstellationFromView = sat => {
@@ -187,7 +192,6 @@ class MainDisplay extends Component {
 
   switchToSecondTab = () => this.setState({ activeIndex: 1 });
 
-
   panes = [
     {
       menuItem: { key: "constellation", icon: "bullseye", content: "" },
@@ -211,9 +215,7 @@ class MainDisplay extends Component {
     {
       menuItem: { key: "view", icon: "unhide", content: "" },
       render: () => (
-        <Tab.Pane
-            attached={false}
-          >
+        <Tab.Pane attached={false}>
           {this.state.view.length == 0 ? null : (
             <ListOfViewElements
               view={this.state.view}
