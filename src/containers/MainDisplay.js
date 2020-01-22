@@ -154,15 +154,12 @@ class MainDisplay extends Component {
 
   loadWatchlistInView = list => {
       console.log("load watchlist")
-  
-
 
     //get unique constellation names
     let SatelliteConstellationIdArray =  list.satellites.map( sat => sat.constellation_id)
     let uniqueArrayOfConstellationIds = [...new Set(SatelliteConstellationIdArray)]
     //load constellations
 
-    //
     let constellationList = [...this.state.constellations]
 
     let matchedConstellationsArray =uniqueArrayOfConstellationIds.map(ID => {
@@ -171,14 +168,9 @@ class MainDisplay extends Component {
     )
 
     let matchedUniqueConstellationsArray = [...new Set(matchedConstellationsArray)]
-    debugger
-
     console.log("set flag")
 
     this.setState({ view: list.satellites, viewedConstellations: matchedUniqueConstellationsArray});
-
-    // let viewedConstellationList = [...this.state.viewedConstellations];
-    // viewedConstellationList.push(constellation);
 
   };
 
@@ -216,7 +208,13 @@ class MainDisplay extends Component {
     this.setState({ ARview: !this.state.ARview });
   };
 
-  handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
+  clearSelectionContainer = () => {
+    this.setState({ selection: []});
+  }
+
+  handleTabChange = (e, { activeIndex }) => {
+      this.setState({ activeIndex, selection: [] })
+    };
 
   switchToSecondTab = () => this.setState({ activeIndex: 1 });
 
@@ -234,12 +232,6 @@ class MainDisplay extends Component {
         </Tab.Pane>
       )
     },
-    // {   menuItem: { key: 'catalog', icon: 'list', content: '' },
-    //     render: () =>   <Tab.Pane
-    //                         inverted
-    //                         attached={false}>
-    //                     </Tab.Pane>,
-    // },
     {
       menuItem: { key: "view", icon: "unhide", content: "" },
       render: () => (

@@ -10,27 +10,36 @@ class SelectionNavInfo extends Component {
         return ( 
 
             <div>
+                 <h5>Menu Options</h5>
                  <div>
-                 <Icon name='bullseye'/>
-                 :: Open List of Constellations
-                 </div>
-                 <div>
-                 <Icon name='list'/>
-                 :: Open List of Satellites
-                 </div>
-                 <div>
-                 <Icon name='unhide'/>
-                 :: Open List of Currently Viewed Objects
-                 </div>
-                 <div>
-                 <Icon name='list'/>
-                 :: Open List of Saved Watchlists
-                 </div>
-                 <div>
-                 <Icon name='window close'/>
-                 :: Open List of Saved Watchlists
-                 </div>
+                    <Icon name='bullseye'/>
+                    :: List of available Constellations
+                </div>
+                <div>
+                    <Icon name='unhide'/>
+                    :: List of viewed Objects
+                </div>
+                <div>
+                    <Icon name='list'/>
+                    :: List of available Watchlists
+                </div>
+
+                <br></br>
+                <h5>Element Options</h5>
+                <div>
+                    <Icon name='info'/>
+                    :: Get Info
+                </div>
+                <div>
+                    <Icon name='unhide'/>
+                    :: Shown > Click to Hide
+                </div>
+                <div>
+                    <Icon name='hide'/>
+                    :: Hidden > Click to Show
+                </div>
             </div>
+            
          );
     }
 }

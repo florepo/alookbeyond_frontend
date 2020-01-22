@@ -71,7 +71,7 @@ class ListOfViewElements extends Component {
         </Segment>
 
         <Segment attached>
-        Remove Satellites:
+        Remove individual Satellites:
           <List divided verticalAlign="middle">
             {view.map(item => (
               <ElementViewList

@@ -87,15 +87,15 @@
 
 .selection-container {
   background-color: 445;
+    z-index: 1;
 }
 
 .info-box {
   position: absolute;
-  bottom: 95px;
+  bottom: 120px;
   margin-left: 10px;
   padding-right: 20px;
-  /* color: wheat;
-  background-color: rgb(109, 8, 8); */
+  color: white;
 }
 
 .viewport {
