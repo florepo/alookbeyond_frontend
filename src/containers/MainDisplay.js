@@ -226,7 +226,7 @@ saveViewToWatchlist = watchlist_name => {
       render: () => (
         <Tab.Pane attached={false}>
           {this.state.view.length == 0 ? (
-            "currently no items selected"
+            "You have not selected any constellations to visualise. Click on SELECT tab above and start adding some satellite constellations to your view. Otherwise, click on LOAD tab above to load a saved view."
           ) : (
             <ListOfViewElements
               view={this.state.view}

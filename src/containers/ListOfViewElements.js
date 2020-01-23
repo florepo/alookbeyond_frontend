@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Tab, List, Button, Segment, Confirm } from "semantic-ui-react";
+import {
+  Tab,
+  List,
+  Button,
+  Segment,
+  Header,
+  Popup,
+  Icon
+} from "semantic-ui-react";
 
 import ElementViewList from "../components/ElementViewList";
 import ElementViewConstellation from "../components/ElementViewConstellation";
@@ -49,17 +57,41 @@ class ListOfViewElements extends Component {
           handleConfirm={this.handleModalConfirm}
           valueIntoModal={this.props.watchlists}
         />
-
-        <Button attached="top" onClick={this.show}>
-          Save current Selection
+        <p>
+          You could go back to SELECT Tab to add more constellations to this
+          view.
+        </p>
+        <Button color="green" attached="top" onClick={this.show}>
+          Save Current View
         </Button>
-
-        <Button attached="top" onClick={this.handleClearButtonClick}>
-          Clear all from View
-        </Button>
-
+        <p></p>
+        <Header as="h6">Reset View</Header>
         <Segment attached>
-          Remove all Satellites from:
+          <List divided verticalAlign="middle">
+            <List.Item key="RemoveAll">
+              <List.Content floated="right">
+                <Popup
+                  basic
+                  content="Remove Everything!"
+                  trigger={
+                    <Button
+                      color="orange"
+                      icon
+                      onClick={this.handleClearButtonClick}
+                    >
+                      <Icon name="window close" />
+                    </Button>
+                  }
+                />
+              </List.Content>
+              <List.Content>Remove Everything!</List.Content>
+            </List.Item>
+          </List>
+        </Segment>
+
+        <p></p>
+        <Header as="h6">Remove By Constellation:</Header>
+        <Segment attached>
           <List divided verticalAlign="middle">
             {constellationsInView.map(constellation => (
               <ElementViewConstellation
@@ -69,9 +101,9 @@ class ListOfViewElements extends Component {
             ))}
           </List>
         </Segment>
-
+        <p></p>
+        <Header as="h6">Remove By Individual Satellites:</Header>
         <Segment attached>
-        Remove individual Satellites:
           <List divided verticalAlign="middle">
             {view.map(item => (
               <ElementViewList
