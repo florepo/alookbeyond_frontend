@@ -21,7 +21,7 @@ class NavBar extends Component {
                 <Menu.Item
                     as={Link}
                     to={'/'}
-                    name='Start Page'
+                    name='A Look Beyond'
                     active={activeItem === 'home'}
                     onClick={this.handleItemClick}
                 />
@@ -31,15 +31,6 @@ class NavBar extends Component {
                         active={activeItem === 'arview'}
                         onClick={this.handleItemClick}
                     /> */}
-                    {/* <Menu.Item
-                        name='Watchlists'
-                        active={activeItem === 'watchlist'}
-                        onClick={this.handleItemClick}
-                    >
-                        {/* <DropdownWatchlists
-                         onClick={this.handleWatchListClick}
-                        /> */}
-                    {/* </Menu.Item> */} 
                 </Menu.Menu>
           </Menu>
          );
