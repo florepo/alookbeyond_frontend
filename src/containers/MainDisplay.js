@@ -167,34 +167,34 @@ saveViewToWatchlist = watchlist_name => {
     let data = { sat_ids: sat_ids, watchlist_id: target[0].id };
 
     API.updateWatchList(data, target[0].id)
-      .then(response =>  this.addResponseToArrayAndReturnCombined (non_targeted,response))
-      .then(watchlists =>  this.setState({ watchlists }))
- 
+      .then(response =>
+        this.addResponseToArrayAndReturnCombined(non_targeted, response)
+      )
+      .then(watchlists => this.setState({ watchlists }));
   };
-  
-  addResponseToArrayAndReturnCombined = (arrayOfElements, itemToAdd) =>{
-    arrayOfElements.push(itemToAdd)
-    return arrayOfElements
-  }
 
+  addResponseToArrayAndReturnCombined = (arrayOfElements, itemToAdd) => {
+    arrayOfElements.push(itemToAdd);
+    return arrayOfElements;
+  };
 
   toggleARview = () => {
     this.setState({ ARview: !this.state.ARview });
   };
 
   clearSelectionContainer = () => {
-    this.setState({ selection: []});
-  }
+    this.setState({ selection: [] });
+  };
 
   handleTabChange = (e, { activeIndex }) => {
-      this.setState({ activeIndex, selection: [] })
-    };
+    this.setState({ activeIndex, selection: [] });
+  };
 
   switchToSecondTab = () => this.setState({ activeIndex: 1 });
 
   panes = [
     {
-      menuItem: { key: "constellation", icon: "bullseye", content: "" },
+      menuItem: { key: "constellation", icon: "bullseye", content: "SELECT" },
       render: () => (
         <Tab.Pane attached={false}>
           <p>
@@ -222,10 +222,12 @@ saveViewToWatchlist = watchlist_name => {
       )
     },
     {
-      menuItem: { key: "view", icon: "unhide", content: "" },
+      menuItem: { key: "view", icon: "unhide", content: "CURRENT VIEW" },
       render: () => (
         <Tab.Pane attached={false}>
-          {this.state.view.length == 0 ? "currently no items selected" : (
+          {this.state.view.length == 0 ? (
+            "currently no items selected"
+          ) : (
             <ListOfViewElements
               view={this.state.view}
               watchlists={this.state.watchlists}
@@ -244,14 +246,14 @@ saveViewToWatchlist = watchlist_name => {
       )
     },
     {
-      menuItem: { key: "watchlists", icon: "list", content: "" },
+      menuItem: { key: "watchlists", icon: "list", content: "LOAD" },
       render: () => (
         <Tab.Pane attached={false}>
           <ListOfWatchlists
             watchlists={this.state.watchlists}
             loadWatchlistInView={this.loadWatchlistInView}
             switchToSecondTab={this.switchToSecondTab}
-        />
+          />
         </Tab.Pane>
       )
     }

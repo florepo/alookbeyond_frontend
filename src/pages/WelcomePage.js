@@ -204,7 +204,7 @@ const HomepageLayout = () => (
         <Grid.Row>
           <Grid.Column width={7}>
             <Header as="h3" style={{ fontSize: "2em" }}>
-              <Icon name="unhide" /> CUSTOMISE AND SAVE
+              <Icon name="unhide" /> CURRENT VIEW
             </Header>
             <p style={{ fontSize: "1.33em" }}>
               Customise what satellites or constellations that you want in View.
@@ -230,10 +230,16 @@ const HomepageLayout = () => (
         <Grid.Row>
           <Grid.Column width={7}>
             <Header as="h3" style={{ fontSize: "2em" }}>
-              <Icon name="list" /> SAVED VIEWS
+              <Icon name="list" /> LOAD
             </Header>
             <p style={{ fontSize: "1.33em" }}>
-              Find your list of saved Views here.
+              Load your list of saved Views from here.
+            </p>
+            <p style={{ fontSize: "1.33em" }}>
+              <i>
+                (An AR version of the app is under development, so you could
+                view them in AR soon!)
+              </i>
             </p>
           </Grid.Column>
           <Grid.Column floated="right" width={7}>
