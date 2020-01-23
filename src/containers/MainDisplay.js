@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tab, Button } from "semantic-ui-react";
+import { Tab, Button, Header, Icon } from "semantic-ui-react";
 import Viewport from "./Viewport";
 import ARContainer from "./ARContainer";
 import ListOfViewElements from "../containers/ListOfViewElements";
@@ -197,6 +197,21 @@ saveViewToWatchlist = watchlist_name => {
       menuItem: { key: "constellation", icon: "bullseye", content: "" },
       render: () => (
         <Tab.Pane attached={false}>
+          <p>
+            Satellites can be classified by their function since they are
+            launched into space to do a specific job. There are nine different
+            types of satellites - here there are three of them.
+          </p>
+          <Header style={{ fontSize: "1em" }}>
+            SELECT CONSTELLATIONS TO VIEW, and see how they differ in their
+            altitude and orbital shape.
+          </Header>
+          <p>
+            <i>
+              Pro tip: Hover over <Icon name="info" /> to view more details of
+              that particular constellation.
+            </i>
+          </p>
           <ListOfConstellations
             constellations={this.state.constellations}
             addOnClick={this.addOrFetchSatsForConstellationToView}
