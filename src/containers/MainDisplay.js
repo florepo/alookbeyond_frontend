@@ -249,6 +249,16 @@ saveViewToWatchlist = watchlist_name => {
       menuItem: { key: "watchlists", icon: "list", content: "LOAD" },
       render: () => (
         <Tab.Pane attached={false}>
+          <p>
+            Select one of the saved views to visualise. You could also edit the
+            view and ovewrite the list in CURRENT VIEW Tab.
+          </p>
+          <p>
+            <i>
+              (An AR version of the app is under development, so you could view
+              them in AR soon!)
+            </i>
+          </p>
           <ListOfWatchlists
             watchlists={this.state.watchlists}
             loadWatchlistInView={this.loadWatchlistInView}
