@@ -5,6 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import DemoPage from './pages/DemoPage'
+import View1 from './pages/View1'
 import ErrorPage from './pages/ErrorPage'
 
 class App extends Component {

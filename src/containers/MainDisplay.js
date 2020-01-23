@@ -22,7 +22,7 @@ class MainDisplay extends Component {
       selection: [],
       ARview: false,
       modalOpen: false,
-      activeIndex: 0 
+      activeIndex: 0
     };
   }
 
@@ -44,7 +44,7 @@ class MainDisplay extends Component {
       );
       let viewedConstellationList = [...this.state.viewedConstellations];
       viewedConstellationList.push(constellation);
-      this.setState({ viewedConstellations: viewedConstellationList })
+      this.setState({ viewedConstellations: viewedConstellationList });
     } else {
       constellation.displayed = true;
       let sats = [...constellation.satellites];
@@ -52,12 +52,12 @@ class MainDisplay extends Component {
       updatedViewlist.concat(sats);
 
       let viewedConstellationList = [...this.state.viewedConstellations];
-       viewedConstellationList.push(constellation);
-      
-        this.setState({
-            view: updatedViewlist,
-            viewedConstellations: viewedConstellationList
-        })
+      viewedConstellationList.push(constellation);
+
+      this.setState({
+        view: updatedViewlist,
+        viewedConstellations: viewedConstellationList
+      });
     }
   };
 
@@ -78,7 +78,7 @@ class MainDisplay extends Component {
   };
 
   removeSatelliteFromView = sat => {
-      console.log("sat removed")
+    console.log("sat removed");
     sat.displayed = false;
     let updatedViewlist = [...this.state.view].filter(s => s.id != sat.id);
     this.setState({ view: updatedViewlist });
@@ -133,29 +133,39 @@ class MainDisplay extends Component {
     this.setState({ selection: [item] });
   };
 
-loadWatchlistInView = list => {
+  loadWatchlistInView = list => {
+    let SatelliteConstellationIdArray = list.satellites.map(
+      sat => sat.constellation_id
+    );
+    let uniqueArrayOfConstellationIds = [
+      ...new Set(SatelliteConstellationIdArray)
+    ];
 
-    let SatelliteConstellationIdArray =  list.satellites.map( sat => sat.constellation_id)
-    let uniqueArrayOfConstellationIds = [...new Set(SatelliteConstellationIdArray)]
+    let constellationList = [...this.state.constellations];
 
-    let constellationList = [...this.state.constellations]
+    let matchedConstellationsArray = uniqueArrayOfConstellationIds.map(ID => {
+      return constellationList.filter(
+        constellation => constellation.id == ID
+      )[0];
+    });
 
-    let matchedConstellationsArray =uniqueArrayOfConstellationIds.map( ID => {
-            return constellationList.filter(constellation => constellation.id == ID)[0]
-        }
-    )
+    let matchedUniqueConstellationsArray = [
+      ...new Set(matchedConstellationsArray)
+    ];
+    this.setState({
+      view: list.satellites,
+      viewedConstellations: matchedUniqueConstellationsArray
+    });
+  };
 
-    let matchedUniqueConstellationsArray = [...new Set(matchedConstellationsArray)]
-    this.setState({ view: list.satellites, viewedConstellations: matchedUniqueConstellationsArray });
-    };
-
-    clearView = () => {
-    let disableViewforAllConstellations = [...this.state.constellations].map( c => c.displayed = false)
+  clearView = () => {
+    let disableViewforAllConstellations = [...this.state.constellations].map(
+      c => (c.displayed = false)
+    );
     this.setState({ view: [], constellatiom: disableViewforAllConstellations });
+  };
 
-};
-
-saveViewToWatchlist = watchlist_name => {
+  saveViewToWatchlist = watchlist_name => {
     let target = [...this.state.watchlists].filter(
       watchlist => watchlist.name == watchlist_name
     );
@@ -283,10 +293,7 @@ saveViewToWatchlist = watchlist_name => {
         <div className="flex-column-container">
           {!this.state.ARview ? (
             <React.Fragment>
-              <Viewport
-                className="viewport"
-                sats={this.state.view}
-              />
+              <Viewport className="viewport" sats={this.state.view} />
             </React.Fragment>
           ) : (
             <React.Fragment>

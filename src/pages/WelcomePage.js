@@ -170,14 +170,14 @@ const HomepageLayout = () => (
     <Segment style={{ padding: "8em 0em" }} vertical>
       <Grid container stackable verticalAlign="middle">
         <Grid.Row>
-          <Grid.Column floated="right" width={14}>
+          <Grid.Column floated="right">
             <Header as="h2" style={{ fontSize: "4em" }}>
-              NAVIGATING IN THE APP
+              HOW TO USE THE APP
             </Header>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
-          <Grid.Column width={7}>
+        <Grid.Row columns={3}>
+          <Grid.Column>
             <Header as="h3" style={{ fontSize: "2em" }}>
               <Icon name="bullseye" /> SELECT
             </Header>
@@ -193,15 +193,39 @@ const HomepageLayout = () => (
               <br></br>
             </p>
           </Grid.Column>
-          <Grid.Column floated="right" width={7}>
-            <Image
-              rounded
-              size="large"
-              src="./assets/images/SelectConstellations.png"
-            />
+          <Grid.Column>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              <Icon name="unhide" /> CURRENT VIEW
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              Customise what satellites or constellations that you want in View.
+            </p>
+            <p style={{ fontSize: "1.33em" }}>
+              Save your selection and load them up for viewing later.
+            </p>
+            <p style={{ fontSize: "1.33em" }}>
+              <i>
+                (An AR version of the app is under development, so you could
+                view them in AR soon!)
+              </i>
+            </p>
+          </Grid.Column>
+          <Grid.Column>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              <Icon name="list" /> LOAD
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              Load your list of saved Views from here.
+            </p>
+            <p style={{ fontSize: "1.33em" }}>
+              <i>
+                (An AR version of the app is under development, so you could
+                view them in AR soon!)
+              </i>
+            </p>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
+        {/* <Grid.Row>
           <Grid.Column width={7}>
             <Header as="h3" style={{ fontSize: "2em" }}>
               <Icon name="unhide" /> CURRENT VIEW
@@ -249,7 +273,7 @@ const HomepageLayout = () => (
               src="./assets/images/Welcome_Load.png"
             />
           </Grid.Column>
-        </Grid.Row>
+        </Grid.Row> */}
       </Grid>
     </Segment>
 
