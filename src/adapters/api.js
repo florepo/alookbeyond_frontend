@@ -52,6 +52,9 @@ export const getWatchlists = () => {
     return get(url)
 }
 
+
+
+
 export const updateWatchList = (data, id) => {
     const url = BACKEND_URL +'/watchlists/'+ id
     console.log("posting")

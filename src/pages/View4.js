@@ -15,8 +15,8 @@ class DemoPage extends Component {
         this.setState({ARview: !this.state.ARview})
       }
 
-    componentDidMount() {
-        API.getWatchlist(108)
+      componentDidMount() {
+        API.getWatchlist(111)
         .then(watchlist => this.setState({watchlist: watchlist.satellites}))
     }
 

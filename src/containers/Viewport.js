@@ -32,7 +32,8 @@ const currentTimeStamp   = new Date();
 class Viewport extends Component {
   constructor(props) {
     super(props)
-    this.state = {removable_items: []}
+    this.state = {removable_items: [],
+     satsToDisplay: []}
   }
 
 
@@ -40,6 +41,7 @@ class Viewport extends Component {
     console.log("we mount here", this.canvas)
     this.initialize()
     this.start();
+
   }
 
   componentWillUnmount() {
@@ -48,6 +50,7 @@ class Viewport extends Component {
  
   componentDidUpdate(prevProps, prevState){
     this.trackPropsChangesAndRerender(prevProps, prevState)
+
   }
   
   initialize = () => {
@@ -109,10 +112,15 @@ class Viewport extends Component {
      //handle added elements
     } else if (prevProps.sats.length<this.props.sats.length) {
       const addedElements = differenceBy(this.props.sats, prevProps.sats)
-      this.addEntities(addedElements)
+      this.removeEntities(prevProps.sats)
+      this.addEntities(this.props.sats)
+     
+      // this.setState({satsToDisplay: this.props.sats})
     } else {}
     this.renderer.render(this.scene, this.camera)
+   
   }
+
 
   cleanUp = () =>{
     window.removeEventListener("resize", this.updateViewportDimensions);

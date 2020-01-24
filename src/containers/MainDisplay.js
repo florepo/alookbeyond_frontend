@@ -272,6 +272,8 @@ saveViewToWatchlist = watchlist_name => {
   render() {
     return (
       <div className="main-display-container">
+    {!this.state.ARview ? (
+        <div>
         <Tab
           inverted
           className="sidetabs"
@@ -280,6 +282,8 @@ saveViewToWatchlist = watchlist_name => {
           activeIndex={this.state.activeIndex}
           onTabChange={this.handleTabChange}
         />
+        </div>): null }
+
         <div className="flex-column-container">
           {!this.state.ARview ? (
             <React.Fragment>
@@ -290,7 +294,9 @@ saveViewToWatchlist = watchlist_name => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <ARContainer ARview={this.state.ARview} sats={this.state.view} />
+              <ARContainer
+                ARview={this.state.ARview} 
+                sats={this.state.view} />
               <Button
                 className="activate-ar-button"
                 basic

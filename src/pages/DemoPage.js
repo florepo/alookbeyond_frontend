@@ -16,18 +16,20 @@ class DemoPage extends Component {
       }
 
     componentDidMount() {
-        API.getConstellationSats(108)
+        API.getConstellationSats(124)
         .then(watchlist => this.setState({watchlist: watchlist.satellites}))
     }
 
     render() { 
         return (  
             <div className="App">
-                <button onClick={this.handleClick}> 3D/AR </button>
-                <ARContainer
+                {(this.state.watchlist!=[])?
+                (<ARContainer
                     ARview={this.state.ARview}
                     sats={this.state.watchlist}
-                />
+                />)
+                : <div>no constellation selected</div>
+                }
             </div>
              );
     }

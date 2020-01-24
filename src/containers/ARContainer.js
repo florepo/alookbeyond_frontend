@@ -7,9 +7,10 @@ const ARContainer = ({ ARview, sats}) => {
 
   //"component did mount"
   useEffect(() => {
-    if(sats && sats.length>0){mount(canvasEl.current, sats, ARview)};
-    mount(canvasEl.current, sats, ARview);
-  },);
+    (sats && sats.length>0)? mount(canvasEl.current, sats, ARview): console.log("waiting for input");
+    // debugger
+    // mount(canvasEl.current, sats, ARview);
+  });
 
   return (
     <div>
