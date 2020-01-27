@@ -14,6 +14,7 @@ class NavBar extends Component {
     this.props.onClick(id);
   };
 
+<<<<<<< HEAD
   render() {
     const { activeItem } = this.state;
     return (
@@ -27,10 +28,26 @@ class NavBar extends Component {
         />
         <Menu.Menu position="right">
           {/* <Menu.Item
+=======
+    render() { 
+        const { activeItem } = this.state
+        return ( 
+            <Menu pointing secondary>
+                <Menu.Item
+                    as={Link}
+                    to={'/'}
+                    name='A Look Beyond'
+                    active={activeItem === 'home'}
+                    onClick={this.handleItemClick}
+                />
+                <Menu.Menu position='right'>
+                    {/* <Menu.Item
+>>>>>>> refactoring
                         name='AR-Preview'
                         active={activeItem === 'arview'}
                         onClick={this.handleItemClick}
                     /> */}
+<<<<<<< HEAD
           {/* <Menu.Item
                         name='Watchlists'
                         active={activeItem === 'watchlist'}
@@ -44,6 +61,12 @@ class NavBar extends Component {
       </Menu>
     );
   }
+=======
+                </Menu.Menu>
+          </Menu>
+         );
+    }
+>>>>>>> refactoring
 }
 
 export default NavBar;

@@ -32,14 +32,15 @@ const currentTimeStamp   = new Date();
 class Viewport extends Component {
   constructor(props) {
     super(props)
-    this.state = {removable_items: []}
+    this.state = {removable_items: [],
+                  satsToDisplay: []}
   }
 
-
   componentDidMount() {
-    console.log("we mount here", this.canvas)
+    console.log("Three.js canvas mounted here:", this.canvas)
     this.initialize()
     this.start();
+
   }
 
   componentWillUnmount() {
@@ -48,6 +49,7 @@ class Viewport extends Component {
  
   componentDidUpdate(prevProps, prevState){
     this.trackPropsChangesAndRerender(prevProps, prevState)
+
   }
   
   initialize = () => {
@@ -56,7 +58,7 @@ class Viewport extends Component {
     let height = this.canvas.clientHeight;
     let width = this.canvas.clientWidth;   
 
-    //SET UP SCENE, CAMERA, RENDERER, AMBIENTLIGHT
+    //SET UP SCENE, CAMERA, RENDERER, AMBIENT LIGHT
     this.setupScene(height, width)
 
     //SET WINDOW RESIZE LISTENER AND UPDATE RENDERER AND CAMERA BASED ON CANVAS SIZE
@@ -70,9 +72,9 @@ class Viewport extends Component {
     //ADD EARTH
     let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
     earth = adjustObjectOrientation(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
-    // earth = alignXaxis2Equinox(earth,currentTimeStamp); // align coordinate system with vernal equinox
+
     this.scene.add(earth)
-    // this.trackObject(earth)   //tracking for garbage collection
+
   }
 
   
@@ -109,10 +111,15 @@ class Viewport extends Component {
      //handle added elements
     } else if (prevProps.sats.length<this.props.sats.length) {
       const addedElements = differenceBy(this.props.sats, prevProps.sats)
-      this.addEntities(addedElements)
+      this.removeEntities(prevProps.sats)
+      this.addEntities(this.props.sats)
+     
+      // this.setState({satsToDisplay: this.props.sats})
     } else {}
     this.renderer.render(this.scene, this.camera)
+   
   }
+
 
   cleanUp = () =>{
     window.removeEventListener("resize", this.updateViewportDimensions);

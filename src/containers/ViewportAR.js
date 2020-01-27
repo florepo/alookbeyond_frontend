@@ -19,7 +19,7 @@ import {
 //Control parameters
 let counter =0 
 const earthRadius = 6371; //[km]
-const cameraAltitude = 60000; //[km]
+const cameraAltitude = 80000; //[km]
 const sceneScaleFactor = 1 / 2000;
 const satScaleFactor = 200;
 const currentTimeStamp = new Date();
@@ -166,11 +166,11 @@ const initialize = (canvas, current) => {
   let pointLight = new window.THREE.PointLight(0xffffff, 1, 100);
   pointLight.position.set(0.5, 3, 2);
   // create a mesh to help visualize the position of the light
-  pointLight.add(
-    new window.THREE.Mesh(
-      new window.THREE.SphereBufferGeometry(0.05, 16, 8),
-      new window.THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5 })
-    )
+  // pointLight.add(
+  //   new window.THREE.Mesh(
+  //     new window.THREE.SphereBufferGeometry(0.05, 16, 8),
+  //     new window.THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5 })
+  //   )
   );
   markerRoot1.add(pointLight);
 

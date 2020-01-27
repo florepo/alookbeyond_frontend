@@ -282,6 +282,8 @@ class MainDisplay extends Component {
   render() {
     return (
       <div className="main-display-container">
+    {!this.state.ARview ? (
+        <div>
         <Tab
           inverted
           className="sidetabs"
@@ -290,6 +292,8 @@ class MainDisplay extends Component {
           activeIndex={this.state.activeIndex}
           onTabChange={this.handleTabChange}
         />
+        </div>): null }
+
         <div className="flex-column-container">
           {!this.state.ARview ? (
             <React.Fragment>
@@ -297,7 +301,9 @@ class MainDisplay extends Component {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <ARContainer ARview={this.state.ARview} sats={this.state.view} />
+              <ARContainer
+                ARview={this.state.ARview} 
+                sats={this.state.view} />
               <Button
                 className="activate-ar-button"
                 basic

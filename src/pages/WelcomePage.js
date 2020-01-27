@@ -167,15 +167,18 @@ const HomepageLayout = () => (
         </Grid.Row>
       </Grid>
     </Segment>
-    <Segment style={{ padding: "8em 0em" }} vertical>
-      <Grid container stackable verticalAlign="middle">
+    <Segment style={{ padding: "8em 12em" }} vertical>
+
+      <Grid style={{ padding: "8em 12em" }}  container stackable verticalAlign="middle">
         <Grid.Row>
           <Grid.Column floated="right">
             <Header as="h2" style={{ fontSize: "4em" }}>
               HOW TO USE THE APP
             </Header>
+           
           </Grid.Column>
         </Grid.Row>
+<<<<<<< HEAD
         <Grid.Row columns={3}>
           <Grid.Column>
             <Header as="h3" style={{ fontSize: "2em" }}>
@@ -253,27 +256,72 @@ const HomepageLayout = () => (
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={7}>
+=======
+      </Grid>
+
+      <Grid columns={3} verticalAlign="top">
+        <Grid.Row>
+          <Grid.Column fluid vertical >
+            <Container positon="top">
+>>>>>>> refactoring
             <Header as="h3" style={{ fontSize: "2em" }}>
-              <Icon name="list" /> LOAD
-            </Header>
-            <p style={{ fontSize: "1.33em" }}>
-              Load your list of saved Views from here.
-            </p>
-            <p style={{ fontSize: "1.33em" }}>
-              <i>
-                (An AR version of the app is under development, so you could
-                view them in AR soon!)
-              </i>
-            </p>
+                <Icon name="bullseye" /> SELECT
+              </Header>
+              <p style={{ fontSize: "1.33em" }}>
+                In this tab, select the satellite constellation(s) that you want
+                to add to View.
+              </p>
+              <p style={{ fontSize: "1.33em" }}>
+                <Icon mini name="hide" />
+                <Icon mini name="unhide" />
+                Click to show/hide constellation
+                <br></br>
+                <br></br>
+              </p>
+              </Container>
           </Grid.Column>
-          <Grid.Column floated="right" width={7}>
-            <Image
-              rounded
-              size="large"
-              src="./assets/images/Welcome_Load.png"
-            />
+          <Grid.Column>
+            <Container positon="top">
+              <Header as="h3" style={{ fontSize: "2em" }}>
+                  <Icon name="unhide" /> CURRENT VIEW
+                </Header>
+                <p style={{ fontSize: "1.33em" }}>
+                  Customise what satellites or constellations that you want in View.
+                </p>
+                <p style={{ fontSize: "1.33em" }}>
+                  Save your selection and load them up for viewing later.
+                </p>
+                <p style={{ fontSize: "1.33em" }}>
+                  <i>
+                    (An AR version of the app is under development, so you could
+                    view them in AR soon!)
+                  </i>
+                </p>
+              </Container>
           </Grid.Column>
+<<<<<<< HEAD
         </Grid.Row> */}
+=======
+
+        <Grid.Column>
+          <Header as="h3" style={{ fontSize: "2em" }}>
+                <Icon name="list" /> LOAD
+              </Header>
+              <p style={{ fontSize: "1.33em" }}>
+                Load your list of saved Views from here.
+              </p>
+              <p style={{ fontSize: "1.33em" }}>
+                <i>
+                  (An AR version of the app is under development, so you could
+                  view them in AR soon!)
+                </i>
+              </p>
+        </Grid.Column>
+        </Grid.Row>
+ 
+       
+
+>>>>>>> refactoring
       </Grid>
     </Segment>
 

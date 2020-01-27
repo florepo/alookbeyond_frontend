@@ -79,6 +79,8 @@
 .ui.vertical.center.aligned.segment {
   /* background-color: rgb(63, 63, 63); */
   background-image: url("./css-assets/welcomeBackground.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
   /* color: white */
 }
 
@@ -134,6 +136,10 @@
   color: rgba(0,0,0,.95);
   font-weight: 400;
   box-shadow: none;
+}
+
+.activate-ar-button{
+  z-index: 1;
 }
 
 .ui.menu {

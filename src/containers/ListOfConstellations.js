@@ -15,12 +15,14 @@ class ListOfConstellations extends Component {
 
   render() {
     const { activeIndex } = this.state;
+
     const {
       constellations,
       addOnClick,
       removeOnClick,
       showInfoOnClick
     } = this.props;
+
     return (
       <Accordion>
         <Accordion.Title
