@@ -15,7 +15,6 @@ class MainDisplay extends Component {
     super(props);
     this.state = {
       constellations: [],
-      satellites: [],
       view: [],
       viewedConstellations: [],
       watchlists: [],

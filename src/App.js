@@ -6,13 +6,10 @@ import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import DemoPage from './pages/DemoPage'
 import View1 from './pages/View1'
-<<<<<<< HEAD
-=======
 import View2 from './pages/View2'
 import View3 from './pages/View3'
 import View4 from './pages/View4'
 
->>>>>>> refactoring
 import ErrorPage from './pages/ErrorPage'
 
 class App extends Component {
