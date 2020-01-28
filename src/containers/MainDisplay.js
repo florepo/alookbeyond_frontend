@@ -25,19 +25,19 @@ class MainDisplay extends Component {
       infoContentForDisplay: [],
       arViewOpen: false,
       modalOpen: false,
-      activeIndex: 0
+      activeTabIndex: 0
     };
   }
 
   componentDidMount() {
-    API.getConstellations().then(constellations =>
-      this.setState({ constellations })
-    );
-    API.getWatchlists().then(watchlists => this.setState({ watchlists }));
+    API.getConstellations()
+      .then(constellations =>this.setState({ constellations }));
+    API.getWatchlists()
+      .then(watchlists => this.setState({ watchlists }));
   }
 
   addOrFetchSatsForConstellationToView = constellation => {
-    this.setState({ infoContentForDisplay: [] });
+    // this.setState({ infoContentForDisplay: [] });
     if (constellation.displayed == true) {
       console.log("already selected");
     } else if (!constellation.satellites) {
@@ -65,10 +65,9 @@ class MainDisplay extends Component {
   };
 
   addSatellitesToView = sats => {
-    this.setState({ infoContentForDisplay: [] });
     let satsToAdd = sats.filter(s => s.displayed != true);
     let updatedViewlist = [...this.state.view].concat(satsToAdd);
-    this.setState({ view: updatedViewlist });
+    this.setState({ view: updatedViewlist, infoContentForDisplay: [] });
   };
 
   addSatelliteToView = sat => {
@@ -199,8 +198,8 @@ class MainDisplay extends Component {
     this.setState({ infoContentForDisplay: [] });
   };
 
-  handleTabChange = (e, { activeIndex }) => {
-    this.setState({ activeIndex, infoContentForDisplay: [] });
+  handleTabChange = (e, { activeTabIndex }) => {
+    this.setState({ activeTabIndex, infoContentForDisplay: [] });
   };
 
   switchToSecondTab = () => this.setState({ activeIndex: 1 });
@@ -285,26 +284,29 @@ class MainDisplay extends Component {
   render() {
     return (
       <div className="main-display-container">
-    {!this.state.arViewOpen ? (
-        <div>
-        <Tab
-          inverted
-          className="sidetabs"
-          menu={{ attached: false }}
-          panes={this.panes}
-          activeIndex={this.state.activeIndex}
-          onTabChange={this.handleTabChange}
-        />
-        </div>): null }
+        {!this.state.arViewOpen? 
+          <Tab
+            className="sidetabs"
+            menu={{ attached: false }}
+            panes={this.panes}
+            activeIndex={this.state.activeIndex}
+            onTabChange={this.handleTabChange}
+          />
+          :
+          null
+        }
 
         <div className="flex-column-container">
           {!this.state.arViewOpen ? (
             <React.Fragment>
-              <Viewport className="viewport" sats={this.state.view} />
+              <Viewport
+                className="viewport"
+                sats={this.state.view} />
             </React.Fragment>
           ) : (
             <React.Fragment>
               <ARContainer
+                className="ar-container"
                 ARview={this.state.arViewOpen} 
                 sats={this.state.view} />
               <Button
