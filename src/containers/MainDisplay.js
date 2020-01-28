@@ -33,31 +33,61 @@ class MainDisplay extends Component {
   }
 
   addOrFetchSatsForConstellationToView = constellation => {
+    
+    if (!constellation.satellites) {
+      loadSatellitesForConstellationAndAddToView(constellation.id)
+    }
+
     if (constellation.displayed == true) {
       console.log("already selected");
-    } else if (!constellation.satellites) {
-      constellation.displayed = true;
-      API.getConstellationSats(constellation.id).then(constellation =>
-        this.addSatellitesToView(constellation.satellites)
-      );
-      let viewedConstellationList = [...this.state.viewedConstellations];
-      viewedConstellationList.push(constellation);
-      this.setState({ viewedConstellations: viewedConstellationList });
     } else {
-      constellation.displayed = true;
-      let sats = [...constellation.satellites];
-      let updatedViewlist = [...this.state.view];
-      updatedViewlist.concat(sats);
 
       let viewedConstellationList = [...this.state.viewedConstellations];
+      constellation.displayed = true;
       viewedConstellationList.push(constellation);
 
+      let updatedViewlist = [...this.state.view];
+      updatedViewlist.concat([...constellation.satellites]);
+  
       this.setState({
         view: updatedViewlist,
         viewedConstellations: viewedConstellationList
       });
     }
   };
+
+  setSatelliteDisplay
+
+
+
+  addSatellitesToView = sats => {
+    let satsToAdd = sats.filter(s => s.displayed != true);
+    let updatedViewlist = [...this.state.view].concat(satsToAdd);
+    this.setState({ view: updatedViewlist })
+  };
+
+
+
+  loadSatellitesForConstellationAndAddToView = (id) => {
+    API.getConstellationSats(constellation.id)
+    .then(constellation => this.addSatellitesToView(constellation.satellites))
+  }
+
+  removeConstellationFromView = constellation => {
+    constellation.displayed = false;
+    let updatedViewlist = [...this.state.view].filter(
+      s => s.constellation_id != constellation.id
+    );
+
+    let viewedConstellationsWithoutSelectedConstellation = [
+      ...this.state.viewedConstellations
+    ].filter(c => c.id != constellation.id);
+    this.setState({
+      view: updatedViewlist,
+      viewedConstellations: viewedConstellationsWithoutSelectedConstellation
+    });
+  };
+
 
   addSatellitesToView = sats => {
     let satsToAdd = sats.filter(s => s.displayed != true);
@@ -81,21 +111,7 @@ class MainDisplay extends Component {
     this.setState({ view: updatedViewlist });
   };
 
-  removeConstellationFromView = constellation => {
-    constellation.displayed = false;
-    let updatedViewlist = [...this.state.view].filter(
-      s => s.constellation_id != constellation.id
-    );
-
-    let viewedConstellationsWithoutSelectedConstellation = [
-      ...this.state.viewedConstellations
-    ].filter(c => c.id != constellation.id);
-    this.setState({
-      view: updatedViewlist,
-      viewedConstellations: viewedConstellationsWithoutSelectedConstellation
-    });
-  };
-
+  
   removeSatelliteWithConstellationFromView = sat => {
     sat.displayed = false;
 
@@ -211,7 +227,7 @@ class MainDisplay extends Component {
             constellations={this.state.constellations}
             addOnClick={this.addOrFetchSatsForConstellationToView}
             removeOnClick={this.removeConstellationFromView}
-            showInfoOnClick={this.showConstellationInfoOnClick}
+            // showInfoOnClick={this.showConstellationInfoOnClick}
           />
         </Tab.Pane>
       )
