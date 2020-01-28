@@ -33,32 +33,59 @@ class MainDisplay extends Component {
   }
 
   addOrFetchSatsForConstellationToView = constellation => {
-    
-    if (!constellation.satellites) {
-      loadSatellitesForConstellationAndAddToView(constellation.id)
-    }
-
     if (constellation.displayed == true) {
       console.log("already selected");
+
     } else {
+      if (!constellation.satellites){
+        this.loadSatellitesForConstellationAndAddToView(constellation)
+      } else {
+        let updatedConstellation = this.toggleObjectDisplayStatus(constellation)
+        this.updateConstellationInConstellationsState(constellation,updatedConstellation)
+        this.addConstellationToConstellationViewList(updatedConstellation)
+        this.addSatellitesToView(updatedConstellation.satellites)
+      }
+    };
+  }
+  loadSatellitesForConstellationAndAddToView = (constellation) => {
+    return API.getConstellationSats(constellation.id)
+      .then(constellation => this.toggleObjectDisplayStatus(constellation))
+      .then(updatedConstellation => this.updateConstellationInConstellationsState(constellation,updatedConstellation))
+      .then(updatedConstellation => this.addConstellationToConstellationViewList(updatedConstellation))
+      .then(updatedConstellation => this.addSatellitesToView(updatedConstellation.satellites))
+  }
 
-      let viewedConstellationList = [...this.state.viewedConstellations];
-      constellation.displayed = true;
-      viewedConstellationList.push(constellation);
+  toggleObjectDisplayStatus = (object) => {
+    object.displayed =  !object.displayed 
+    return object
+  }
 
-      let updatedViewlist = [...this.state.view];
-      updatedViewlist.concat([...constellation.satellites]);
-  
-      this.setState({
-        view: updatedViewlist,
-        viewedConstellations: viewedConstellationList
-      });
+  updateConstellationInConstellationsState = (constellation, updatedConstellation) => {
+    let constellationsArray = [...this.state.constellations]
+    let index = constellationsArray.indexOf(constellation)
+    constellationsArray[index] = updatedConstellation
+    this.setState({constellations: constellationsArray})
+    return updatedConstellation
+  }
+
+  addConstellationToConstellationViewList = constellation => {
+    if ( ![...this.state.viewedConstellations].includes(constellation)){
+        let list = [...this.state.viewedConstellations];
+        list.push(constellation);
+        this.setState({viewedConstellations: list})
     }
+    return constellation
   };
 
-  setSatelliteDisplay
 
 
+  addSatellitesToView = sats => {
+    let satsToAdd = sats.filter(s => s.displayed != true);
+    satsToAdd = satsToAdd.map( sat => this.toggleObjectDisplayStatus(sat) )
+
+    let updatedViewlist = [...this.state.view].concat(satsToAdd);
+    this.setState({ view: updatedViewlist })
+  };
 
   addSatellitesToView = sats => {
     let satsToAdd = sats.filter(s => s.displayed != true);
@@ -67,11 +94,18 @@ class MainDisplay extends Component {
   };
 
 
+  addSatellitesToView = sats => {
+    let satsToAdd = sats.filter(s => s.displayed != true);
 
-  loadSatellitesForConstellationAndAddToView = (id) => {
-    API.getConstellationSats(constellation.id)
-    .then(constellation => this.addSatellitesToView(constellation.satellites))
+    satsToAdd = satsToAdd.map( sat => {
+      sat.displayed = true
+      return sat
+    })
+
+    let updatedViewlist = [...this.state.view].concat(satsToAdd);
+    this.setState({ view: updatedViewlist })
   }
+ 
 
   removeConstellationFromView = constellation => {
     constellation.displayed = false;
@@ -89,11 +123,6 @@ class MainDisplay extends Component {
   };
 
 
-  addSatellitesToView = sats => {
-    let satsToAdd = sats.filter(s => s.displayed != true);
-    let updatedViewlist = [...this.state.view].concat(satsToAdd);
-    this.setState({ view: updatedViewlist })
-  };
 
   addSatelliteToView = sat => {
     if (!!this.state.view.find(s => s == sat)) {
