@@ -178,7 +178,6 @@ const HomepageLayout = () => (
            
           </Grid.Column>
         </Grid.Row>
-<<<<<<< HEAD
         <Grid.Row columns={3}>
           <Grid.Column>
             <Header as="h3" style={{ fontSize: "2em" }}>
@@ -256,14 +255,6 @@ const HomepageLayout = () => (
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={7}>
-=======
-      </Grid>
-
-      <Grid columns={3} verticalAlign="top">
-        <Grid.Row>
-          <Grid.Column fluid vertical >
-            <Container positon="top">
->>>>>>> refactoring
             <Header as="h3" style={{ fontSize: "2em" }}>
                 <Icon name="bullseye" /> SELECT
               </Header>
@@ -299,9 +290,6 @@ const HomepageLayout = () => (
                 </p>
               </Container>
           </Grid.Column>
-<<<<<<< HEAD
-        </Grid.Row> */}
-=======
 
         <Grid.Column>
           <Header as="h3" style={{ fontSize: "2em" }}>
@@ -321,7 +309,6 @@ const HomepageLayout = () => (
  
        
 
->>>>>>> refactoring
       </Grid>
     </Segment>
 
@@ -346,7 +333,6 @@ const HomepageLayout = () => (
           </Grid.Column>
           {/* </Grid.Row> */}
         </Grid>
-      </Container>
     </Segment>
   </ResponsiveContainer>
 );
