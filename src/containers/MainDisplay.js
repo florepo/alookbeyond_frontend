@@ -4,12 +4,9 @@ import { Tab, Button, Header, Icon } from "semantic-ui-react";
 import ListOfConstellations from "./ListOfConstellations";
 import ListOfViewElements from "../containers/ListOfViewElements";
 import ListOfWatchlists from "../containers/ListOfWatchlists";
-
 import Viewport from "./Viewport";
 import ARContainer from "./ARContainer";
-
 import SelectionContainer from "./SelectionContainer";
-
 
 import { _ } from "lodash";
 import * as API from "../adapters/api";
@@ -19,10 +16,9 @@ class MainDisplay extends Component {
     super(props);
     this.state = {
       constellations: [],
-      watchlists: [],
       view: [],
+      watchlists: [],
       viewedConstellations: [],
-      infoContentForDisplay: [],
       arViewOpen: false,
       modalOpen: false,
       activeTabIndex: 0
@@ -31,13 +27,12 @@ class MainDisplay extends Component {
 
   componentDidMount() {
     API.getConstellations()
-      .then(constellations =>this.setState({ constellations }));
+      .then(constellations => this.setState({ constellations }));
     API.getWatchlists()
       .then(watchlists => this.setState({ watchlists }));
   }
 
   addOrFetchSatsForConstellationToView = constellation => {
-    // this.setState({ infoContentForDisplay: [] });
     if (constellation.displayed == true) {
       console.log("already selected");
     } else if (!constellation.satellites) {
@@ -67,7 +62,7 @@ class MainDisplay extends Component {
   addSatellitesToView = sats => {
     let satsToAdd = sats.filter(s => s.displayed != true);
     let updatedViewlist = [...this.state.view].concat(satsToAdd);
-    this.setState({ view: updatedViewlist, infoContentForDisplay: [] });
+    this.setState({ view: updatedViewlist })
   };
 
   addSatelliteToView = sat => {
@@ -131,10 +126,6 @@ class MainDisplay extends Component {
     });
   };
 
-  showConstellationInfoOnClick = item => {
-    this.setState({ infoContentForDisplay: [item] });
-  };
-
   loadWatchlistInView = list => {
     let SatelliteConstellationIdArray = list.satellites.map(
       sat => sat.constellation_id
@@ -190,21 +181,13 @@ class MainDisplay extends Component {
     return arrayOfElements;
   };
 
-  toggleARview = () => {
-    this.setState({ arViewOpen: !this.state.arViewOpen });
-  };
+  toggleARview = () => this.setState({ arViewOpen: !this.state.arViewOpen });
 
-  clearSelectionContainer = () => {
-    this.setState({ infoContentForDisplay: [] });
-  };
+  switchToViewTab = () => this.setState({ activeIndex: 1 });
 
-  handleTabChange = (e, { activeTabIndex }) => {
-    this.setState({ activeTabIndex, infoContentForDisplay: [] });
-  };
+  handleTabChange = (e, { activeTabIndex }) => this.setState({ activeTabIndex });
 
-  switchToSecondTab = () => this.setState({ activeIndex: 1 });
-
-  panes = [
+  tabPanes = [
     {
       menuItem: { key: "constellation", icon: "bullseye", content: "SELECT" },
       render: () => (
@@ -274,7 +257,7 @@ class MainDisplay extends Component {
           <ListOfWatchlists
             watchlists={this.state.watchlists}
             loadWatchlistInView={this.loadWatchlistInView}
-            switchToSecondTab={this.switchToSecondTab}
+            switchToSecondTab={this.switchToViewTab}
           />
         </Tab.Pane>
       )
@@ -285,17 +268,15 @@ class MainDisplay extends Component {
     return (
       <div className="main-display-container">
         {!this.state.arViewOpen? 
-          <Tab
-            className="sidetabs"
+          <Tab className="sidetabs"
             menu={{ attached: false }}
-            panes={this.panes}
-            activeIndex={this.state.activeIndex}
+            panes={this.tabPanes}
+            activeIndex={this.state.activeTabIndex}
             onTabChange={this.handleTabChange}
           />
           :
           null
         }
-
         <div className="flex-column-container">
           {!this.state.arViewOpen ? (
             <React.Fragment>
@@ -305,12 +286,10 @@ class MainDisplay extends Component {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <ARContainer
-                className="ar-container"
+              <ARContainer className="ar-container"
                 ARview={this.state.arViewOpen} 
                 sats={this.state.view} />
-              <Button
-                className="activate-ar-button"
+              <Button className="activate-ar-button"
                 basic
                 color="red"
                 onClick={this.toggleARview}
