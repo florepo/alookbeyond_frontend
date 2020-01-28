@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { Tab, Button, Header, Icon } from "semantic-ui-react";
+
+import ListOfConstellations from "./ListOfConstellations";
+import ListOfViewElements from "../containers/ListOfViewElements";
+import ListOfWatchlists from "../containers/ListOfWatchlists";
+
 import Viewport from "./Viewport";
 import ARContainer from "./ARContainer";
-import ListOfViewElements from "../containers/ListOfViewElements";
-import ListOfConstellations from "./ListOfConstellations";
+
 import SelectionContainer from "./SelectionContainer";
-import ListOfWatchlists from "../containers/ListOfWatchlists";
+
 
 import { _ } from "lodash";
 import * as API from "../adapters/api";
@@ -15,11 +19,11 @@ class MainDisplay extends Component {
     super(props);
     this.state = {
       constellations: [],
+      watchlists: [],
       view: [],
       viewedConstellations: [],
-      watchlists: [],
-      selection: [],
-      ARview: false,
+      infoContentForDisplay: [],
+      arViewOpen: false,
       modalOpen: false,
       activeIndex: 0
     };
@@ -33,7 +37,7 @@ class MainDisplay extends Component {
   }
 
   addOrFetchSatsForConstellationToView = constellation => {
-    this.setState({ selection: [] });
+    this.setState({ infoContentForDisplay: [] });
     if (constellation.displayed == true) {
       console.log("already selected");
     } else if (!constellation.satellites) {
@@ -61,7 +65,7 @@ class MainDisplay extends Component {
   };
 
   addSatellitesToView = sats => {
-    this.setState({ selection: [] });
+    this.setState({ infoContentForDisplay: [] });
     let satsToAdd = sats.filter(s => s.displayed != true);
     let updatedViewlist = [...this.state.view].concat(satsToAdd);
     this.setState({ view: updatedViewlist });
@@ -129,7 +133,7 @@ class MainDisplay extends Component {
   };
 
   showConstellationInfoOnClick = item => {
-    this.setState({ selection: [item] });
+    this.setState({ infoContentForDisplay: [item] });
   };
 
   loadWatchlistInView = list => {
@@ -188,15 +192,15 @@ class MainDisplay extends Component {
   };
 
   toggleARview = () => {
-    this.setState({ ARview: !this.state.ARview });
+    this.setState({ arViewOpen: !this.state.arViewOpen });
   };
 
   clearSelectionContainer = () => {
-    this.setState({ selection: [] });
+    this.setState({ infoContentForDisplay: [] });
   };
 
   handleTabChange = (e, { activeIndex }) => {
-    this.setState({ activeIndex, selection: [] });
+    this.setState({ activeIndex, infoContentForDisplay: [] });
   };
 
   switchToSecondTab = () => this.setState({ activeIndex: 1 });
@@ -281,7 +285,7 @@ class MainDisplay extends Component {
   render() {
     return (
       <div className="main-display-container">
-    {!this.state.ARview ? (
+    {!this.state.arViewOpen ? (
         <div>
         <Tab
           inverted
@@ -294,14 +298,14 @@ class MainDisplay extends Component {
         </div>): null }
 
         <div className="flex-column-container">
-          {!this.state.ARview ? (
+          {!this.state.arViewOpen ? (
             <React.Fragment>
               <Viewport className="viewport" sats={this.state.view} />
             </React.Fragment>
           ) : (
             <React.Fragment>
               <ARContainer
-                ARview={this.state.ARview} 
+                ARview={this.state.arViewOpen} 
                 sats={this.state.view} />
               <Button
                 className="activate-ar-button"
