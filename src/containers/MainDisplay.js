@@ -257,7 +257,6 @@ class MainDisplay extends Component {
             constellations={this.state.constellations}
             addOnClick={this.addOrFetchSatsForConstellationToView}
             removeOnClick={this.removeConstellationFromView}
-            // showInfoOnClick={this.showConstellationInfoOnClick}
           />
         </Tab.Pane>
       )
@@ -273,11 +272,11 @@ class MainDisplay extends Component {
               view={this.state.view}
               watchlists={this.state.watchlists}
               constellations={this.state.constellations}
-              removeSatOnClick={this.removeSatelliteFromView}
+              // removeSatOnClick={this.removeSatelliteFromView}
               removeConOnClick={this.removeConstellationFromView}
-              removeSatAndConOnClick={
-                this.removeSatelliteWithConstellationFromView
-              }
+              // removeSatAndConOnClick={
+              //   this.removeSatelliteWithConstellationFromView
+              // }
               clearView={this.clearView}
               saveViewToWatchlist={this.saveViewToWatchlist}
               constellationsInView={this.state.viewedConstellations}

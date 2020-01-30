@@ -4,18 +4,13 @@ import {List, Button, Icon, Header, Popup} from 'semantic-ui-react'
 const ElementConstellationList = ({item, addOnClick, removeOnClick, showInfoOnClick}) => {
     
     const handleInfoClick = (item) => {
-        console.log("clicked")
         showInfoOnClick(item)
     }
 
     const handleViewClick = (item) => {
-        console.log("clicked")
-
         if (item.displayed){
-            console.log("remove")
             removeOnClick(item)
          } else {
-            console.log("add")
             addOnClick(item)
          }
     }
