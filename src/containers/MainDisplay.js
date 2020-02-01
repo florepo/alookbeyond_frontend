@@ -18,7 +18,6 @@ class MainDisplay extends Component {
       constellations: [],
       view: [],
       watchlists: [],
-      // viewedConstellations: [],
       arViewOpen: false,
       modalOpen: false,
       activeTabIndex: 0
@@ -42,7 +41,7 @@ class MainDisplay extends Component {
         let updatedConstellation = this.toggleObjectDisplayStatus(
           constellation
         );
-     
+
         this.updateConstellationInConstellationsState(
           constellation,
           updatedConstellation
@@ -83,11 +82,12 @@ class MainDisplay extends Component {
     return constellationDisplayFalse;
   };
 
-  changeChildrenSatelliteDisplayToggleToFalse = constellation =>
-    constellation.satellites.map(sat => {
+  changeChildrenSatelliteDisplayToggleToFalse = constellation => {
+    return constellation.satellites.map(sat => {
       sat.displayed = false;
       return sat;
     });
+  };
 
   removeConstellationFromView = constellation => {
     // remove the satellites that belong to the given constellation
@@ -105,13 +105,12 @@ class MainDisplay extends Component {
         let childrenSatellitesDisplayToggleUpdated = this.changeChildrenSatelliteDisplayToggleToFalse(
           constellationDisplayToggledFalse
         );
-        constellationDisplayToggledFalse.satellites = childrenSatellitesDisplayToggleUpdated
-        return  constellationDisplayToggledFalse;
+        constellationDisplayToggledFalse.satellites = childrenSatellitesDisplayToggleUpdated;
+        return constellationDisplayToggledFalse;
       } else {
         return c;
       }
     });
-    debugger
     this.setState({
       view: updatedViewlist,
       constellations: updatedConstellationList
@@ -194,8 +193,15 @@ class MainDisplay extends Component {
 
   clearView = () => {
     let disableViewforAllConstellations = [...this.state.constellations].map(
-      c => (c.displayed = false)
+      c => {
+        c.displayed = false;
+        if (c.satellites) {
+          c.satellites = this.changeChildrenSatelliteDisplayToggleToFalse(c);
+        }
+        return c;
+      }
     );
+
     this.setState({
       view: [],
       constellations: disableViewforAllConstellations
