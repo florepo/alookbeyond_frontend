@@ -72,9 +72,7 @@ class Viewport extends Component {
     //ADD EARTH
     let earth = EarthGeoModel(earthRadius,sceneScaleFactor)
     earth = adjustObjectOrientation(earth) //correct for Three.js standard coordinate system (threejs: z towards screen)
-
     this.scene.add(earth)
-
   }
 
   
@@ -113,22 +111,7 @@ class Viewport extends Component {
     this.removeEntities(removedSatellites)
     this.addEntities(addedSatellites)
     this.renderer.render(this.scene, this.camera)
-    //handle removed elements
-    // if (prevProps.sats.length>this.props.sats.length) {
-    //   console.log("remove elements")
-    //   const removedElements = differenceBy(prevProps.sats, this.props.sats)
-    //   const removedElements = differenceBy(prevProps.sats, this.props.sats)
-    //   this.removeEntities(removedElements, prevState)
-    //  //handle added elements
-    // } else if (prevProps.sats.length<this.props.sats.length) {
-    //   console.log("add elements")
-    //   this.removeEntities(prevProps.sats)
-    //   this.addEntities(this.props.sats)
-     
-    //   // this.setState({satsToDisplay: this.props.sats})
-    // } else {}
-    // this.renderer.render(this.scene, this.camera)
-   
+
   }
 
 
@@ -199,15 +182,9 @@ class Viewport extends Component {
     //possibly add texture.dispose()
   }
 
-
-
-
   stop = () => {
     cancelAnimationFrame(this.frameId);
   };
-
-
-
 
   render() {
     return (
@@ -216,7 +193,6 @@ class Viewport extends Component {
     );
   }
 
-  //Working
 
   setupScene = (height, width) => {
     //ADD SCENE
@@ -248,8 +224,6 @@ class Viewport extends Component {
     this.scene.add(ambientLight)
     // this.trackObject(ambientLight, this.scene)
   }
-  
-
 
 }
 
