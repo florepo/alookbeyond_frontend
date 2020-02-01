@@ -18,7 +18,7 @@ class MainDisplay extends Component {
       constellations: [],
       view: [],
       watchlists: [],
-      viewedConstellations: [],
+      // viewedConstellations: [],
       arViewOpen: false,
       modalOpen: false,
       activeTabIndex: 0
@@ -26,149 +26,122 @@ class MainDisplay extends Component {
   }
 
   componentDidMount() {
-    API.getConstellations()
-      .then(constellations => this.setState({ constellations }));
-    API.getWatchlists()
-      .then(watchlists => this.setState({ watchlists }));
+    API.getConstellations().then(constellations =>
+      this.setState({ constellations })
+    );
+    API.getWatchlists().then(watchlists => this.setState({ watchlists }));
   }
 
   addOrFetchSatsForConstellationToView = constellation => {
     if (constellation.displayed == true) {
       console.log("already selected");
-
     } else {
-      if (!constellation.satellites){
-        this.loadSatellitesForConstellationAndAddToView(constellation)
+      if (!constellation.satellites) {
+        this.loadSatellitesForConstellationAndAddToView(constellation);
       } else {
-        let updatedConstellation = this.toggleObjectDisplayStatus(constellation)
-        this.updateConstellationInConstellationsState(constellation,updatedConstellation)
-        this.addConstellationToConstellationViewList(updatedConstellation)
-        this.addSatellitesToView(updatedConstellation.satellites)
+        let updatedConstellation = this.toggleObjectDisplayStatus(
+          constellation
+        );
+     
+        this.updateConstellationInConstellationsState(
+          constellation,
+          updatedConstellation
+        );
+
+        this.addSatellitesToView(updatedConstellation.satellites);
       }
-    };
-  }
-
-  loadSatellitesForConstellationAndAddToView = (constellation) => {
-    return API.getConstellationSats(constellation.id)
-      .then(constellation => this.toggleObjectDisplayStatus(constellation))
-      .then(updatedConstellation => this.updateConstellationInConstellationsState(constellation,updatedConstellation))
-      .then(updatedConstellation => this.addConstellationToConstellationViewList(updatedConstellation))
-      .then(updatedConstellation => this.addSatellitesToView(updatedConstellation.satellites))
-  }
-
-
-
-  updateConstellationInConstellationsState = (constellation, updatedConstellation) => {
-    let constellationsArray = [...this.state.constellations]
-    let index = constellationsArray.indexOf(constellation)
-    constellationsArray[index] = updatedConstellation
-    this.setState({constellations: constellationsArray})
-    return updatedConstellation
-  }
-
-  addConstellationToConstellationViewList = constellation => {
-    if ( ![...this.state.viewedConstellations].includes(constellation)){
-        let list = [...this.state.viewedConstellations];
-        list.push(constellation);
-        this.setState({viewedConstellations: list})
     }
-    return constellation
   };
 
+  loadSatellitesForConstellationAndAddToView = constellation => {
+    return API.getConstellationSats(constellation.id)
+      .then(constellation => this.toggleObjectDisplayStatus(constellation))
+      .then(updatedConstellation =>
+        this.updateConstellationInConstellationsState(
+          constellation,
+          updatedConstellation
+        )
+      )
+      .then(updatedConstellation =>
+        this.addSatellitesToView(updatedConstellation.satellites)
+      );
+  };
+
+  // addConstellationToView = constellation => {
+
+  //   const updatedConstellationList = [...this.state.constellations].map ( c =>
+  //     c.id == constellation.id ? {...c, displayed: true} : c
+  //   )
+  //   this.setState({
+  //     view: updatedViewlist,
+  //     constellations: updatedConstellationList
+  //   });
+  // }
+
+  changeConstellationDisplayToFalse = constellation => {
+    let constellationDisplayFalse = { ...constellation, displayed: false };
+    return constellationDisplayFalse;
+  };
+
+  changeChildrenSatelliteDisplayToggleToFalse = constellation =>
+    constellation.satellites.map(sat => {
+      sat.displayed = false;
+      return sat;
+    });
+
   removeConstellationFromView = constellation => {
-    constellation.displayed = false;
-    let updatedViewlist = [...this.state.view].filter(
+    // remove the satellites that belong to the given constellation
+    const updatedViewlist = [...this.state.view].filter(
       s => s.constellation_id != constellation.id
     );
 
-    let viewedConstellationsWithoutSelectedConstellation = [
-      ...this.state.viewedConstellations
-    ].filter(c => c.id != constellation.id);
+    const updatedConstellationList = [...this.state.constellations].map(c => {
+      if (c.id == constellation.id) {
+        // toggle Display to false for the given constellation
+        let constellationDisplayToggledFalse = this.changeConstellationDisplayToFalse(
+          c
+        );
+        // toggle Display to false for satellites in the given constellation
+        let childrenSatellitesDisplayToggleUpdated = this.changeChildrenSatelliteDisplayToggleToFalse(
+          constellationDisplayToggledFalse
+        );
+        constellationDisplayToggledFalse.satellites = childrenSatellitesDisplayToggleUpdated
+        return  constellationDisplayToggledFalse;
+      } else {
+        return c;
+      }
+    });
+    debugger
     this.setState({
       view: updatedViewlist,
-      viewedConstellations: viewedConstellationsWithoutSelectedConstellation
+      constellations: updatedConstellationList
     });
   };
 
-
-  addSatellitesToView = sats => {
-    let satsToAdd = sats.filter(s => s.displayed != true);
-    satsToAdd = satsToAdd.map( sat => this.toggleObjectDisplayStatus(sat) )
-
-    let updatedViewlist = [...this.state.view].concat(satsToAdd);
-    this.setState({ view: updatedViewlist })
+  updateConstellationInConstellationsState = (
+    constellation,
+    updatedConstellation
+  ) => {
+    let constellationsArray = [...this.state.constellations];
+    let index = constellationsArray.indexOf(constellation);
+    constellationsArray[index] = updatedConstellation;
+    this.setState({ constellations: constellationsArray });
+    return updatedConstellation;
   };
 
   addSatellitesToView = sats => {
     let satsToAdd = sats.filter(s => s.displayed != true);
+    satsToAdd = satsToAdd.map(sat => this.toggleObjectDisplayStatus(sat));
+
     let updatedViewlist = [...this.state.view].concat(satsToAdd);
-    this.setState({ view: updatedViewlist })
+    this.setState({ view: updatedViewlist });
   };
-
-  // addSatellitesToView = sats => {
-  //   let satsToAdd = sats.filter(s => s.displayed != true);
-
-  //   satsToAdd = satsToAdd.map( sat => {
-  //     sat.displayed = true
-  //     return sat
-  //   })
-
-  //   let updatedViewlist = [...this.state.view].concat(satsToAdd);
-  //   this.setState({ view: updatedViewlist })
-  // }
- 
-  
-  // addSatelliteToView = sat => {
-  //   if (!!this.state.view.find(s => s == sat)) {
-  //   } else {
-  //     sat.displayed = true;
-  //     let updatedViewlist = [...this.state.view].concat(sat);
-  //     this.setState({ view: updatedViewlist });
-  //   }
-  // };
-
-  // removeSatelliteFromView = sat => {
-  //   console.log("sat removed");
-  //   sat.displayed = false;
-  //   let updatedViewlist = [...this.state.view].filter(s => s.id != sat.id);
-  //   this.setState({ view: updatedViewlist });
-  // };
-
-  // removeSatelliteWithConstellationFromView = sat => {
-  //   sat.displayed = false;
-
-  //   let constellationList = [...this.state.constellations];
-
-  //   let constellationWithSatelliteArray = constellationList.filter(
-  //     c => c.id == sat.constellation_id
-  //   );
-
-  //   constellationWithSatelliteArray[0].displayed = false;
-  //   let updatedConstellationToNotBeDisplayed =
-  //     constellationWithSatelliteArray[0];
-
-  //   let constellationsWithoutSat = constellationList.filter(
-  //     c => c.id != sat.constellation_id
-  //   );
-
-  //   constellationsWithoutSat.push(updatedConstellationToNotBeDisplayed);
-  //   let allConstellationsWithCorrectDisplayAttribute = constellationsWithoutSat;
-
-  //   let updatedSatellitesToViewArray = [...this.state.view].filter(
-  //     s => s.constellation_id != updatedConstellationToNotBeDisplayed.id
-  //   );
-
-  //   this.setState({
-  //     constellations: allConstellationsWithCorrectDisplayAttribute,
-  //     view: updatedSatellitesToViewArray
-  //   });
-  // };
 
   loadWatchlistInView = list => {
-
     let SatelliteConstellationIdArray = list.satellites.map(
       sat => sat.constellation_id
     );
+
     let uniqueArrayOfConstellationIds = [
       ...new Set(SatelliteConstellationIdArray)
     ];
@@ -190,7 +163,6 @@ class MainDisplay extends Component {
       viewedConstellations: matchedUniqueConstellationsArray
     });
   };
-
 
   saveViewToWatchlist = watchlist_name => {
     let target = [...this.state.watchlists].filter(
@@ -215,23 +187,28 @@ class MainDisplay extends Component {
     return arrayOfElements;
   };
 
-  toggleObjectDisplayStatus = (object) => {
-    object.displayed =  !object.displayed 
-    return object
-  }
+  toggleObjectDisplayStatus = object => {
+    object.displayed = !object.displayed;
+    return object;
+  };
 
   clearView = () => {
     let disableViewforAllConstellations = [...this.state.constellations].map(
       c => (c.displayed = false)
     );
-    this.setState({ view: [], constellatiom: disableViewforAllConstellations });
+    this.setState({
+      view: [],
+      constellations: disableViewforAllConstellations
+    });
   };
 
-  toggleARviewStatus = () => this.setState({ arViewOpen: !this.state.arViewOpen });
+  toggleARviewStatus = () =>
+    this.setState({ arViewOpen: !this.state.arViewOpen });
 
   switchToViewTab = () => this.setState({ activeIndex: 1 });
 
-  handleTabChange = (e, { activeTabIndex }) => this.setState({ activeTabIndex });
+  handleTabChange = (e, { activeTabIndex }) =>
+    this.setState({ activeTabIndex });
 
   tabPanes = [
     {
@@ -312,29 +289,29 @@ class MainDisplay extends Component {
   render() {
     return (
       <div className="main-display-container">
-        {!this.state.arViewOpen? 
-          <Tab className="sidetabs"
+        {!this.state.arViewOpen ? (
+          <Tab
+            className="sidetabs"
             menu={{ attached: false }}
             panes={this.tabPanes}
             activeIndex={this.state.activeTabIndex}
             onTabChange={this.handleTabChange}
           />
-          :
-          null
-        }
+        ) : null}
         <div className="flex-column-container">
           {!this.state.arViewOpen ? (
             <React.Fragment>
-              <Viewport
-                className="viewport"
-                sats={this.state.view} />
+              <Viewport className="viewport" sats={this.state.view} />
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <ARContainer className="ar-container"
-                ARview={this.state.arViewOpen} 
-                sats={this.state.view} />
-              <Button className="activate-ar-button"
+              <ARContainer
+                className="ar-container"
+                ARview={this.state.arViewOpen}
+                sats={this.state.view}
+              />
+              <Button
+                className="activate-ar-button"
                 basic
                 color="red"
                 onClick={this.toggleARviewStatus}
@@ -343,11 +320,6 @@ class MainDisplay extends Component {
               </Button>
             </React.Fragment>
           )}
-
-          {/* <SelectionContainer
-            className="selection-container"
-            // info={this.state.selection}
-          /> */}
         </div>
       </div>
     );

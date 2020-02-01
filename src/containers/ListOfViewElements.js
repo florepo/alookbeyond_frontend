@@ -20,12 +20,10 @@ class ListOfViewElements extends Component {
   }
 
   show = () => {
-    console.log("show modal");
     this.setState({ modelOpen: true });
   };
 
   handleClearButtonClick = () => {
-    console.log("clearview");
     this.props.clearView();
   };
 
@@ -46,8 +44,7 @@ class ListOfViewElements extends Component {
     const {
       view,
       constellations,
-      constellationsInView,
-      removeConOnClick
+      removeConOnClick,
     } = this.props;
     return (
       <React.Fragment>
@@ -93,12 +90,15 @@ class ListOfViewElements extends Component {
         <Header as="h6">Remove By Constellation:</Header>
         <Segment attached>
           <List divided verticalAlign="middle">
-            {constellationsInView.map(constellation => (
+            {constellations.map( constellation => 
+              constellation.displayed ?
               <ElementViewConstellation
                 item={constellation}
                 removeConOnClick={removeConOnClick}
               />
-            ))}
+              :
+              null
+            )}
           </List>
         </Segment>
         <p></p>
