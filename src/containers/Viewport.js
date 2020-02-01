@@ -32,8 +32,7 @@ const currentTimeStamp   = new Date();
 class Viewport extends Component {
   constructor(props) {
     super(props)
-    this.state = {removable_items: [],
-                  satsToDisplay: []}
+    this.state = {removable_items: []}
   }
 
   componentDidMount() {
@@ -48,6 +47,7 @@ class Viewport extends Component {
   }
  
   componentDidUpdate(prevProps, prevState){
+    console.log("re-render viewport")
     this.trackPropsChangesAndRerender(prevProps, prevState)
 
   }
@@ -104,19 +104,30 @@ class Viewport extends Component {
   //--------------------------------------
 
   trackPropsChangesAndRerender = (prevProps, prevState) =>{
-    //handle removed elements
-    if (prevProps.sats.length>this.props.sats.length) {
-      const removedElements = differenceBy(prevProps.sats, this.props.sats)
-      this.removeEntities(removedElements, prevState)
-     //handle added elements
-    } else if (prevProps.sats.length<this.props.sats.length) {
-      const addedElements = differenceBy(this.props.sats, prevProps.sats)
-      this.removeEntities(prevProps.sats)
-      this.addEntities(this.props.sats)
-     
-      // this.setState({satsToDisplay: this.props.sats})
-    } else {}
+    console.log("previous sats no.",prevProps.sats.length)
+    console.log("current sats no.",this.props.sats.length)
+    const removedSatellites = differenceBy(prevProps.sats, this.props.sats)
+    const addedSatellites = differenceBy(this.props.sats, prevProps.sats,)
+    console.log("removed sats",removedSatellites)
+    console.log("added sats",addedSatellites)
+    this.removeEntities(removedSatellites)
+    this.addEntities(addedSatellites)
     this.renderer.render(this.scene, this.camera)
+    //handle removed elements
+    // if (prevProps.sats.length>this.props.sats.length) {
+    //   console.log("remove elements")
+    //   const removedElements = differenceBy(prevProps.sats, this.props.sats)
+    //   const removedElements = differenceBy(prevProps.sats, this.props.sats)
+    //   this.removeEntities(removedElements, prevState)
+    //  //handle added elements
+    // } else if (prevProps.sats.length<this.props.sats.length) {
+    //   console.log("add elements")
+    //   this.removeEntities(prevProps.sats)
+    //   this.addEntities(this.props.sats)
+     
+    //   // this.setState({satsToDisplay: this.props.sats})
+    // } else {}
+    // this.renderer.render(this.scene, this.camera)
    
   }
 
@@ -152,7 +163,7 @@ class Viewport extends Component {
     this.setState({removable_items: trackingList})
   }
 
-  removeEntities = (removedEntities, prevState = null)  => {
+  removeEntities = (removedEntities)  => {
     let entitiesNames = removedEntities.map(entity => entity.name)
 
     let dependencies = entitiesNames.map(entityName=>{

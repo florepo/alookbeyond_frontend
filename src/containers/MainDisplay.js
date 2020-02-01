@@ -136,31 +136,49 @@ class MainDisplay extends Component {
     this.setState({ view: updatedViewlist });
   };
 
-  loadWatchlistInView = list => {
-    let SatelliteConstellationIdArray = list.satellites.map(
-      sat => sat.constellation_id
+  loadWatchlistInView = watchlist => {
+    debugger
+    let satsToAdd = watchlist.satellites.map(s => {
+      s.displayed = true
+      return s}
     );
 
-    let uniqueArrayOfConstellationIds = [
-      ...new Set(SatelliteConstellationIdArray)
-    ];
+    let updatedViewlist = [...this.state.view]
+    updatedViewlist = satsToAdd
+    debugger
 
-    let constellationList = [...this.state.constellations];
+    this.setState({view: updatedViewlist});
+    debugger
+      // constellations: updatedList
+      // viewedConstellations: matchedUniqueConstellationsArray
+    
+  
+    // let SatelliteConstellationIdArray = watchlist.satellites.map(
+    //   sat => sat.constellation_id
+    // );
 
-    let matchedConstellationsArray = uniqueArrayOfConstellationIds.map(ID => {
-      return constellationList.filter(
-        constellation => constellation.id == ID
-      )[0];
-    });
+    // let uniqueArrayOfConstellationIds = [
+    //   ...new Set(SatelliteConstellationIdArray)
+    // ];
 
-    let matchedUniqueConstellationsArray = [
-      ...new Set(matchedConstellationsArray)
-    ];
+    // let constellationList = [...this.state.constellations];
 
-    this.setState({
-      view: list.satellites,
-      viewedConstellations: matchedUniqueConstellationsArray
-    });
+    // let matchedConstellationsArray = uniqueArrayOfConstellationIds.map(ID => {
+    //   return constellationList.filter(
+    //     constellation => constellation.id == ID
+    //   )[0];
+    // });
+
+    // let matchedUniqueConstellationsArray = [
+    //   ...new Set(matchedConstellationsArray)
+    // ];
+
+
+    // this.setState({
+    //   view: satsDisplayTrue,
+    //   // constellations: updatedList
+    //   // viewedConstellations: matchedUniqueConstellationsArray
+    // });
   };
 
   saveViewToWatchlist = watchlist_name => {
@@ -255,14 +273,14 @@ class MainDisplay extends Component {
               view={this.state.view}
               watchlists={this.state.watchlists}
               constellations={this.state.constellations}
-              // removeSatOnClick={this.removeSatelliteFromView}
               removeConOnClick={this.removeConstellationFromView}
+                            // removeSatOnClick={this.removeSatelliteFromView}
               // removeSatAndConOnClick={
               //   this.removeSatelliteWithConstellationFromView
               // }
               clearView={this.clearView}
               saveViewToWatchlist={this.saveViewToWatchlist}
-              constellationsInView={this.state.viewedConstellations}
+              // constellationsInView={this.state.viewedConstellations}
             />
           )}
         </Tab.Pane>
