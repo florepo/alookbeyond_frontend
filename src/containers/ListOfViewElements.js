@@ -93,6 +93,7 @@ class ListOfViewElements extends Component {
             {constellations.map( constellation => 
               constellation.displayed ?
               <ElementViewConstellation
+                key={constellation.id}
                 item={constellation}
                 removeConOnClick={removeConOnClick}
               />

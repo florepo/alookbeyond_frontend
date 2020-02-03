@@ -100,17 +100,19 @@ class MainDisplay extends Component {
       s => s.constellation_id != constellation.id
     );
 
-    const updatedConstellationList = [...this.state.constellations].map(c => {
+    const updatedConstellationList = [...this.state.constellations].map( c => {
       if (c.id == constellation.id) {
         // toggle Display to false for the given constellation
         let constellationDisplayToggledFalse = this.changeConstellationDisplayToFalse(
           c
         );
         // toggle Display to false for satellites in the given constellation
-        let childrenSatellitesDisplayToggleUpdated = this.changeChildrenSatelliteDisplayToggleToFalse(
-          constellationDisplayToggledFalse
-        );
-        constellationDisplayToggledFalse.satellites = childrenSatellitesDisplayToggleUpdated;
+        if (c.satellites) {
+          let childrenSatellitesDisplayToggleUpdated = this.changeChildrenSatelliteDisplayToggleToFalse(
+            constellationDisplayToggledFalse
+          );
+          constellationDisplayToggledFalse.satellites = childrenSatellitesDisplayToggleUpdated;
+        }
         return constellationDisplayToggledFalse;
       } else {
         return c;
