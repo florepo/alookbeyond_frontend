@@ -47,9 +47,10 @@ jobs:
 
 workflows:
   version: 2.0
-  workflow:
+    build-and-deploy:
     jobs:
       - build-and-deploy:
           filters:
             branches:
               only: master # set so only changes to master will be deployed
+
