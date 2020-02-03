@@ -37,7 +37,6 @@
   }
 }
 
-
 .title {
   background-color: #7abfff;
   border-radius: 5px;
@@ -99,7 +98,7 @@
 
 .selection-container {
   background-color: 445;
-    z-index: 1;
+  z-index: 1;
 }
 
 .info-box {
@@ -133,12 +132,12 @@
 
 .ui.menu .active.item {
   background: rgba(21, 129, 171, 0.4) !important;
-  color: rgba(0,0,0,.95);
+  color: rgba(0, 0, 0, 0.95);
   font-weight: 400;
   box-shadow: none;
 }
 
-.activate-ar-button{
+.activate-ar-button {
   z-index: 1;
 }
 
@@ -146,7 +145,6 @@
   display: block;
   flex: 0 0 200px;
   margin: 3px 4px 3px 4px;
-  background-color: rgb(87, 13, 13);
 }
 
 .title.active {

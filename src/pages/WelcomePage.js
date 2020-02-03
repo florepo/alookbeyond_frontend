@@ -42,7 +42,7 @@ const HomepageHeading = ({ mobile }) => (
         fontSize: mobile ? "2em" : "8em",
         fontWeight: "normal",
         marginBottom: 0,
-        marginTop: mobile ? "1.5em" : "3em"
+        marginTop: mobile ? "1.5em" : "0em"
       }}
     />
     <Header
@@ -141,11 +141,6 @@ const HomepageLayout = () => (
     <Segment style={{ padding: "8em 0em" }} vertical>
       <Grid container stackable verticalAlign="middle">
         <Grid.Row>
-          {/* <Grid.Column width={8}> */}
-          {/* <Header as='h3' style={{ fontSize: '2em' }}   textAlign='center' verticalAlign='middle'>
-              Explanation
-            </Header> */}
-          <br></br>
           <p style={{ fontSize: "2em" }}>
             "A Look Beyond" is a 3D visualisation of satellite constellations,
             based on <b>real-time orbital tracking data</b>.
@@ -167,15 +162,13 @@ const HomepageLayout = () => (
         </Grid.Row>
       </Grid>
     </Segment>
-    <Segment style={{ padding: "8em 12em" }} vertical>
-
-      <Grid style={{ padding: "8em 12em" }}  container stackable verticalAlign="middle">
+    <Segment style={{ padding: "8em 3em" }} vertical>
+      <Grid container stackable verticalAlign="middle">
         <Grid.Row>
           <Grid.Column floated="right">
             <Header as="h2" style={{ fontSize: "4em" }}>
               HOW TO USE THE APP
             </Header>
-           
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={3}>
@@ -197,19 +190,13 @@ const HomepageLayout = () => (
           </Grid.Column>
           <Grid.Column>
             <Header as="h3" style={{ fontSize: "2em" }}>
-              <Icon name="unhide" /> CURRENT VIEW
+              <Icon name="unhide" /> VIEW
             </Header>
             <p style={{ fontSize: "1.33em" }}>
-              Customise what satellites or constellations that you want in View.
+              Customise what constellations that you want in View.
             </p>
             <p style={{ fontSize: "1.33em" }}>
               Save your selection and load them up for viewing later.
-            </p>
-            <p style={{ fontSize: "1.33em" }}>
-              <i>
-                (An AR version of the app is under development, so you could
-                view them in AR soon!)
-              </i>
             </p>
           </Grid.Column>
           <Grid.Column>
@@ -316,23 +303,23 @@ const HomepageLayout = () => (
       <Container>
         <Grid divided inverted stackable>
           {/* <Grid.Row> */}
-          <Grid.Column width={3}>
-            {/* <Header inverted as='h4' content='About' />
+        <Grid.Column width={3}>
+          {/* <Header inverted as='h4' content='About' />
               <List link inverted>
                 <List.Item as='a'>Sitemap</List.Item>
                 <List.Item as='a'>Contact</List.Item>
               </List> */}
-          </Grid.Column>
-          <Grid.Column width={7}>
-            {/* <Header as='h4' inverted>
+        </Grid.Column>
+        <Grid.Column width={7}>
+          {/* <Header as='h4' inverted>
                 Footer Header
               </Header>
               <p>
                 Extra space for a call to action inside the footer that could help re-engage users.
               </p> */}
-          </Grid.Column>
-          {/* </Grid.Row> */}
-        </Grid>
+        </Grid.Column>
+        {/* </Grid.Row> */}
+      </Grid>
     </Segment>
   </ResponsiveContainer>
 );
