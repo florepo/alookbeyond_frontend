@@ -283,7 +283,7 @@ class MainDisplay extends Component {
       )
     },
     {
-      menuItem: { key: "view", icon: "unhide", content: "CURRENT VIEW" },
+      menuItem: { key: "view", icon: "unhide", content: "VIEW" },
       render: () => (
         <Tab.Pane attached={false}>
           {this.state.view.length == 0 ? (
