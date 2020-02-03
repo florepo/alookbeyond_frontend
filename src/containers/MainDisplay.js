@@ -325,7 +325,7 @@ class MainDisplay extends Component {
 
   render() {
     return (
-      <div className="main-display-container">
+      <div className="main-display">
         {!this.state.arViewOpen ? (
           <Tab
             className="sidetabs"
@@ -335,7 +335,6 @@ class MainDisplay extends Component {
             onTabChange={this.handleTabChange}
           />
         ) : null}
-        <div className="flex-column-container">
           {!this.state.arViewOpen ? (
             <React.Fragment>
               <Viewport
@@ -361,7 +360,6 @@ class MainDisplay extends Component {
             </React.Fragment>
           )}
         </div>
-      </div>
     );
   }
 }

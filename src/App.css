@@ -42,7 +42,7 @@
   border-radius: 5px;
 }
 
-/* MAINPAGE */
+/* == MAINPAGE == */
 
 .main-display {
   display: flex;
@@ -50,19 +50,32 @@
   width: 100vw;
 }
 
-.main-display-container {
-  display: flex;
-  flex-flow: row;
-  margin: 3px 3px 3px 4px;
-}
-
-
+/* SIDETAB == */
 .sidetabs {
-  min-width: 350px;
-  max-height: 100vh;
+  max-width: 350px;
+  max-height: 95vh;
   overflow-y: auto;
   margin: 3px 4px 3px 4px;
 }
+/* VIEWPORT == */
+
+.viewport {
+  height: 95vh;
+  width: 80vw;
+  border-radius: 5px;
+  flex: 1 1 auto;
+  overflow: hidden;
+  margin: 3px 4px 3px 4px;
+}
+
+canvas {
+  flex: 1 1 auto;
+  height: 85vh;
+  width: 80vh;
+  overflow: hidden;
+}
+
+
 
 .ui.vertical.center.aligned.segment {
   background-image: url("./css-assets/welcomeBackground.jpeg");
@@ -85,21 +98,7 @@
   z-index: 1;
 }
 
-.info-box {
-  position: absolute;
-  bottom: 120px;
-  margin-left: 10px;
-  padding-right: 20px;
-  color: white;
-}
 
-.viewport {
-  height: 85vh;
-  width: 80vw;
-  border-radius: 5px;
-  flex: 1 1 auto;
-  overflow: hidden;
-}
 
 .viewport-ar {
   flex: 1 1 auto;
@@ -113,13 +112,6 @@
   object-fit: fill;
 }
 
-
-.canvas {
-  flex: 1 1 auto;
-  height: 85vh;
-  width: 80vh;
-  overflow: hidden;
-}
 
 .a.active.icon.item {
   background-color: #3f99ec;
