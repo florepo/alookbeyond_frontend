@@ -327,8 +327,7 @@ class MainDisplay extends Component {
     return (
       <div className="main-display">
         {!this.state.arViewOpen ? (
-          <Tab
-            className="sidetabs"
+          <Tab className="sidetabs"
             menu={{ attached: false }}
             panes={this.tabPanes}
             activeIndex={this.state.activeTabIndex}
@@ -337,15 +336,13 @@ class MainDisplay extends Component {
         ) : null}
           {!this.state.arViewOpen ? (
             <React.Fragment>
-              <Viewport
-                className="viewport"
+              <Viewport className="viewport"
                 sats={this.state.view}
               />
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <ARContainer
-                className="ar-container"
+              <ARContainer className="ar-container"
                 ARview={this.state.arViewOpen}
                 sats={this.state.view}
               />

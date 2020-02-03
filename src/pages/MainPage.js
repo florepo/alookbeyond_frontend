@@ -6,8 +6,8 @@ const MainPage = () => {
 
     return (
         <div className = "main-page" >
-            <NavBar className = "navbar" />
-            <MainDisplay className = "main-display" />
+            <NavBar/>
+            <MainDisplay/>
         </div>
     )
     

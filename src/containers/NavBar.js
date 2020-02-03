@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 class NavBar extends Component {
@@ -15,20 +15,24 @@ class NavBar extends Component {
 
     render() { 
         const { activeItem } = this.state
-        return ( 
-            <Menu
-              pointing
-              secondary
-              className = "navbar-menu"
-            >
-            <Menu.Item
-                as={Link}
-                to={'/'}
-                name='A Look Beyond'
-                active={activeItem === 'home'}
-                onClick={this.handleItemClick}
-            />
-          </Menu>
+        return (
+          <div className="nav-bar">
+            <Header
+              as={Link}
+              style={{ textDecoration: 'none' }}
+              to={'/'}
+              onClick={this.handleItemClick}>
+                A look Beyond
+              </Header>
+          </div>
+          //     pointing
+          //     secondary
+          //     className = "navbar-menu"
+          //   >
+          //   <Menu.Item
+          //       
+          //   />
+          // </Menu>
          );
     }
 }
