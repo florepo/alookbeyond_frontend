@@ -346,8 +346,7 @@ class MainDisplay extends Component {
                 ARview={this.state.arViewOpen}
                 sats={this.state.view}
               />
-              <Button
-                className="activate-ar-button"
+              <Button className="activate-ar-button"
                 basic
                 color="red"
                 onClick={this.toggleARviewStatus}

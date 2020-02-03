@@ -9,9 +9,8 @@ const ConstellationCategoryList = ({constellations, category, addOnClick, remove
       {constellations
         .filter(c => c.category == category)
         .map(constellation => (
-          <React.Fragment>
+          <React.Fragment key={constellation.name}>
             <ElementOfConstellationList
-              key={constellation.name}
               item={constellation}
               addOnClick={addOnClick}
               removeOnClick={removeOnClick}

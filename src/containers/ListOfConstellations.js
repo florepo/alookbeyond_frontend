@@ -28,6 +28,7 @@ class ListOfConstellations extends Component {
 
         <Accordion.Content active={activeIndex === 0}>
           <ConstellationCategoryList 
+            key={"Navigation & Positioning"}
             category={"Navigation & Positioning"}
             constellations={constellations}
             addOnClick={addOnClick}
@@ -44,6 +45,7 @@ class ListOfConstellations extends Component {
 
         <Accordion.Content active={activeIndex === 1}>
           <ConstellationCategoryList 
+            key={"Communication"}
             category={"Communication"}
             constellations={constellations}
             addOnClick={addOnClick}
@@ -60,6 +62,7 @@ class ListOfConstellations extends Component {
 
         <Accordion.Content active={activeIndex === 2}>
           <ConstellationCategoryList 
+            key={"Weather and Earth Resources"}
             category={"Weather and Earth Resources"}
             constellations={constellations}
             addOnClick={addOnClick}

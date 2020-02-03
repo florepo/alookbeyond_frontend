@@ -1,8 +1,5 @@
-// export const FRONTEND_URL = "http://a-look-beyond.s3-website.eu-west-2.amazonaws.com"
-export const FRONTEND_URL = 'http://localhost:3001'
-
-// export const BACKEND_URL = "https://vast-headland-62704.herokuapp.com"
-export const BACKEND_URL = 'http://localhost:3000'
+export const BACKEND_URL = "https://a-look-beyond.herokuapp.com/"
+// export const BACKEND_URL = 'http://localhost:3000'
 
 const apiHeaders = {
     "Content-Type": "application/json",
