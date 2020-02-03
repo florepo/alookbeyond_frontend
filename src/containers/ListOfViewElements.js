@@ -102,7 +102,7 @@ class ListOfViewElements extends Component {
           </List>
         </Segment>
         <p></p>
-        <Header as="h6">Remove By Individual Satellites:</Header>
+        {/* <Header as="h6">Remove By Individual Satellites:</Header>
         <Segment attached>
           <List divided verticalAlign="middle">
             {view.map(item => (
@@ -124,7 +124,7 @@ class ListOfViewElements extends Component {
               />
             ))}
           </List>
-        </Segment>
+        </Segment> */}
       </React.Fragment>
     );
   }

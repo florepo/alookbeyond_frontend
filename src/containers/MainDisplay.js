@@ -298,7 +298,6 @@ class MainDisplay extends Component {
               // }
               clearView={this.clearView}
               saveViewToWatchlist={this.saveViewToWatchlist}
-              // constellationsInView={this.state.viewedConstellations}
             />
           )}
         </Tab.Pane>
