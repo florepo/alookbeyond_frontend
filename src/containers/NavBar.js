@@ -21,13 +21,13 @@ class NavBar extends Component {
               secondary
               className = "navbar-menu"
             >
-                <Menu.Item
-                    as={Link}
-                    to={'/'}
-                    name='A Look Beyond'
-                    active={activeItem === 'home'}
-                    onClick={this.handleItemClick}
-                />
+            <Menu.Item
+                as={Link}
+                to={'/'}
+                name='A Look Beyond'
+                active={activeItem === 'home'}
+                onClick={this.handleItemClick}
+            />
           </Menu>
          );
     }

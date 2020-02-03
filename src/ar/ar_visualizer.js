@@ -32,9 +32,8 @@ let satScaleFactor = 200;
 const currentTimeStamp   = new Date();
 
 // for satellite model//      //global??
-let scaleFactor = 1/40000
-console.log("test",scaleFactor)
-let satSize = 0.5
+// let scaleFactor = 1/40000
+// let satSize = 0.5
 let timefactor = 2000
 let ARview = {}
 let ModelOffset = {}
@@ -49,8 +48,8 @@ const initialTimeStamp = new Date()
 
 export const mount = (domElement,sats,ARview_2) => {
   ARview = true
-  console.log('we mount here', domElement)
-  console.log("we received", sats.length,"satellites")
+  // console.log('we mount here', domElement)
+  // console.log("we received", sats.length,"satellites")
   initialize(domElement, sats);
   animate();
 };

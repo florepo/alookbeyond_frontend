@@ -56,9 +56,6 @@
   margin: 3px 3px 3px 4px;
 }
 
-.video {
-  object-fit: fill;
-}
 
 .sidetabs {
   min-width: 350px;
@@ -104,6 +101,19 @@
   overflow: hidden;
 }
 
+.viewport-ar {
+  flex: 1 1 auto;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vh;
+}
+
+
+.video {
+  object-fit: fill;
+}
+
+
 .canvas {
   flex: 1 1 auto;
   height: 85vh;
@@ -134,12 +144,6 @@
   border-width: thin;
 }
 
-.viewport-ar {
-  flex: 1 1 auto;
-  overflow: hidden;
-  height: 100vh;
-  width: 100vh;
-}
 
 /* NAVBAR */
 
