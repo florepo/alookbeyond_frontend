@@ -155,7 +155,6 @@ class MainDisplay extends Component {
       s.displayed = true;
       return s;
     });
-    debugger
     let constellationList = [...this.state.constellations];
 
     //reset view status to false for all constellations

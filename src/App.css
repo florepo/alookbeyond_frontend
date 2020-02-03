@@ -44,56 +44,43 @@
 
 /* MAINPAGE */
 
-.ui.menu.active.item {
-  background: rgba(41, 98, 22, 0.45);
-}
-
 .main-display {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background-color: rgb(33, 204, 204);
 }
 
 .main-display-container {
   display: flex;
   flex-flow: row;
   margin: 3px 3px 3px 4px;
-  /* background-color: rgb(20, 74, 74); */
 }
 
 .video {
   object-fit: fill;
 }
+
 .sidetabs {
   min-width: 350px;
   max-height: 100vh;
   overflow-y: auto;
   margin: 3px 4px 3px 4px;
-  /* z-index: 1; */
-  /* 
-  background-color: rgb(90, 74, 74); */
 }
 
 .ui.vertical.center.aligned.segment {
-  /* background-color: rgb(63, 63, 63); */
   background-image: url("./css-assets/welcomeBackground.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   /* color: white */
 }
 
-.ui.menu:not(.vertical) .item {
-  width: 33% !important;
-}
 
-/* viewport example */
+
 .flex-column-container {
   display: flex;
   flex-flow: column;
   height: 100%;
   width: 100%;
-  /* background-color: rgb(109, 8, 8); */
 }
 
 .selection-container {
@@ -115,7 +102,6 @@
   border-radius: 5px;
   flex: 1 1 auto;
   overflow: hidden;
-  /* background-color: rgb(197, 110, 110); */
 }
 
 .canvas {
@@ -123,29 +109,18 @@
   height: 85vh;
   width: 80vh;
   overflow: hidden;
-  /* background-color: rgb(1, 110, 110); */
 }
 
 .a.active.icon.item {
   background-color: #3f99ec;
 }
 
-.ui.menu .active.item {
-  background: rgba(21, 129, 171, 0.4) !important;
-  color: rgba(0, 0, 0, 0.95);
-  font-weight: 400;
-  box-shadow: none;
-}
+
 
 .activate-ar-button {
   z-index: 1;
 }
 
-.ui.menu {
-  display: block;
-  flex: 0 0 200px;
-  margin: 3px 4px 3px 4px;
-}
 
 .title.active {
   background-color: #3f99ec;
@@ -168,16 +143,32 @@
 
 /* NAVBAR */
 
+
 /* FOOTER */
 .footer {
   border-radius: 5px;
   background-color: #888;
 }
 
-.ui.menu:not(.vertical) .item {
+
+
+/* TABS - MAIN DISPLAY*/
+
+.ui.menu {
   display: block;
-  align-items: center;
+  flex: 0 0 200px;
+  margin: 3px 4px 3px 4px;
+}
+
+.ui.menu .active.item {
+  background: rgba(21, 129, 171, 0.4) !important;
+  color: rgba(0, 0, 0, 0.95);
+  font-weight: 400;
+  box-shadow: none;
+}
+
+.ui.menu:not(.vertical) .item {
   float: left;
-  width: 25%;
+  width: 33%;
   text-align: center;
 }

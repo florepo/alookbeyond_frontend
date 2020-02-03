@@ -16,7 +16,11 @@ class NavBar extends Component {
     render() { 
         const { activeItem } = this.state
         return ( 
-            <Menu pointing secondary>
+            <Menu
+              pointing
+              secondary
+              className = "navbar-menu"
+            >
                 <Menu.Item
                     as={Link}
                     to={'/'}
@@ -24,13 +28,6 @@ class NavBar extends Component {
                     active={activeItem === 'home'}
                     onClick={this.handleItemClick}
                 />
-                <Menu.Menu position='right'>
-                    {/* <Menu.Item
-                        name='AR-Preview'
-                        active={activeItem === 'arview'}
-                        onClick={this.handleItemClick}
-                    /> */}
-                </Menu.Menu>
           </Menu>
          );
     }
