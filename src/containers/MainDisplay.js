@@ -156,7 +156,7 @@ class MainDisplay extends Component {
       s.displayed = true;
       return s;
     });
-
+    debugger
     let constellationList = [...this.state.constellations];
 
     //reset view status to false for all constellations
@@ -171,10 +171,9 @@ class MainDisplay extends Component {
       watchlist
     );
 
-    let updatedConstellationList = constellationListSetToDisplayFalse.map(
-      constellation => {
-        return uniqueArrayOfConstellationIds.map(id => {
-          if (constellation.id == id) {
+    let updatedConstellationList = constellationListSetToDisplayFalse.map(constellation => {
+
+          if (uniqueArrayOfConstellationIds.includes(constellation.id)) {
             // toggle Display to false for the given constellation
             let constellationDisplayToggledTrue = this.changeConstellationDisplayToTrue(
               constellation
@@ -182,19 +181,19 @@ class MainDisplay extends Component {
 
             // toggle Display to false for satellites in the given constellation
             if (constellation.satellites) {
-              let childrenSatellitesDisplayToggleUpdated = this.changeChildrenSatelliteDisplayToggleToTrue(
+              let childrenSatellitesDisplayToggledToTrue = this.changeChildrenSatelliteDisplayToggleToTrue(
                 constellationDisplayToggledTrue
               );
-              constellationDisplayToggledTrue.satellites = childrenSatellitesDisplayToggleUpdated;
+              constellationDisplayToggledTrue.satellites = childrenSatellitesDisplayToggledToTrue;
             }
             return constellationDisplayToggledTrue;
           } else {
             return constellation;
           }
-        });
-      }
-    );
-    updatedConstellationList = updatedConstellationList.flat(1);
+        ;
+      })
+    
+    debugger
     this.setState({
       view: satsDisplaySetToTrue,
       constellations: updatedConstellationList
