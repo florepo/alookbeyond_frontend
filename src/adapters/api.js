@@ -55,4 +55,4 @@ export const updateWatchList = (data, id) => {
     return patch(url, data)
 }
 
-export default {BACKEND_URL, FRONTEND_URL}
+export default {BACKEND_URL}
