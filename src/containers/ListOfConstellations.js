@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Accordion, Icon, List, Divider } from "semantic-ui-react";
-import ElementOfConstellationList from "../components/ElementOfConstellationList";
+import { Accordion, Icon} from "semantic-ui-react";
 import ConstellationCategoryList from "../components/ConstellationCategoryList"
 
 class ListOfConstellations extends Component {
@@ -19,7 +18,7 @@ class ListOfConstellations extends Component {
 
     return (
       <Accordion>
-        
+
         <Accordion.Title active={activeIndex === 0}
           index={0}
           onClick={this.handleClickOnTabTitle}>
