@@ -17,9 +17,9 @@ class MainDisplay extends Component {
       constellations: [],
       view: [],
       watchlists: [],
+      activeTabIndex: 0,
       arViewOpen: false,
-      modalOpen: false,
-      activeTabIndex: 0
+      modalOpen: false
     };
   }
 
@@ -192,7 +192,6 @@ class MainDisplay extends Component {
         ;
       })
     
-    debugger
     this.setState({
       view: satsDisplaySetToTrue,
       constellations: updatedConstellationList
@@ -244,13 +243,11 @@ class MainDisplay extends Component {
     });
   };
 
-  toggleARviewStatus = () =>
-    this.setState({ arViewOpen: !this.state.arViewOpen });
+  toggleARviewStatus = () => this.setState({ arViewOpen: !this.state.arViewOpen });
 
   switchToViewTab = () => this.setState({ activeTabIndex: 1 });
 
-  handleTabChange = (e, { activeIndex }) =>
-    this.setState({ activeTabIndex: activeIndex });
+  handleTabChange = (e, { activeIndex }) => this.setState({ activeTabIndex: activeIndex });
 
   tabPanes = [
     {
@@ -268,7 +265,7 @@ class MainDisplay extends Component {
           </Header>
           <p>
             <i>
-              Pro tip: Hover over <Icon name="info" /> to view more details of
+              Pro tip: Hover over <Icon name="info"/> to view more details of
               that particular constellation.
             </i>
           </p>
