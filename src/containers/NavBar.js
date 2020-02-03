@@ -14,7 +14,6 @@ class NavBar extends Component {
   };
 
     render() { 
-        const { activeItem } = this.state
         return (
           <div className="nav-bar">
             <Header
@@ -22,17 +21,9 @@ class NavBar extends Component {
               style={{ textDecoration: 'none' }}
               to={'/'}
               onClick={this.handleItemClick}>
-                A look Beyond
+                A Look Beyond
               </Header>
           </div>
-          //     pointing
-          //     secondary
-          //     className = "navbar-menu"
-          //   >
-          //   <Menu.Item
-          //       
-          //   />
-          // </Menu>
          );
     }
 }

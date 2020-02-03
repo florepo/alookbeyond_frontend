@@ -279,7 +279,7 @@ class MainDisplay extends Component {
     {
       menuItem: { key: "view", icon: "unhide", content: "VIEW" },
       render: () => (
-        <Tab.Pane attached={false}>
+        <Tab.Pane attached={'top'}>
           {this.state.view.length == 0 ? 
             (
             "You have not selected any constellations to visualise. Click on SELECT tab above and start adding some satellite constellations to your view. Otherwise, click on LOAD tab above to load a saved view."
@@ -328,7 +328,7 @@ class MainDisplay extends Component {
       <div className="main-display">
         {!this.state.arViewOpen ? (
           <Tab className="sidetabs"
-            menu={{ attached: false }}
+            menu={{ attached: false}}
             panes={this.tabPanes}
             activeIndex={this.state.activeTabIndex}
             onTabChange={this.handleTabChange}

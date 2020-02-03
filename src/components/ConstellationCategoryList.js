@@ -23,5 +23,4 @@ const ConstellationCategoryList = ({constellations, category, addOnClick, remove
   );
 }
 
- 
 export default ConstellationCategoryList;
