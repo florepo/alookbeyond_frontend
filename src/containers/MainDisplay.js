@@ -150,7 +150,6 @@ class MainDisplay extends Component {
   };
 
   loadWatchlistInView = watchlist => {
-    debugger;
     let satsDisplaySetToTrue = watchlist.satellites.map(s => {
       s.displayed = true;
       return s;
@@ -248,10 +247,10 @@ class MainDisplay extends Component {
   toggleARviewStatus = () =>
     this.setState({ arViewOpen: !this.state.arViewOpen });
 
-  switchToViewTab = () => this.setState({ activeIndex: 1 });
+  switchToViewTab = () => this.setState({ activeTabIndex: 1 });
 
-  handleTabChange = (e, { activeTabIndex }) =>
-    this.setState({ activeTabIndex });
+  handleTabChange = (e, { activeIndex }) =>
+    this.setState({ activeTabIndex: activeIndex });
 
   tabPanes = [
     {
