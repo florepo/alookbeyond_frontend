@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Accordion, Icon, List, Divider } from "semantic-ui-react";
-import ElementConstellationList from "../components/ElementConstellationList";
+import ElementOfConstellationList from "../components/ElementOfConstellationList";
 
 class ListOfConstellations extends Component {
   state = { activeIndex: 0 };
 
-  handleClick = (e, titleProps) => {
+  handleClickOnTabTitle = (e, titleProps) => {
     const { index } = titleProps;
     const { activeIndex } = this.state;
+
     const newIndex = activeIndex === index ? -1 : index;
 
     this.setState({ activeIndex: newIndex });
@@ -20,7 +21,6 @@ class ListOfConstellations extends Component {
       constellations,
       addOnClick,
       removeOnClick,
-      showInfoOnClick
     } = this.props;
 
     return (
@@ -28,7 +28,7 @@ class ListOfConstellations extends Component {
         <Accordion.Title
           active={activeIndex === 0}
           index={0}
-          onClick={this.handleClick}
+          onClick={this.handleClickOnTabTitle}
         >
           <Icon name="dropdown" />
           Navigation & Positioning
@@ -39,12 +39,11 @@ class ListOfConstellations extends Component {
               .filter(c => c.category == "Navigation & Positioning")
               .map(constellation => (
                 <React.Fragment key={constellation.name}>
-                  <ElementConstellationList
+                  <ElementOfConstellationList
                     key={constellation.name}
                     item={constellation}
                     addOnClick={addOnClick}
                     removeOnClick={removeOnClick}
-                    showInfoOnClick={showInfoOnClick}
                   />
                   <Divider />
                 </React.Fragment>
@@ -55,7 +54,7 @@ class ListOfConstellations extends Component {
         <Accordion.Title
           active={activeIndex === 1}
           index={1}
-          onClick={this.handleClick}
+          onClick={this.handleClickOnTabTitle}
         >
           <Icon name="dropdown" />
           Communication
@@ -65,12 +64,11 @@ class ListOfConstellations extends Component {
             {constellations
               .filter(c => c.category == "Communication")
               .map(constellation => (
-                <ElementConstellationList
+                <ElementOfConstellationList
                   key={constellation.name}
                   item={constellation}
                   addOnClick={addOnClick}
                   removeOnClick={removeOnClick}
-                  showInfoOnClick={showInfoOnClick}
                 />
               ))}
           </List>
@@ -79,7 +77,7 @@ class ListOfConstellations extends Component {
         <Accordion.Title
           active={activeIndex === 2}
           index={2}
-          onClick={this.handleClick}
+          onClick={this.handleClickOnTabTitle}
         >
           <Icon name="dropdown" />
           Weather and Earth Resources
@@ -89,12 +87,11 @@ class ListOfConstellations extends Component {
             {constellations
               .filter(c => c.category == "Weather and Earth Resources")
               .map(constellation => (
-                <ElementConstellationList
+                <ElementOfConstellationList
                   key={constellation.name}
                   item={constellation}
                   addOnClick={addOnClick}
                   removeOnClick={removeOnClick}
-                  showInfoOnClick={showInfoOnClick}
                 />
               ))}
           </List>

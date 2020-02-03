@@ -36,7 +36,7 @@ class Viewport extends Component {
   }
 
   componentDidMount() {
-    console.log("Three.js canvas mounted here:", this.canvas)
+    // console.log("Three.js canvas mounted here:", this.canvas)
     this.initialize()
     this.start();
 
@@ -47,7 +47,7 @@ class Viewport extends Component {
   }
  
   componentDidUpdate(prevProps, prevState){
-    console.log("re-render viewport")
+    // console.log("re-render viewport")
     this.trackPropsChangesAndRerender(prevProps, prevState)
 
   }
@@ -102,16 +102,11 @@ class Viewport extends Component {
   //--------------------------------------
 
   trackPropsChangesAndRerender = (prevProps, prevState) =>{
-    console.log("previous sats no.",prevProps.sats.length)
-    console.log("current sats no.",this.props.sats.length)
     const removedSatellites = differenceBy(prevProps.sats, this.props.sats)
     const addedSatellites = differenceBy(this.props.sats, prevProps.sats,)
-    console.log("removed sats",removedSatellites)
-    console.log("added sats",addedSatellites)
     this.removeEntities(removedSatellites)
     this.addEntities(addedSatellites)
     this.renderer.render(this.scene, this.camera)
-
   }
 
 
@@ -137,12 +132,8 @@ class Viewport extends Component {
   }
 
   trackObject = (object) => {
-    // console.log("tracking: ", object)
-
     let trackingList = [...this.state.removable_items]
-    // console.log(trackingList.length)
     trackingList.push(object)
-    // console.log(trackingList.length)
     this.setState({removable_items: trackingList})
   }
 
@@ -170,13 +161,11 @@ class Viewport extends Component {
   }
 
   removeEntityfromScene = (entity) => {
-
     this.scene.remove( entity );
     this.renderer.render(this.scene, this.camera);
   }
 
   removeEntityFromMemory = (entity) =>{
-    // console.log("entity to be clean up:",entity.name)
     entity.material.dispose();
     entity.geometry.dispose();
     //possibly add texture.dispose()
@@ -208,7 +197,7 @@ class Viewport extends Component {
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(width, height);
-    console.log("we add renderer here", this.canvas)
+    // console.log("we add renderer here", this.canvas)
     this.canvas.appendChild(this.renderer.domElement);
 
     //ADD ORBITCONTROLS
@@ -224,7 +213,6 @@ class Viewport extends Component {
     this.scene.add(ambientLight)
     // this.trackObject(ambientLight, this.scene)
   }
-
 }
 
 export default Viewport;

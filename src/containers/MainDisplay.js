@@ -6,7 +6,6 @@ import ListOfViewElements from "../containers/ListOfViewElements";
 import ListOfWatchlists from "../containers/ListOfWatchlists";
 import Viewport from "./Viewport";
 import ARContainer from "./ARContainer";
-import SelectionContainer from "./SelectionContainer";
 
 import { _ } from "lodash";
 import * as API from "../adapters/api";
@@ -37,7 +36,7 @@ class MainDisplay extends Component {
 
   addOrFetchSatsForConstellationToView = constellation => {
     if (constellation.displayed == true) {
-      console.log("already selected");
+      // console.log("already selected");
     } else {
       if (!constellation.satellites) {
         this.loadSatellitesForConstellationAndAddToView(constellation);
@@ -285,22 +284,22 @@ class MainDisplay extends Component {
       menuItem: { key: "view", icon: "unhide", content: "VIEW" },
       render: () => (
         <Tab.Pane attached={false}>
-          {this.state.view.length == 0 ? (
+          {this.state.view.length == 0 ? 
+            (
             "You have not selected any constellations to visualise. Click on SELECT tab above and start adding some satellite constellations to your view. Otherwise, click on LOAD tab above to load a saved view."
-          ) : (
+            )
+          : 
+            (
             <ListOfViewElements
               view={this.state.view}
               watchlists={this.state.watchlists}
               constellations={this.state.constellations}
               removeConOnClick={this.removeConstellationFromView}
-              // removeSatOnClick={this.removeSatelliteFromView}
-              // removeSatAndConOnClick={
-              //   this.removeSatelliteWithConstellationFromView
-              // }
               clearView={this.clearView}
               saveViewToWatchlist={this.saveViewToWatchlist}
             />
-          )}
+            )
+          }
         </Tab.Pane>
       )
     },
@@ -343,7 +342,10 @@ class MainDisplay extends Component {
         <div className="flex-column-container">
           {!this.state.arViewOpen ? (
             <React.Fragment>
-              <Viewport className="viewport" sats={this.state.view} />
+              <Viewport
+                className="viewport"
+                sats={this.state.view}
+              />
             </React.Fragment>
           ) : (
             <React.Fragment>
