@@ -25,16 +25,15 @@ class MainDisplay extends Component {
   }
 
   componentDidMount() {
-    this.loadConstellationsAndWatchListsForInitialDisplay
+    this.loadConstellationsAndWatchListsForInitialDisplay();
   }
-  
+
   loadConstellationsAndWatchListsForInitialDisplay = () => {
     API.getConstellations().then(constellations =>
       this.setState({ constellations })
     );
     API.getWatchlists().then(watchlists => this.setState({ watchlists }));
-
-  }
+  };
 
   addOrFetchSatsForConstellationToView = constellation => {
     if (constellation.displayed == true) {
@@ -71,14 +70,13 @@ class MainDisplay extends Component {
       );
   };
 
-
   changeConstellationDisplayToFalse = constellation => {
     let constellationDisplayFalse = { ...constellation, displayed: false };
     return constellationDisplayFalse;
   };
 
   changeConstellationDisplayToTrue = constellation => {
-    let constellationDisplayFalse = { ...constellation, displayed: true};
+    let constellationDisplayFalse = { ...constellation, displayed: true };
     return constellationDisplayFalse;
   };
 
@@ -143,39 +141,44 @@ class MainDisplay extends Component {
     this.setState({ view: updatedViewlist });
   };
 
-  getListofIDsofConstellationsSavedInWatchlist = watchlist =>{
+  getListofIDsofConstellationsSavedInWatchlist = watchlist => {
     let AllConstellationIds = watchlist.satellites.map(
       sat => sat.constellation_id
     );
     let uniqueArrayOfConstellationIds = [...new Set(AllConstellationIds)];
-    return uniqueArrayOfConstellationIds
-  }
+    return uniqueArrayOfConstellationIds;
+  };
 
   loadWatchlistInView = watchlist => {
-    debugger
+    debugger;
     let satsDisplaySetToTrue = watchlist.satellites.map(s => {
-      s.displayed = true
-      return s
+      s.displayed = true;
+      return s;
     });
 
     let constellationList = [...this.state.constellations];
 
     //reset view status to false for all constellations
-    let constellationListSetToDisplayFalse = constellationList.map( constellation => {
-      constellation.displayed = false
-      return constellation
-    })
+    let constellationListSetToDisplayFalse = constellationList.map(
+      constellation => {
+        constellation.displayed = false;
+        return constellation;
+      }
+    );
 
-    let uniqueArrayOfConstellationIds = this.getListofIDsofConstellationsSavedInWatchlist(watchlist)
+    let uniqueArrayOfConstellationIds = this.getListofIDsofConstellationsSavedInWatchlist(
+      watchlist
+    );
 
-    let updatedConstellationList = constellationListSetToDisplayFalse.map( constellation => {
-
-        return uniqueArrayOfConstellationIds.map( id => {
-
+    let updatedConstellationList = constellationListSetToDisplayFalse.map(
+      constellation => {
+        return uniqueArrayOfConstellationIds.map(id => {
           if (constellation.id == id) {
             // toggle Display to false for the given constellation
-            let constellationDisplayToggledTrue = this.changeConstellationDisplayToTrue(constellation);
-            
+            let constellationDisplayToggledTrue = this.changeConstellationDisplayToTrue(
+              constellation
+            );
+
             // toggle Display to false for satellites in the given constellation
             if (constellation.satellites) {
               let childrenSatellitesDisplayToggleUpdated = this.changeChildrenSatelliteDisplayToggleToTrue(
@@ -183,18 +186,18 @@ class MainDisplay extends Component {
               );
               constellationDisplayToggledTrue.satellites = childrenSatellitesDisplayToggleUpdated;
             }
-            return constellationDisplayToggledTrue
+            return constellationDisplayToggledTrue;
           } else {
-            return constellation
-          }  
-    
-      })
-    })
-    updatedConstellationList = updatedConstellationList.flat(1)
+            return constellation;
+          }
+        });
+      }
+    );
+    updatedConstellationList = updatedConstellationList.flat(1);
     this.setState({
       view: satsDisplaySetToTrue,
       constellations: updatedConstellationList
-    })
+    });
   };
 
   saveViewToWatchlist = watchlist_name => {
@@ -290,7 +293,7 @@ class MainDisplay extends Component {
               watchlists={this.state.watchlists}
               constellations={this.state.constellations}
               removeConOnClick={this.removeConstellationFromView}
-                            // removeSatOnClick={this.removeSatelliteFromView}
+              // removeSatOnClick={this.removeSatelliteFromView}
               // removeSatAndConOnClick={
               //   this.removeSatelliteWithConstellationFromView
               // }
