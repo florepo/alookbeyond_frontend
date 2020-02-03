@@ -25,10 +25,15 @@ class MainDisplay extends Component {
   }
 
   componentDidMount() {
+    this.loadConstellationsAndWatchListsForInitialDisplay
+  }
+  
+  loadConstellationsAndWatchListsForInitialDisplay = () => {
     API.getConstellations().then(constellations =>
       this.setState({ constellations })
     );
     API.getWatchlists().then(watchlists => this.setState({ watchlists }));
+
   }
 
   addOrFetchSatsForConstellationToView = constellation => {
@@ -66,25 +71,27 @@ class MainDisplay extends Component {
       );
   };
 
-  // addConstellationToView = constellation => {
-
-  //   const updatedConstellationList = [...this.state.constellations].map ( c =>
-  //     c.id == constellation.id ? {...c, displayed: true} : c
-  //   )
-  //   this.setState({
-  //     view: updatedViewlist,
-  //     constellations: updatedConstellationList
-  //   });
-  // }
 
   changeConstellationDisplayToFalse = constellation => {
     let constellationDisplayFalse = { ...constellation, displayed: false };
     return constellationDisplayFalse;
   };
 
+  changeConstellationDisplayToTrue = constellation => {
+    let constellationDisplayFalse = { ...constellation, displayed: true};
+    return constellationDisplayFalse;
+  };
+
   changeChildrenSatelliteDisplayToggleToFalse = constellation => {
     return constellation.satellites.map(sat => {
       sat.displayed = false;
+      return sat;
+    });
+  };
+
+  changeChildrenSatelliteDisplayToggleToTrue = constellation => {
+    return constellation.satellites.map(sat => {
+      sat.displayed = true;
       return sat;
     });
   };
@@ -136,49 +143,58 @@ class MainDisplay extends Component {
     this.setState({ view: updatedViewlist });
   };
 
+  getListofIDsofConstellationsSavedInWatchlist = watchlist =>{
+    let AllConstellationIds = watchlist.satellites.map(
+      sat => sat.constellation_id
+    );
+    let uniqueArrayOfConstellationIds = [...new Set(AllConstellationIds)];
+    return uniqueArrayOfConstellationIds
+  }
+
   loadWatchlistInView = watchlist => {
     debugger
-    let satsToAdd = watchlist.satellites.map(s => {
+    let satsDisplaySetToTrue = watchlist.satellites.map(s => {
       s.displayed = true
-      return s}
-    );
+      return s
+    });
 
-    let updatedViewlist = [...this.state.view]
-    updatedViewlist = satsToAdd
-    debugger
+    let constellationList = [...this.state.constellations];
 
-    this.setState({view: updatedViewlist});
-    debugger
-      // constellations: updatedList
-      // viewedConstellations: matchedUniqueConstellationsArray
+    //reset view status to false for all constellations
+    let constellationListSetToDisplayFalse = constellationList.map( constellation => {
+      constellation.displayed = false
+      return constellation
+    })
+
+    let uniqueArrayOfConstellationIds = this.getListofIDsofConstellationsSavedInWatchlist(watchlist)
+
+    let updatedConstellationList = constellationListSetToDisplayFalse.map( constellation => {
+
+        return uniqueArrayOfConstellationIds.map( id => {
+
+          if (constellation.id == id) {
+            // toggle Display to false for the given constellation
+            let constellationDisplayToggledTrue = this.changeConstellationDisplayToTrue(constellation);
+            
+            // toggle Display to false for satellites in the given constellation
+            if (constellation.satellites) {
+              let childrenSatellitesDisplayToggleUpdated = this.changeChildrenSatelliteDisplayToggleToTrue(
+                constellationDisplayToggledTrue
+              );
+              constellationDisplayToggledTrue.satellites = childrenSatellitesDisplayToggleUpdated;
+            }
+            return constellationDisplayToggledTrue
+          } else {
+            return constellation
+          }  
     
-  
-    // let SatelliteConstellationIdArray = watchlist.satellites.map(
-    //   sat => sat.constellation_id
-    // );
-
-    // let uniqueArrayOfConstellationIds = [
-    //   ...new Set(SatelliteConstellationIdArray)
-    // ];
-
-    // let constellationList = [...this.state.constellations];
-
-    // let matchedConstellationsArray = uniqueArrayOfConstellationIds.map(ID => {
-    //   return constellationList.filter(
-    //     constellation => constellation.id == ID
-    //   )[0];
-    // });
-
-    // let matchedUniqueConstellationsArray = [
-    //   ...new Set(matchedConstellationsArray)
-    // ];
-
-
-    // this.setState({
-    //   view: satsDisplayTrue,
-    //   // constellations: updatedList
-    //   // viewedConstellations: matchedUniqueConstellationsArray
-    // });
+      })
+    })
+    updatedConstellationList = updatedConstellationList.flat(1)
+    this.setState({
+      view: satsDisplaySetToTrue,
+      constellations: updatedConstellationList
+    })
   };
 
   saveViewToWatchlist = watchlist_name => {
