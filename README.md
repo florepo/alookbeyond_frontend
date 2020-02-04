@@ -19,7 +19,9 @@ It integrates and utilizes three.js for the creation and 3D rendering of the con
 - Reveal the hidden beauty of satellite constellations in a visually stunning and intuative way, in order to showcase a technology everyday life largely depends on (via GPS Navigation, Telecommunication, Weather Forecast...) in a non obvious way.
 - Exploring how Javascript libraries and 3D rendering can be incorporated in a modern Front-end library like React.
 - Build a web application utilizind tools and methods learned in the last 4 month as part of my bootcamp training and extracurricular learning activities.
-- Exploring the use of integrated Continous Delivery services from Netlify and Heruko.
+- Exploring the use of integrated Continous Delivery services from Netlify and Heroku.
+
+![Image of Constellation View](https://i.imgur.com/k1drWN8.png)
 
 ## Tech Stack
 - Front-end in React
