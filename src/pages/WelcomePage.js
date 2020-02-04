@@ -32,7 +32,8 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? "1.5em" : "0em"
       }}
     />
-    <Header inverted
+    <Header
+      inverted
       as="h2"
       content="...visualising real-time satellite constellations"
       style={{
@@ -41,10 +42,7 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? "0.5em" : "1.5em"
       }}
     />
-    <Button secondary
-      size="huge"
-      as={Link}
-      to={"/home"}>
+    <Button secondary size="huge" as={Link} to={"/home"}>
       explore
       <Icon name="right arrow" />
     </Button>
@@ -81,16 +79,15 @@ class DesktopContainer extends Component {
             style={{ minHeight: 60, padding: "1em 1em" }}
             vertical
           >
-             <Menu
-               fixed={fixed ? "top" : null}
-               inverted={!fixed}
-               pointing={!fixed}
-               secondary={!fixed}
-               size="large"
-             >
-             </Menu>
+            <Menu
+              fixed={fixed ? "top" : null}
+              inverted={!fixed}
+              pointing={!fixed}
+              secondary={!fixed}
+              size="large"
+            ></Menu>
             <HomepageHeading />
-           </Segment>
+          </Segment>
         </Visibility>
 
         {children}
@@ -116,86 +113,97 @@ ResponsiveContainer.propTypes = {
 const HomepageLayout = () => (
   <ResponsiveContainer>
     <React.Fragment>
-    <Segment verticaltyle={{ padding: "4em 0em" }}>
-       <Grid container stackable verticalAlign="middle">
-         <Grid.Row>
-           <p style={{ fontSize: "1.5em" }}>
-             "A Look Beyond" is a 3D visualisation of  <b>satellite constellations</b>,
-             based on <b>real-time orbital tracking data</b>.
-           </p>
-           <p style={{ fontSize: "1.5em" }}>
-             Explore constellations of 11 satellites from 3 different categories
-             of uses:
-           </p>
-             <ul style={{ fontSize: "1.5em" }}>
-               <li><b>Navigation & Positioning</b></li>
-               <li><b>Communication</b></li>
-               <li><b>Weather & Earth Resources</b></li>
-             </ul>
-         </Grid.Row>
-       </Grid>
-    </Segment>
-
-    <Segment style={{ padding: "4em 3em" }} vertical>
-      <Grid container stackable verticalAlign="middle">
-        <Grid.Row>
-          <Grid.Column floated="right">
-            <Header as="h2" style={{ fontSize: "3em" }}>
-              HOW TO USE THE APP
-            </Header>
-          </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Row columns={3} >
-          <Grid.Column verticalAlign='top'>
-            <Header as="h3" style={{ fontSize: "2em" }}>
-              <Icon name="bullseye"/>
-              SELECT
-            </Header>
-            <p style={{ fontSize: "1.33em" }}>
-              In this tab, select the satellite constellation(s) that you want
-              to add to View.
+      <Segment verticaltyle={{ padding: "4em 0em" }}>
+        <Grid container stackable verticalAlign="middle">
+          <Grid.Row>
+            <p style={{ fontSize: "1.5em" }}>
+              "A Look Beyond" is a 3D visualisation of{" "}
+              <b>satellite constellations</b>, based on{" "}
+              <b>real-time orbital tracking data</b>.
             </p>
-            <p style={{ fontSize: "1.33em" }}>
-              <Icon name="hide" />
-              <Icon name="unhide" />
-              Click to show/hide constellation
+            <p style={{ fontSize: "1.5em" }}>
+              Explore constellations of 11 satellites from 3 different
+              categories of uses:
             </p>
-          </Grid.Column>
-          <Grid.Column verticalAlign='top'>
-            <div>
+          </Grid.Row>
+          <Grid.Row>
+            <ul style={{ fontSize: "1.5em" }}>
+              <li>
+                <b>Navigation & Positioning</b>
+              </li>
+              <li>
+                <b>Communication</b>
+              </li>
+              <li>
+                <b>Weather & Earth Resources</b>
+              </li>
+            </ul>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+
+      <Segment style={{ padding: "4em 3em" }} vertical>
+        <Grid container stackable verticalAlign="middle">
+          <Grid.Row>
+            <Grid.Column floated="right">
+              <Header as="h2" style={{ fontSize: "3em" }}>
+                HOW TO USE THE APP
+              </Header>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row columns={3}>
+            <Grid.Column verticalAlign="top">
               <Header as="h3" style={{ fontSize: "2em" }}>
-                <Icon name="unhide"/>
-                VIEW
+                <Icon name="bullseye" />
+                SELECT
               </Header>
               <p style={{ fontSize: "1.33em" }}>
-                Customise what constellations that you want in View.
+                In this tab, select the satellite constellation(s) that you want
+                to add to View.
               </p>
               <p style={{ fontSize: "1.33em" }}>
-                Save your selection and load them up for viewing later.
+                <Icon name="hide" />
+                <Icon name="unhide" />
+                Click to show/hide constellation
               </p>
-            </div>
-          </Grid.Column>
-          <Grid.Column verticalAlign='top'>
-            <div>
-              <Header as="h3" style={{ fontSize: "2em" }}>
-                <Icon name="list" />
-                LOAD
-              </Header>
-              <p style={{ fontSize: "1.33em" }}>
-                Load your list of saved Views from here.
-              </p>
-              <p style={{ fontSize: "1.33em" }}>
-                <i>
-                  (An AR version of the app is under development!)
-                  <br></br>
-                </i>
-              </p>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
+            </Grid.Column>
+            <Grid.Column verticalAlign="top">
+              <div>
+                <Header as="h3" style={{ fontSize: "2em" }}>
+                  <Icon name="unhide" />
+                  VIEW
+                </Header>
+                <p style={{ fontSize: "1.33em" }}>
+                  Customise what constellations that you want in View.
+                </p>
+                <p style={{ fontSize: "1.33em" }}>
+                  Save your selection and load them up for viewing later.
+                </p>
+              </div>
+            </Grid.Column>
+            <Grid.Column verticalAlign="top">
+              <div>
+                <Header as="h3" style={{ fontSize: "2em" }}>
+                  <Icon name="list" />
+                  LOAD
+                </Header>
+                <p style={{ fontSize: "1.33em" }}>
+                  Load your list of saved Views from from this tab.
+                </p>
+                <p style={{ fontSize: "1.33em" }}>
+                  <i>
+                    (An AR version of the app is under development, so stay
+                    tuned for the upcoming release!)
+                  </i>
+                  &nbsp;
+                </p>
+                
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
     </React.Fragment>
   </ResponsiveContainer>
 );

@@ -40,6 +40,11 @@
   flex: 1 1 auto;
 }
 
+@media screen and (max-width: 600px) {
+  .ui.menu .item {
+  flex-direction: column;
+  }
+}
 .ui.menu .active.item {
   background: rgba(21, 129, 171, 0.4) !important;
   color: rgba(0, 0, 0, 0.95);
@@ -67,7 +72,7 @@
 canvas {
   flex: 1 1 auto;
   height: calc(100vh - 50px);
-
+  width: 80vw;
   overflow: hidden;
 }
 
