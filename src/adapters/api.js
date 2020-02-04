@@ -1,5 +1,5 @@
-export const BACKEND_URL = "https://vast-headland-62704.herokuapp.com"
-// export const BACKEND_URL = 'http://localhost:3000'
+// export const BACKEND_URL = "https://vast-headland-62704.herokuapp.com"
+export const BACKEND_URL = 'http://localhost:3000'
 
 const apiHeaders = {
     "Content-Type": "application/json",
@@ -18,10 +18,8 @@ export const patch = (url, data) => {
                     body: JSON.stringify({data})
                 };
         return fetch(url, configObject)
-            .then(resp => resp.json());
-            
+            .then(resp => resp.json());         
 }
-
 
 export const getConstellations = () => {
     const url = BACKEND_URL +'/constellations'
@@ -45,13 +43,11 @@ export const getWatchlist = (id) => {
 
 export const getWatchlists = () => {
     const url = BACKEND_URL +'/watchlists'
-    console.log(url)
     return get(url)
 }
 
 export const updateWatchList = (data, id) => {
     const url = BACKEND_URL +'/watchlists/'+ id
-    console.log("posting")
     return patch(url, data)
 }
 

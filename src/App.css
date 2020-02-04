@@ -2,45 +2,14 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* == WELCOME PAGE == */
+
+.ui.vertical.center.aligned.segment {
+  background-image: url("./css-assets/welcomeBackground.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.title {
-  background-color: #7abfff;
-  border-radius: 5px;
-}
 
 /* == NAVBAR == */
 
@@ -50,7 +19,6 @@
   width: 100vw;
   margin: 15px 4px 10px 12px;
 }
-
 
 /* == MAINPAGE == */
 
@@ -105,27 +73,6 @@ canvas {
 
 
 
-.ui.vertical.center.aligned.segment {
-  background-image: url("./css-assets/welcomeBackground.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* color: white */
-}
-
-
-
-.flex-column-container {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  width: 100%;
-}
-
-.selection-container {
-  background-color: 445;
-  z-index: 1;
-}
-
 
 
 .viewport-ar {
@@ -163,9 +110,6 @@ canvas {
   border-color: #0574bed2;
   border-width: thin;
 }
-
-
-
 
 
 /* FOOTER */

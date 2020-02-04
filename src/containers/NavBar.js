@@ -21,7 +21,7 @@ class NavBar extends Component {
               style={{ textDecoration: 'none' }}
               to={'/'}
               onClick={this.handleItemClick}>
-                A Look Beyond
+                <b>A Look Beyond</b>
               </Header>
           </div>
          );
