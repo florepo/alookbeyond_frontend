@@ -1,10 +1,10 @@
 #  A look Beyond
-[A Look Beyond](https://cocky-curie-b08b8e.netlify.com/) 
+[Live: A Look Beyond](https://cocky-curie-b08b8e.netlify.com/) 
 
 A web based tool for real-time visualization of satellite constellations in 3D.
 It integrates and utilizes three.js for the creation and 3D rendering of the constellation.
 
-![Image of A Look Beyond](https://imgur.com/a/MqocQQL)
+![Image of A Look Beyond](https://i.imgur.com/j20Yqr4.png)
 
 ## Key Features
 
@@ -13,7 +13,7 @@ It integrates and utilizes three.js for the creation and 3D rendering of the con
 3. Visualisations can be explored in 3D (zoom in out, rotate)
 4. Favourite views can be saved to the data base for later retrival.
 
-![Image of Constellation View](https://imgur.com/iJfoyqS)
+![Image of Constellation View](https://i.imgur.com/iJfoyqS.png)
 
 ## Motivation
 - Reveal the hidden beauty of satellite constellations in a visually stunning and intuative way, in order to showcase a technology everyday life largely depends on (via GPS Navigation, Telecommunication, Weather Forecast...) in a non obvious way.
